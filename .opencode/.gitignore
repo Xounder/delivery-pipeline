@@ -1,0 +1,16 @@
+# Projects specifics folder
+architecture
+plan
+sessions
+
+# Projects specifics files
+INDEX.md
+docs-catalog.md
+project-structure.md
+pipeline.yaml
+
+# Build 
+node_modules
+package.json
+package-lock.json
+bun.lock
