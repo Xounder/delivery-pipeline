@@ -480,6 +480,794 @@ And is shared across multiple codebases:
 
 ---
 
+# Project-Specific Branches
+
+The `delivery-pipeline` is a shared and reusable harness used across multiple codebases.
+
+Although the central workflow should remain agnostic, individual projects may need to experiment with, adapt, or extend the harness before a change is considered suitable for all codebases.
+
+For this reason, each project that needs to modify the `delivery-pipeline` should first create its own dedicated branch.
+
+## Branch Naming Convention
+
+All project-specific branches must follow this naming convention:
+
+```text
+dlvr-ppln/<project-name>
+````
+
+Examples:
+
+```text
+dlvr-ppln/market-app
+
+dlvr-ppln/project-alpha
+
+dlvr-ppln/my-backend
+
+dlvr-ppln/codebase-a
+```
+
+The prefix:
+
+```text
+dlvr-ppln/
+```
+
+is mandatory and identifies branches created specifically for project-level work on the `delivery-pipeline`.
+
+---
+
+# Why Use Project-Specific Branches?
+
+The shared `delivery-pipeline` may be used by multiple independent codebases:
+
+```text
+                        delivery-pipeline
+
+                              main
+                               │
+                ┌──────────────┼──────────────┐
+                │              │              │
+                ▼              ▼              ▼
+
+     dlvr-ppln/project-a  dlvr-ppln/project-b  dlvr-ppln/project-c
+                │              │              │
+                ▼              ▼              ▼
+
+           Codebase A      Codebase B      Codebase C
+```
+
+This allows each project to work independently on the harness without immediately affecting other projects.
+
+For example:
+
+```text
+Codebase A
+    │
+    ▼
+dlvr-ppln/codebase-a
+    │
+    │ Project-specific improvements
+    ▼
+Changes
+```
+
+Meanwhile:
+
+```text
+Codebase B
+    │
+    ▼
+dlvr-ppln/codebase-b
+    │
+    │ Different experiments
+    ▼
+Changes
+```
+
+Neither project directly affects the other.
+
+---
+
+# Creating a Project Branch
+
+Before modifying the `delivery-pipeline`, create a branch for the project.
+
+Example:
+
+```bash
+cd delivery-pipeline
+```
+
+Create the branch:
+
+```bash
+git checkout -b dlvr-ppln/<project-name>
+```
+
+Example:
+
+```bash
+git checkout -b dlvr-ppln/market-app
+```
+
+Push the branch to the remote repository:
+
+```bash
+git push -u origin dlvr-ppln/market-app
+```
+
+The project can now safely work with its own version of the harness.
+
+---
+
+# ⚠️⚠️⚠️ WARNING — PAY ATTENTION WHEN CLONING THE SUBMODULE ⚠️⚠️⚠️
+
+```text
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║                         ⚠️  IMPORTANT WARNING  ⚠️                     ║
+║                                                                      ║
+║   DO NOT simply clone or initialize the delivery-pipeline and       ║
+║   start making changes immediately.                                 ║
+║                                                                      ║
+║   BEFORE MAKING ANY CHANGES, ALWAYS CHECK WHICH BRANCH THE           ║
+║   SUBMODULE IS CURRENTLY USING.                                    ║
+║                                                                      ║
+║   EACH PROJECT MUST USE ITS OWN PROJECT-SPECIFIC BRANCH:             ║
+║                                                                      ║
+║              dlvr-ppln/<project-name>                               ║
+║                                                                      ║
+║   Example:                                                          ║
+║                                                                      ║
+║              dlvr-ppln/market-app                                   ║
+║                                                                      ║
+║   DO NOT ACCIDENTALLY MAKE PROJECT-SPECIFIC CHANGES DIRECTLY ON:     ║
+║                                                                      ║
+║              main                                                   ║
+║                                                                      ║
+║   OR ON ANOTHER PROJECT'S BRANCH.                                   ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+```
+
+When cloning or initializing a codebase that contains the submodule, always verify the current branch:
+
+```bash
+cd delivery-pipeline
+git branch --show-current
+```
+
+Expected result:
+
+```text
+dlvr-ppln/<project-name>
+```
+
+Example:
+
+```text
+dlvr-ppln/market-app
+```
+
+If the submodule is not using the correct project branch, switch to it:
+
+```bash
+git checkout dlvr-ppln/<project-name>
+```
+
+Example:
+
+```bash
+git checkout dlvr-ppln/market-app
+```
+
+---
+
+# Recommended Submodule Setup Flow
+
+The recommended flow for adding the `delivery-pipeline` to a project is:
+
+```text
+Start
+  │
+  ▼
+Create Project Repository
+  │
+  ▼
+Create Project Branch
+  │
+  │
+  │ dlvr-ppln/<project-name>
+  ▼
+Push Branch to delivery-pipeline
+  │
+  ▼
+Add / Clone Submodule
+  │
+  ▼
+⚠️ VERIFY CURRENT BRANCH ⚠️
+  │
+  ▼
+Switch to Project Branch
+  │
+  ▼
+Verify Again
+  │
+  ▼
+Start Using the delivery-pipeline
+```
+
+Conceptually:
+
+```text
+                       delivery-pipeline
+
+                              main
+                               │
+                               │
+               ┌───────────────┼───────────────┐
+               │               │               │
+               ▼               ▼               ▼
+
+     dlvr-ppln/project-a dlvr-ppln/project-b dlvr-ppln/project-c
+
+               │               │               │
+               │               │               │
+               ▼               ▼               ▼
+
+          Codebase A      Codebase B      Codebase C
+```
+
+---
+
+# Working on the Project-Specific Branch
+
+Once the correct branch is configured, changes can be made safely.
+
+Example:
+
+```bash
+cd delivery-pipeline
+```
+
+Verify the branch:
+
+```bash
+git branch --show-current
+```
+
+Expected:
+
+```text
+dlvr-ppln/market-app
+```
+
+Make the changes:
+
+```bash
+git add .
+git commit -m "feat: improve delivery pipeline workflow"
+git push
+```
+
+These changes will affect:
+
+```text
+dlvr-ppln/market-app
+```
+
+They will not directly affect:
+
+```text
+main
+
+dlvr-ppln/project-a
+
+dlvr-ppln/project-b
+```
+
+---
+
+# Promoting Changes to the Shared Harness
+
+A change created for a specific project may eventually become useful for other codebases.
+
+The recommended flow is:
+
+```text
+                    Codebase A
+
+                        │
+                        ▼
+
+              dlvr-ppln/project-a
+
+                        │
+                        │
+                 New Improvement
+                        │
+                        ▼
+
+                   Validation
+                        │
+                        ▼
+
+               Is it Generic?
+                        │
+              ┌─────────┴─────────┐
+              │                   │
+              ▼                   ▼
+
+             NO                   YES
+              │                   │
+              ▼                   ▼
+
+      Keep in Project       Create Pull Request
+          Branch                   │
+                                  ▼
+
+                                main
+
+                                  │
+                                  ▼
+
+                       Shared Improvement
+```
+
+Only changes that are sufficiently agnostic and reusable should be promoted to the shared branch.
+
+Project-specific behavior should remain isolated in the corresponding project branch whenever possible.
+
+---
+
+# Relationship Between `main` and Project Branches
+
+The branches have different responsibilities.
+
+## `main`
+
+The `main` branch represents:
+
+```text
+✓ Shared Harness
+
+✓ Generic Workflow
+
+✓ Reusable Skills
+
+✓ Generic Agents
+
+✓ Shared Contracts
+
+✓ Cross-Codebase Improvements
+```
+
+It should not contain behavior exclusive to a single project.
+
+---
+
+## `dlvr-ppln/<project-name>`
+
+Project-specific branches represent:
+
+```text
+✓ Project Experiments
+
+✓ Project Adaptations
+
+✓ Project-Specific Improvements
+
+✓ Temporary Divergences
+
+✓ Features Being Validated
+
+✓ Changes Not Yet Generic Enough for main
+```
+
+---
+
+# Branch Flow
+
+```text
+                              main
+
+                                │
+                                │
+                     Shared Generic Harness
+                                │
+                ┌───────────────┼───────────────┐
+                │               │               │
+                ▼               ▼               ▼
+
+       dlvr-ppln/project-a dlvr-ppln/project-b dlvr-ppln/project-c
+
+                │               │               │
+
+                ▼               ▼               ▼
+
+           Codebase A      Codebase B      Codebase C
+
+                │
+                │ New Improvement
+                ▼
+
+       dlvr-ppln/project-a
+                │
+                │
+                ▼
+
+        Is it reusable?
+                │
+         ┌──────┴──────┐
+         │             │
+        No            Yes
+         │             │
+         ▼             ▼
+
+     Stay in       Pull Request
+     Branch             │
+                        ▼
+
+                       main
+```
+
+---
+
+# When to Create a Pull Request
+
+A Pull Request to promote changes from a project-specific branch to the shared `main` branch must **not** be created immediately after implementing a new flow or improvement.
+
+A new flow must first be tested and used within the project-specific branch.
+
+Example:
+
+```text
+dlvr-ppln/<project-name>
+````
+
+The recommended process is:
+
+```text
+New Flow or Improvement
+          │
+          ▼
+Implementation
+          │
+          ▼
+Testing
+          │
+          ▼
+Real Project Usage
+          │
+          ▼
+Iteration and Improvements
+          │
+          ▼
+Is the Flow Stable?
+          │
+      ┌───┴───┐
+      │       │
+     NO      YES
+      │       │
+      ▼       ▼
+ Continue   Is it Useful
+ Iterating  Beyond This Project?
+              │
+          ┌───┴───┐
+          │       │
+         NO      YES
+          │       │
+          ▼       ▼
+     Keep in      Pull Request
+ Project Branch        │
+                       ▼
+                      main
+```
+
+## Requirements Before Creating a Pull Request
+
+A Pull Request should only be created when the new flow has been demonstrated to be:
+
+```text
+✓ Stable
+
+✓ Useful
+
+✓ Tested in real usage
+
+✓ Validated through actual workflow execution
+
+✓ Mature enough to be reused
+
+✓ Not dependent on project-specific assumptions
+```
+
+The flow must not be promoted to `main` simply because it works once.
+
+It should be used and validated over time within the project-specific branch.
+
+---
+
+## Recommended Promotion Flow
+
+The complete promotion process should follow:
+
+```text
+                         Project
+
+                            │
+                            ▼
+
+                dlvr-ppln/<project-name>
+
+                            │
+                            ▼
+
+                 New Flow / Improvement
+
+                            │
+                            ▼
+
+                      Implementation
+
+                            │
+                            ▼
+
+                         Testing
+
+                            │
+                            ▼
+
+                    Real World Usage
+
+                            │
+                            ▼
+
+                   Iteration / Refinement
+
+                            │
+                            ▼
+
+                   Proven Stable and Useful?
+
+                            │
+                    ┌───────┴────────┐
+                    │                │
+
+                   NO               YES
+
+                    │                │
+
+                    ▼                ▼
+
+             Continue Using      Create PR
+
+             and Improving           │
+
+                    │                ▼
+
+                    └──────────► Review
+
+                                      │
+                                      ▼
+
+                                     main
+
+                                      │
+                                      ▼
+
+                            Shared Improvement
+
+                                      │
+                         ┌────────────┼────────────┐
+                         │            │            │
+                         ▼            ▼            ▼
+
+                     Codebase A    Codebase B    Codebase C
+```
+
+---
+
+## Important Rule
+
+> A new flow should only be proposed to the shared `main` branch after it has been proven stable and useful through actual usage in a project-specific branch.
+
+The process should be:
+
+```text
+Experiment
+    │
+    ▼
+Use
+    │
+    ▼
+Validate
+    │
+    ▼
+Improve
+    │
+    ▼
+Stabilize
+    │
+    ▼
+Prove Usefulness
+    │
+    ▼
+Create Pull Request
+    │
+    ▼
+main
+```
+
+Do not create a Pull Request for:
+
+```text
+✗ Untested flows
+
+✗ Experimental ideas
+
+✗ One-time successful executions
+
+✗ Project-specific assumptions
+
+✗ Unstable workflows
+
+✗ Changes whose usefulness has not yet been demonstrated
+```
+
+These changes should remain in:
+
+```text
+dlvr-ppln/<project-name>
+```
+
+until they are sufficiently mature.
+
+---
+
+# Final Decision Flow
+
+```text
+New Change
+    │
+    ▼
+
+Is it Project-Specific?
+
+    │
+ ┌──┴──┐
+ │     │
+YES     NO
+ │      │
+ ▼      ▼
+
+Project    Can it be
+Branch     Tested Safely?
+
+ │           │
+ │        ┌──┴──┐
+ │        │     │
+ ▼       NO    YES
+          │     │
+          ▼     ▼
+
+       Keep in  Test and Use
+       Project      │
+       Branch       ▼
+              Is it Stable?
+                    │
+                 ┌──┴──┐
+                 │     │
+                NO    YES
+                 │     │
+                 ▼     ▼
+
+              Iterate  Is it Useful
+                       for Other Projects?
+                              │
+                           ┌──┴──┐
+                           │     │
+                          NO    YES
+                           │     │
+                           ▼     ▼
+
+                        Keep    Create PR
+                        Local       │
+                                    ▼
+
+                                   main
+```
+
+# Recommended Rules
+
+## Before modifying the Submodule
+
+Always verify:
+
+```bash
+git branch --show-current
+```
+
+---
+
+## Before creating a Project Branch
+
+Always follow:
+
+```text
+dlvr-ppln/<project-name>
+```
+
+---
+
+## Never Make Project-Specific Changes Directly on `main`
+
+Project-specific changes should first be developed in:
+
+```text
+dlvr-ppln/<project-name>
+```
+
+---
+
+## Promote Generic Improvements
+
+If a project-specific improvement becomes useful for multiple codebases:
+
+```text
+Project Branch
+      │
+      ▼
+Validation
+      │
+      ▼
+Pull Request
+      │
+      ▼
+main
+      │
+      ▼
+Available to All Codebases
+```
+
+---
+
+# Summary
+
+```text
+╔═══════════════════════════════════════════════════════════════╗
+║                                                               ║
+║                    delivery-pipeline                          ║
+║                                                               ║
+║                           main                                ║
+║                            │                                  ║
+║                  Shared Generic Harness                       ║
+║                            │                                  ║
+║             ┌──────────────┼──────────────┐                   ║
+║             │              │              │                   ║
+║             ▼              ▼              ▼                   ║
+║                                                               ║
+║  dlvr-ppln/project-a  dlvr-ppln/project-b  dlvr-ppln/project-c║
+║             │              │              │                   ║
+║             ▼              ▼              ▼                   ║
+║                                                               ║
+║        Codebase A      Codebase B      Codebase C             ║
+║                                                               ║
+╚═══════════════════════════════════════════════════════════════╝
+```
+
+> ⚠️ **Always verify the branch after cloning or initializing the submodule.**
+>
+> The expected branch must be:
+>
+> ```text
+> dlvr-ppln/<project-name>
+> ```
+>
+> Never assume that the submodule is already using the correct branch.
+
 # Installing the Submodule in a Codebase
 
 Go to the repository where you want to use the `delivery-pipeline`.
@@ -1111,3 +1899,5 @@ Several sections still need to be specified as the actual harness components are
 ```
 
 The final goal is to have a single, centralized, reusable, and evolving harness capable of driving AI agentic workflows across multiple codebases without being directly coupled to the particularities of any individual project.
+
+Thank you for reading this far! ;D
