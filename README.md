@@ -1268,6 +1268,95 @@ Available to All Codebases
 >
 > Never assume that the submodule is already using the correct branch.
 
+# Commit Convention
+
+All commits must follow the **Conventional Commits** specification.
+
+The commit type must describe the nature of the change, such as:
+
+* `feat` — a new feature or capability
+* `fix` — a bug fix
+* `chore` — maintenance or tooling changes
+* `docs` — documentation changes
+* `refactor` — code or workflow restructuring without changing behavior
+* `test` — adding or modifying tests
+* `ci` — CI/CD changes
+* `perf` — performance improvements
+* `build` — build system or dependency changes
+
+## Project-Specific Commits
+
+When a change is related to a specific project, the project name must be included in the commit scope.
+
+The format is:
+
+```text
+<type>(<project-name>): <description>
+```
+
+Examples:
+
+```text
+feat(market-app): add flow validation
+fix(market-app): correct skill loading
+chore(market-app): update pipeline configuration
+docs(market-app): document project-specific flow
+test(market-app): add workflow validation tests
+```
+
+For changes that are **not specific to a single project**, the project scope should be omitted:
+
+```text
+feat: add flow validation
+fix: correct skill loading
+chore: update pipeline dependencies
+docs: improve delivery-pipeline documentation
+ci: add harness validation
+```
+
+The project name used in the commit scope should match the project associated with the `dlvr-ppln/<project-name>` branch whenever the change is project-specific.
+
+### Commit Rules
+
+* All commits must follow the Conventional Commits format.
+* Project-specific changes must include the project name as the scope.
+* Generic harness changes must not use a project-specific scope.
+* Keep the commit subject concise and descriptive.
+* The project name in the commit scope should match the project associated with the `dlvr-ppln/<project-name>` branch.
+* Invalid commit formats should fail CI validation.
+* Use a valid Conventional Commit type.
+* Use the project name as the scope for project-specific changes.
+* Keep the commit subject concise and descriptive.
+* Use the imperative mood when possible.
+* Do not use arbitrary or undocumented commit types.
+* Do not omit the project scope when the change is specific to a consuming project.
+
+### Examples
+
+**Project-specific change:**
+
+```text
+feat(market-app): add flow validation
+```
+
+**Generic harness change:**
+
+```text
+feat: add reusable flow validation
+```
+
+**Project-specific bug fix:**
+
+```text
+fix(market-app): correct validation step
+```
+
+**Generic CI change:**
+
+```text
+ci: enforce required validation checks
+```
+
 # Installing the Submodule in a Codebase
 
 Go to the repository where you want to use the `delivery-pipeline`.
