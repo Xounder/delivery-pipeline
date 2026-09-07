@@ -2,7 +2,7 @@
 name: Tech Lead
 description: Creates/refines technical tasks from documents `.opencode/plan/<context>/` folder, ensuring the development team has clear guidelines for implementation.
 mode: subagent
-model: opencode/deepseek-v4-flash-free
+model: opencode/big-pickle
 temperature: 0.2
 steps: 50
 color: success

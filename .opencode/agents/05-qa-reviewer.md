@@ -3,7 +3,7 @@ name: QA Reviewer
 description: >
   Reviews code implemented by Senior Frontend and Senior Backend agents, validating whether the Tech Lead task was fully completed, without bugs and without architectural violations. Should be instantiated separately for each review (one instance for frontend, another for backend) after implementation is complete.
 mode: subagent
-model: opencode/deepseek-v4-flash-free
+model: opencode/big-pickle
 temperature: 0.1
 steps: 15
 color: error

@@ -3,7 +3,7 @@ name: Product Manager
 description: >
   Creates and refines epics and stories for the application, prioritizes the backlog based on user value, and ensures deliveries provide the best experience. Should be used at the start of each cycle to define what will be built.
 mode: primary
-model: opencode/deepseek-v4-flash-free
+model: opencode/big-pickle
 temperature: 0.3
 steps: 30
 color: primary

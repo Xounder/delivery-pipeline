@@ -3,7 +3,7 @@
   description: >
     Analyzes the codebase for feasibility, risk, impact, technical approaches, and planning. Supports both exploration workflows and structured planning workflows depending on the scope of the requested change.
   mode: primary
-  model: opencode/nemotron-3-ultra-free
+  model: opencode/big-pickle
   temperature: 0.1
   steps: 50
   color: accent
