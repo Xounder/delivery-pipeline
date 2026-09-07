@@ -1423,6 +1423,8 @@ git commit -m "chore: add delivery-pipeline submodule"
 git push
 ```
 
+> After adding or updating the submodule, install the opencode plugin dependencies (`.opencode/node_modules`). See [Installing the opencode Plugin Dependencies](#installing-the-opencode-plugin-dependencies).
+
 ---
 
 # Cloning a Codebase that Contains the Submodule
@@ -1456,6 +1458,28 @@ git submodule update --init --recursive
 ```
 
 This initializes the existing submodules.
+
+---
+
+# Installing the opencode Plugin Dependencies
+
+The `.opencode/` directory contains opencode plugins (`.opencode/plugins/*.plugin.ts`) that import the `@opencode-ai/plugin` package.
+
+These dependencies are declared in `.opencode/package.json` and installed into `.opencode/node_modules`. Since `node_modules` is git-ignored, the dependencies must be installed after cloning or updating the submodule:
+
+```bash
+cd .opencode
+npm install
+```
+
+Alternatively, if you use [Bun](https://bun.sh):
+
+```bash
+cd .opencode
+bun install
+```
+
+> **Note:** `.opencode/package.json` and `.opencode/package-lock.json` are versioned in the repository — only `node_modules`, `bun.lock`, and project-specific files are git-ignored. This ensures the exact pinned version (`@opencode-ai/plugin@1.15.10`) is available to anyone cloning the harness.
 
 ---
 
