@@ -2,6 +2,24 @@
 
 > A harness for running an AI agentic pipeline focused on structured development, continuous validation, and self-learning (SRDD as base).
 
+---
+
+> ## ⚠️ IMPORTANT NOTE
+>
+> **This first implementation of the `delivery-pipeline` was built specifically for the `jobfindr-pipeline` workflow.**
+>
+> The current artifacts (skills, agents, commands, and plugins) were created with the JobFindr workflow exclusively in mind — a concrete project where the monorepo structure (`apps/frontend`, `apps/backend`, `packages/*`), the stack (`Fastify`, `React`, `pnpm --filter`), the endpoints (`GET /jobs/search`), and even the domain (matchmaking, ranking, trust, branding) were embedded directly into the harness.
+>
+> **At this stage, there was no concern about improvements, extensions, or the possibility of the `delivery-pipeline` becoming a reusable lib independent of codebases.**
+>
+> This means the harness today is **NOT agnostic** as the rest of this document describes. It serves JobFindr's immediate needs and reflects decisions specific to that project.
+>
+> **What will be done:** in future commits, we will remove all project-specific references and leave the lib **completely codebase-agnostic**, following the separation of responsibilities documented in the sections below (generic harness vs. project context). Each consuming project will be responsible for providing its own context (architecture, conventions, technologies, business rules).
+>
+> Until then, treat this state as an **evolving implementation** and be aware of the coupling limitations before reusing the harness in another project.
+
+---
+
 ## Overview
 
 This repository contains the **harness for the `delivery-pipeline` AI agentic pipeline**.
