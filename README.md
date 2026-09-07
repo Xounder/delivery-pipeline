@@ -2,6 +2,8 @@
 
 > A harness for running an AI agentic pipeline focused on structured development, continuous validation, and self-learning (SRDD as base).
 
+> 🔒 **Human-in-the-Loop**: the pipeline runs autonomously, but critical decisions (requirement clarification and approval of self-learning doc updates) require explicit human approval before any change is applied.
+
 ---
 
 > ## ⚠️ IMPORTANT NOTE
@@ -518,6 +520,193 @@ Local Context      Local Context
 * The STOP hook expects **all 3 skills** to run — producing only the evaluation without chaining is considered a failure.
 * `learning-improvement` hands off directly to `continuous-learning`, which must then call `session-save`.
 * `session-save` is the **last** skill in the chain; after saving, the pipeline reports to the user and stops. No further skills are loaded.
+
+---
+
+# Human-in-the-Loop — Points of Human Intervention
+
+The `delivery-pipeline` is an **SRDD (Self-Refining Development Document)** with **autolearning** and **human-in-the-loop**: the agents run autonomously, but every cycle the system learns from its mistakes and successes, proposes improvements to its own instruction documents, and **only applies changes after explicit human approval**.
+
+There are **4 critical points** where human intervention is mandatory:
+
+### 1. Requirements Clarification (Phase 1 — PM)
+
+```
+┌──────────┐   "I want to add filters"   ┌──────────────┐
+│  User     │ ──────────────────────────▶ │  Product Mgr  │
+└──────────┘                              └───────┬──────┘
+                                                  │
+                          ┌────────────────────────┘
+                          ▼
+                ┌─────────────────────┐
+                │ PM asks:            │
+                │ "What kinds of      │
+                │  filters? Which     │
+                │  fields? Where in   │
+                │  the UI?"           │
+                └─────────┬───────────┘
+                          │
+                          ▼
+                ┌─────────────────────┐
+                │ User answers        │
+                │ → PM generates      │
+                │   epics             │
+                └─────────────────────┘
+
+ NOTE: If active.txt already exists with prior context,
+ the PM SKIPS this step and reuses the existing context.
+```
+
+### 2. Improvement Plan Review (Phase 6 — Continuous Learning)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Session evaluation:                                     │
+│  DONE: Implemented country and modality filters          │
+│  WRONG: Wrong import of the TrustBadge component         │
+│  IMPROV: Always check imports before build               │
+│  LEARN: The project uses barrel exports in packages/     │
+│         shared                                           │
+│  NEXT: Add unit tests for filters                        │
+└──────────────────────────┬──────────────────────────────┘
+                           │
+                           ▼
+┌─────────────────────────────────────────────────────────┐
+│  continuous-learning:                                    │
+│  "Based on the session, I propose:"                      │
+│                                                          │
+│  `Where`:  .opencode/AGENTS.md                           │
+│  `Why`: Import error indicates docs do not document      │
+│         barrel exports clearly                           │
+│  `Best`: AGENTS.md is the place for project conventions  │
+│  `Modification`:                                         │
+│    + Add "Import Conventions" section with a rule to     │
+│      check barrel exports before importing               │
+│                                                          │
+│  🔒 Waiting for human approval...                        │
+│                                                          │
+│  "Would you like to apply these changes?"                │
+└──────────────────────────┬──────────────────────────────┘
+                           │
+              ┌────────────┼────────────┐
+              ▼            ▼            ▼
+        ┌──────────┐ ┌──────────┐ ┌──────────────┐
+        │  "yes"   │ │"adjust-" │ │    "no"      │
+        │          │ │  ments"  │ │              │
+        └────┬─────┘ └────┬─────┘ └──────┬───────┘
+             │            │              │
+             ▼            ▼              ▼
+        Applies      Re-plans       Does not
+        changes    and re-presents   apply
+```
+
+### 3. QA ↔ Developer Correction Loop (Phase 5)
+
+```
+┌────────────┐   issues   ┌────────────┐
+│ QA Review  │ ─────────▶ │  Senior     │
+│ (rejected) │            │  Frontend   │
+└────────────┘            └──────┬─────┘
+      ▲                          │
+      │    fixed code             │
+      │◀─────────────────────────┘
+      │
+      ▼
+┌────────────┐
+│ QA Review  │   APPROVED → Continues
+│ (re-check) │
+└────────────┘
+
+ NOTE: This loop is AUTONOMOUS — no human input required.
+ The orchestrator continues automatically until approval.
+```
+
+### 4. Prior Session Context Injection (Autoloader Plugin)
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  New session starts                                      │
+│           │                                              │
+│           ▼                                              │
+│  ┌─────────────────────────────────────┐                │
+│  │ session-load-autoloader.plugin.ts    │                │
+│  │                                      │                │
+│  │ 1. Reads .opencode/sessions/*.tmp    │                │
+│  │ 2. Takes the most recent one         │                │
+│  │ 3. Injects it into the user's 1st    │                │
+│  │    message as [Previous Session      │                │
+│  │    Context]                          │                │
+│  └─────────────────────────────────────┘                │
+│           │                                              │
+│           ▼                                              │
+│  ┌─────────────────────────────────────┐                │
+│  │ Agent receives context:              │                │
+│  │ "DONE: ... WRONG: ... LEARN: ..."   │                │
+│  │ → Knows what happened in the        │                │
+│  │   previous session and applies      │                │
+│  │   the learnings                      │                │
+│  └─────────────────────────────────────┘                │
+│                                                          │
+│  🔒 INDIRECT HUMAN-IN-THE-LOOP:                          │
+│     The human approved the doc changes in the previous   │
+│     session; the next session consumes those changes     │
+│     automatically                                         │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Autolearning Cycle
+
+```
+    ┌─────────────────────────────────────────────────┐
+    │              SESSION N                           │
+    │                                                  │
+    │  Pipeline runs → errors/successes happen         │
+    │          │                                       │
+    │          ▼                                       │
+    │  learning-improvement:                           │
+    │    DONE ✓  WRONG ✗  IMPROV ↑  LEARN 📚  NEXT → │
+    │          │                                       │
+    │          ▼                                       │
+    │  continuous-learning:                            │
+    │    Analyzes docs → proposes changes → HUMAN      │
+    │    approves                                       │
+    │          │                                       │
+    │          ▼                                       │
+    │  session-save:                                   │
+    │    Saves evaluation in .opencode/sessions/       │
+    └──────────────────┬──────────────────────────────┘
+                       │
+                       ▼
+    ┌─────────────────────────────────────────────────┐
+    │              SESSION N+1                         │
+    │                                                  │
+    │  Plugin injects context from session N           │
+    │          │                                       │
+    │          ▼                                       │
+    │  Agent reads: "WRONG: wrong barrel import"       │
+    │  Agent reads: "LEARN: project uses barrel        │
+    │  exports"                                        │
+    │          │                                       │
+    │          ▼                                       │
+    │  Agent does NOT repeat the mistake               │
+    │  (the updated doc with the rule is already in    │
+    │  .opencode/)                                     │
+    │          │                                       │
+    │          ▼                                       │
+    │  Pipeline improves with every cycle              │
+    └─────────────────────────────────────────────────┘
+```
+
+## Conclusion
+
+This SRDD is a living system that evolves every session. The agents run autonomously, but the **human keeps control** at two critical points:
+
+1. **Approval of document changes** — continuous-learning never edits without a "yes"
+2. **Requirements clarification** — the PM asks before assuming
+
+The result is a pipeline that **needs less and less human intervention**, because mistakes become instructions and the instructions evolve the docs in `.opencode/`.
 
 ---
 
