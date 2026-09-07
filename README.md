@@ -1391,6 +1391,72 @@ Is the Flow Stable?
                       main
 ```
 
+## Merge Auxiliary Branch
+
+Before opening the Pull Request to `main`, a **merge auxiliary branch** must be created **from the current project branch**. This auxiliary branch is used to adjust and validate any possible merge conflicts before the changes are promoted to `main`.
+
+```text
+                dlvr-ppln/<project-name>
+
+                        │
+                        ▼
+
+        dlvr-ppln/<project-name>-merge_aux
+                        │
+                        ▼
+
+              Conflict resolution
+                        │
+                        ▼
+
+              Re-test battery (≥ 5x)
+                        │
+                        ▼
+
+                 Pull Request
+                        │
+                        ▼
+                      main
+```
+
+### Branch Naming
+
+The auxiliary branch name must be **exactly the same as the current branch name** with the suffix `-merge_aux` appended:
+
+```text
+dlvr-ppln/<project-name>-merge_aux
+```
+
+Examples:
+
+```text
+dlvr-ppln/market-app-merge_aux
+
+dlvr-ppln/project-alpha-merge_aux
+
+dlvr-ppln/my-backend-merge_aux
+
+dlvr-ppln/codebase-a-merge_aux
+```
+
+### Re-test Battery Requirement
+
+The auxiliary branch must pass a **re-test battery** before the Pull Request is opened:
+
+```text
+✓ At least 5 consecutive successful runs (5x) — mandatory minimum
+
+✓ More runs may be required depending on the complexity of the
+  addition and the judgment of the reviewers
+
+✓ Validates that the merged addition suffered NO degradation
+  (regressions) during the conflict resolution process
+```
+
+The re-test battery guarantees that resolving conflicts did not break any existing behavior introduced in the project branch.
+
+---
+
 ## Requirements Before Creating a Pull Request
 
 A Pull Request should only be created when the new flow has been demonstrated to be:
