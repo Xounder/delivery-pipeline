@@ -297,85 +297,207 @@ The codebase is responsible for providing project-specific information about:
 
 # How does the `delivery-pipeline` work?
 
-## TODO
+## Workflow overview
 
-This section should document in detail:
+The pipeline is driven by the **orchestrator** (the main agent), which loads the `jobfindr-pipeline` skill. The orchestrator does not implement code itself — it routes work to specialized agents through the `Task` tool and updates the pipeline state.
 
-* How the `delivery-pipeline` workflow is started;
-* Which stages exist;
-* Which agents participate in each stage;
-* What the inputs and outputs of each stage are;
-* How agents communicate;
-* How context is propagated;
-* How validations are performed;
-* How failures are handled;
-* When a stage should be repeated;
-* How self-learning works;
-* How learnings are persisted;
-* How previous learnings are used;
-* How the workflow is completed.
+The pipeline runs in **two operation modes**:
 
-### TODO: Add a complete workflow diagram
+| Mode | Trigger | Flow |
+|------|---------|------|
+| **Full Pipeline Mode** | `/start` command or "start the pipeline", "begin development" | PM → Tech Lead → Dev (FE + BE parallel) → QA (FE + BE parallel) → corrections loop → conclusion |
+| **Direct Task Mode** | Direct/specific request ("add an endpoint", "fix bug in X") | Single layer (or both) → Dev → QA → report. Skips PM and Tech Lead entirely; QA is skipped only for trivial tasks (e.g., change a color) |
 
-This section should also contain a detailed diagram similar to:
+## Pipeline state — how context is propagated
+
+The execution state lives in three artifacts:
+
+* **`pipeline.yaml`** (project root) — the single source of truth for progress. Tracks `current_step` and, per step: `status` (`pending` / `in_progress` / `completed` / `skipped`), `notes`, `updated_at`, and `problems`. **Only the orchestrator writes it**; agents never touch it.
+* **`.opencode/plan/active.txt`** — points to the active planning context folder (`{active: [<folder>], date: <ISO-8601>}`). Created by the PM, read by all phases, **deleted at pipeline conclusion**.
+* **`.opencode/plan/<context>/`** — the planning folder: `epics/` (PM output) and `tasks/` (Tech Lead output).
+
+The orchestrator reads `active.txt` at startup and passes the active context folder to all subagents via the `Task` tool prompt, so subagents know where to read their working context.
+
+### Phase 0: Context check / resume
+
+Before any phase, the orchestrator checks for existing context (`glob(".opencode/plan/active.txt")`, analysis files, epics, `pipeline.yaml`). If the pipeline was already started, it resumes from the last incomplete step instead of restarting (see the `jobfindr-pipeline-next` skill).
+
+### Phase 1: Product Manager (conditional)
+
+| | |
+|---|---|
+| Input | Requirement / existing analysis document |
+| Agent | `Product Manager` (serial, Full Pipeline Mode only) |
+| Rules | Asks questions **only if no plan exists**. If `active.txt` + analysis/epics already exist, the phase is **skipped** (`status: "skipped"`). |
+| Output | `.opencode/plan/<context>/epics/` with `index.md` + one `.md` per epic (Objective, Deliverables, Tasks, Acceptance Criteria); writes `active.txt`; updates `pipeline.yaml`. |
+
+### Phase 2: Tech Lead
+
+| | |
+|---|---|
+| Input | Epics from `.opencode/plan/<context>/epics/` |
+| Agent | `Tech Lead` (serial, Full Pipeline Mode only) |
+| Output | `.opencode/plan/<context>/tasks/` with `index.md` + one `TASK-NN-<context-task>.md` per task (dependencies, execution order, mermaid dependency graph, and frontend/backend allocation) |
+
+### Phase 3: Development (parallel)
+
+| | |
+|---|---|
+| Input | Tech Lead tasks |
+| Agents | `Senior Frontend` + `Senior Backend` — triggered **simultaneously** via `Task` tool |
+| Output | Implementation of the assigned tasks + layer validation (lint, build, start/stop the app with HTTP checks) |
+
+### Phase 4: QA Review (parallel)
+
+| | |
+|---|---|
+| Input | The implemented code + Tech Lead tasks (+ epics/recommendations if they exist) |
+| Agent | `QA Reviewer` — **one instance per layer** (frontend and backend in parallel) |
+| Output | Structured summary with a verdict: **Approved** or **Corrections needed** |
+
+### Phase 5: Corrections loop (isolated per layer)
+
+For each layer independently:
+
+1. If QA approved → mark the layer `completed`.
+2. If QA requested corrections → reopen the implementation step as `in_progress`.
+3. The orchestrator re-invokes the implementation agent via `Task` tool with the QA issues as input — **never fixes code directly**.
+4. The agent implements the corrections and QA revalidates.
+5. Repeat until approval. After 3 consecutive failures of the same action, the agent must stop and escalate to the orchestrator.
+
+### Phase 6: Conclusion
+
+1. Confirm both layers are approved.
+2. Update `pipeline.yaml` to `current_step: "completed"`.
+3. Summarize and **commit** the changes following the project conventions.
+4. **Remove `.opencode/plan/active.txt`**.
+5. Load the learning skills in sequence: `learning-improvement` → `continuous-learning` → `session-save`.
+6. Update `AGENTS.md` if necessary (tests, commands, scripts).
+
+## How agents communicate
+
+* Agents are invoked through the `Task` tool by `subagent_type` (see the agent routing table in `agent-routing`):
+  `Product Manager` → `Tech Lead` → `Senior Frontend` / `Senior Backend` → `QA Reviewer`.
+* Every agent must return a **non-empty structured summary** (what was implemented, validation results, errors) back to the orchestrator.
+* `pipeline.yaml` is the single source of truth for state transitions — only the orchestrator updates it.
+
+## How validations are performed
+
+* QA review per layer, comparing the code against Tech Lead tasks (functional requirements, acceptance criteria) and, when present, PM epics and planning recommendations.
+* Layer-specific checks: lint, build, tests, and app start/stop with HTTP verification.
+* Architectural checks (e.g., no business logic in the frontend, provider isolation and statelessness in the backend).
+
+## How failures are handled
+
+* QA corrections reopen the implementation step, followed by re-invocation of the implementation agent and QA revalidation (per layer).
+* Non-code failures (tests, spawn issues, port conflicts, build problems) are reported in the agent summaries and recorded in the `problems` array of `pipeline.yaml`.
+* Apps started during validation are stopped (cleanup) after the checks.
+
+## Workflow diagram (actual)
 
 ```text
-                     ┌───────────────┐
-                     │     Input     │
-                     └───────┬───────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │Contextualization│
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │    Planning     │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │    Execution    │
-                    └────────┬────────┘
-                             │
-                             ▼
-                    ┌─────────────────┐
-                    │   Validation    │
-                    └────────┬────────┘
-                             │
-                    ┌────────┴────────┐
-                    │                 │
-                    ▼                 ▼
-                 Success            Failure
-                    │                 │
-                    ▼                 │
-              Learning ◄─────────────┘
-                    │
-                    ▼
-                  Output
+                     ┌───────────────────┐
+                     │      Input        │
+                     │  Feature / Bug    │
+                     │  Requirement      │
+                     └─────────┬─────────┘
+                               │
+                ┌──────────────┴──────────────┐
+                │        Operation Mode       │
+                ▼                             ▼
+     Full Pipeline Mode              Direct Task Mode
+     (/start, epics, resume)         (specific request)
+                │                             │
+                ▼                             │
+  Phase 0 — Context Check / Resume            │
+  (pipeline.yaml, active.txt)                 │
+                │                             │
+                ▼                             │
+  Phase 1 — Product Manager                   │
+  (conditional — skips if plan        ┌───────┴──────┐
+   already exists)                     ▼              ▼
+                │                Senior FE      Senior BE
+                ▼                (+ QA FE)      (+ QA BE)
+  Phase 2 — Tech Lead                 │              │
+  (epics → tasks)                     └──────┬───────┘
+                │                            │
+                ▼                     Corrections loop
+  Phase 3 — Development               (per layer,
+  FE + BE parallel                    until approval)
+                │                            │
+                ▼                            │
+  Phase 4 — QA Review                        │
+  FE + BE parallel                           │
+                │                            │
+                └─────────┬──────────────────┘
+                          │
+                          ▼
+             Phase 6 — Conclusion
+             (commit, remove active.txt,
+              learning skills)
+                          │
+                          ▼
+                       Output
 ```
 
-> **TODO:** The diagram above is only illustrative. The final diagram must represent the actual stages of the `delivery-pipeline`.
+> The sections below describe the *Self-Learning Flow* and *Skills Description* in detail.
 
 ---
 
 # Self-Learning Flow
 
-## TODO
+> The self-learning flow was already implemented and runs at the end of each completed implementation, triggered by the **STOP hook**. It is a chain of 3 skills executed in sequence:
 
-Document:
+```text
+learning-improvement → continuous-learning → session-save
+```
 
-* What qualifies as a learning;
-* Where learnings are extracted from;
-* How learnings are validated;
-* Where they are stored;
-* How incorrect learnings are prevented;
-* How agents access previous learnings;
-* How knowledge is updated;
-* How codebase-specific learnings are separated from global learnings.
+## What qualifies as a learning
 
-It must also be clearly defined:
+A learning is the **session evaluation** extracted after a complete implementation: what was done, what went wrong, what can be improved, discoveries, and suggested next steps. It is structured in one line per topic (English, 5–7 lines):
+
+```text
+DONE:  What was accomplished in the session
+WRONG: What went wrong (bugs, bad decisions, rework)
+IMPROV: Improvements to apply in future sessions
+LEARN:  Discoveries and lessons learned
+NEXT:   Suggested next steps
+```
+
+## Where learnings are extracted from
+
+At the end of a completed pipeline (or a complex Direct Task), the `learning-improvement` skill reviews the **session history** (tool calls, errors, results) and produces the evaluation.
+
+## How learnings are validated
+
+The `continuous-learning` skill analyzes the evaluation against `.opencode/docs-catalog.md`, builds a **change plan** (which file, why, what to modify) and **always requires explicit human approval** before editing any document. An incorrect or unsupported learning is never written to disk on its own — it only persists after the user accepts the proposed change.
+
+## Where they are stored
+
+The `session-save` skill persists the raw evaluation via the `save-session` custom tool (`.opencode/tools/save-session.ts`) into:
+
+```text
+.opencode/sessions/YYYYMMDD-HH-MM-<description>-session.tmp
+```
+
+Only the **2 most recent** session files are retained (newly created + previous one); older files are deleted automatically.
+
+## How learnings are used
+
+Approved learnings update the documentation that drives future sessions, via `continuous-learning`:
+
+* `project-structure.md` — if important folders/files changed
+* `docs-catalog.md` — if new `.md` files were created or removed in `.opencode/`
+* `AGENTS.md` — commands, scripts, conventions
+* `INDEX.md` — central guide and references
+* `skills/**/SKILL.md` — skill adjustments
+* `commands/*.md` — chat commands
+* `architecture/*.md` — architecture docs
+
+## How knowledge is separated (global vs local)
+
+* **Local / codebase-specific knowledge** lives in each consuming project's `.opencode/` folder and is versioned with that codebase.
+* **Global / generic knowledge** belonging to the shared harness is promoted to the `delivery-pipeline` repository through the branch + Pull Request flow (`dlvr-ppln/<project>` → `main`), following the same rules as any other generic improvement.
 
 ```text
 Global Knowledge
@@ -391,76 +513,172 @@ Codebase A         Codebase B
 Local Context      Local Context
 ```
 
+## Chain enforcement
+
+* The STOP hook expects **all 3 skills** to run — producing only the evaluation without chaining is considered a failure.
+* `learning-improvement` hands off directly to `continuous-learning`, which must then call `session-save`.
+* `session-save` is the **last** skill in the chain; after saving, the pipeline reports to the user and stops. No further skills are loaded.
+
 ---
 
 # Skills Description
 
-## TODO
+All skills used by the `delivery-pipeline` live in `.opencode/skills/<name>/SKILL.md` and are loaded through the skill tool. They are organized into three groups: **orchestration**, **learning chain**, and **support**.
 
-This section should document all `skills` used by the `delivery-pipeline`.
+## Catalog
 
-For each skill, the following should be described:
+| Skill | Group | Purpose |
+|-------|-------|---------|
+| `jobfindr-pipeline` | Orchestration | Main orchestrator — full pipeline or direct task routing |
+| `jobfindr-pipeline-next` | Orchestration | Resumes a stopped pipeline from `pipeline.yaml` |
+| `learning-improvement` | Learning chain | Evaluates a completed session (DONE/WRONG/IMPROV/LEARN/NEXT) |
+| `continuous-learning` | Learning chain | Proposes `.opencode/` doc updates based on learnings; requires user approval |
+| `session-save` | Learning chain | Persists the session file in `.opencode/sessions/` |
+| `codebase-analysis` | Support | Scans the codebase/docs and generates structural reports |
+| `doc-audit` | Support | Audits `.opencode/` docs for duplicates and similarities |
+| `06-branding` | Support | Maintains JobFindr branding guidelines (palette, typography, tokens) |
 
-* Name;
-* Purpose;
-* Responsibility;
-* Inputs;
-* Outputs;
-* Preconditions;
-* Postconditions;
-* Dependencies;
-* When it should be used;
-* When it should not be used;
-* Relationship with other skills;
-* Agents allowed to use it.
+## Orchestration skills
 
-Example:
+### `jobfindr-pipeline`
+
+| | |
+|---|---|
+| Purpose | Orchestrate the development pipeline from scratch (Full Pipeline Mode) or route a direct task (Direct Task Mode) |
+| Inputs | User requirement / `/start` command; existing `active.txt` + plan artifacts (for skip/resume decisions) |
+| Outputs | Updated `pipeline.yaml`; planning artifacts; implemented + QA-approved code; commit; learning chain execution |
+| When to use | Starting the pipeline or a direct task |
+| When not to use | Pipeline already started (use `jobfindr-pipeline-next`) |
+| Dependencies | Invokes the specialized agents (`Product Manager`, `Tech Lead`, `Senior Frontend`, `Senior Backend`, `QA Reviewer`) |
+| Relationship | Parent of `jobfindr-pipeline-next`; ends by chaining to the learning skills |
+| Allowed agents | Orchestrator only |
+
+### `jobfindr-pipeline-next`
+
+| | |
+|---|---|
+| Purpose | Continue a pipeline from where it stopped |
+| Inputs | `pipeline.yaml`, `.opencode/plan/active.txt`, existing plan artifacts |
+| Outputs | Resume the remaining phases until completion |
+| When to use | A pipeline already started was interrupted |
+| When not to use | First run (use `jobfindr-pipeline`) |
+| Dependencies | Follows `jobfindr-pipeline` rules |
+| Relationship | Continuation of `jobfindr-pipeline` |
+| Allowed agents | Orchestrator only |
+
+## Learning chain skills (STOP hook)
+
+The three skills below are an **atomic sequence** executed at the end of every completed implementation:
 
 ```text
-Skill
-│
-├── Responsibility
-│
-├── Input
-│
-├── Processing
-│
-├── Output
-│
-└── Next Stage
+learning-improvement → continuous-learning → session-save
 ```
 
-### TODO: Add Skill diagrams
+### `learning-improvement`
 
-The documentation for each skill must include diagrams showing:
+| | |
+|---|---|
+| Purpose | Review the finished session and extract the evaluation |
+| Inputs | Session history (tool calls, errors, results) |
+| Outputs | Text evaluation: DONE, WRONG, IMPROV, LEARN, NEXT (5–7 lines) |
+| When to use | End of a complete implementation (STOP hook / complex tasks) |
+| When not to use | Trivial tasks; Direct Task Mode sessions without QA |
+| Relationship | First of the chain — MUST hand off directly to `continuous-learning` |
+| Allowed agents | Orchestrator (main agent) |
 
-* Execution flow;
-* Inputs and outputs;
-* Relationship with other skills;
-* Dependencies;
-* Position within the `delivery-pipeline`.
+### `continuous-learning`
 
-Conceptual example:
+| | |
+|---|---|
+| Purpose | Decide which `.opencode/` docs to improve based on the evaluation |
+| Inputs | Evaluation from `learning-improvement`; `.opencode/docs-catalog.md` |
+| Outputs | Change plan (file, why, best location, modification) presented for approval; approved changes applied |
+| When to use | Right after `learning-improvement` |
+| When not to use | In isolation (never without the evaluation); never edits application source code |
+| Constraints | Only `.md` files under `.opencode/`; always with explicit user approval |
+| Relationship | Second of the chain — hands off to `session-save` |
+| Allowed agents | Orchestrator (main agent) |
+
+### `session-save`
+
+| | |
+|---|---|
+| Purpose | Persist the session evaluation |
+| Inputs | Evaluation from `learning-improvement` |
+| Outputs | `.opencode/sessions/YYYYMMDD-HH-MM-<description>-session.tmp` (only the 2 most recent files retained) |
+| When to use | Last step of the STOP hook |
+| When not to use | Trivial Direct Task Mode sessions |
+| Dependencies | `save-session` custom tool (`.opencode/tools/save-session.ts`) |
+| Relationship | Last of the chain — after saving, the pipeline ends |
+| Allowed agents | Orchestrator (main agent) |
+
+## Support skills
+
+### `codebase-analysis`
+
+| | |
+|---|---|
+| Purpose | Extract structural information from source and docs using tree-sitter (regex fallback) |
+| Inputs | Project source (`.ts`/`.tsx`) or `.opencode/` docs |
+| Outputs | JSON + Markdown reports in `scripts/output/` (implementation, docs, combined) |
+| When to use | Codebase maps, dependency audits, doc inventories; used by `doc-audit` and planning/QA |
+| When not to use | Quick ad-hoc queries |
+| Dependencies | `tree-sitter` packages (`scripts/package.json`) |
+| Allowed agents | Planning Analyst, Tech Lead, QA Reviewer (read-only) |
+
+### `doc-audit`
+
+| | |
+|---|---|
+| Purpose | Find duplicate/similar content and intra-file prompt duplication in `.opencode/` docs |
+| Inputs | All `.md` files in `.opencode/` (excluding `plan/`); `docs-catalog.md`; `codebase-analysis` docs report |
+| Outputs | Findings per issue; consolidation only after human approval |
+| When to use | Maintaining documentation quality in `.opencode/` |
+| When not to use | Without human approval for any change |
+| Dependencies | `codebase-analysis` (docs mode) |
+| Constraints | 400-line max per file (AGENTS.md); always update `docs-catalog.md` after changes |
+| Allowed agents | Orchestrator / docs maintenance sessions |
+
+### `06-branding`
+
+| | |
+|---|---|
+| Purpose | Define and maintain the visual identity (colors, typography, design tokens) |
+| Inputs | Project components/themes (Tailwind config, `index.css`) |
+| Outputs | Consistent palette and typography decisions for visual layers |
+| When to use | Any visual change (colors, layout, typography, dark mode) |
+| When not to use | Backend/logic-only changes |
+| Relationship | Consumed by `Senior Frontend` and frontend QA |
+| Allowed agents | `Senior Frontend`, QA Reviewer (frontend) |
+
+## Skill relationship diagram
 
 ```text
-                ┌─────────────────┐
-                │      Input      │
-                └────────┬────────┘
-                         │
-                         ▼
-                  ┌─────────────┐
-                  │    Skill    │
-                  └──────┬──────┘
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-              ▼                     ▼
-        Updated Context          Result
-              │                     │
-              └──────────┬──────────┘
-                         │
-                         ▼
-                    Next Stage
+                   jobfindr-pipeline (orchestrator)
+                             │
+              ┌──────────────┴───────────────┐
+              ▼                              ▼
+   jobfindr-pipeline-next         Direct Task Mode
+   (resume from pipeline.yaml)    (no PM/TL ceremony)
+                             │
+                             ▼
+                   Implementation + QA
+                             │
+                             ▼
+                    learning-improvement
+                             │
+                             ▼
+                    continuous-learning
+                             │
+                             ▼
+                         session-save
+                             │
+                             ▼
+                        Pipeline end
+
+Support (available to planning, QA and docs work):
+  codebase-analysis ──────► doc-audit
+  06-branding ────────────► Senior Frontend / QA FE
 ```
 
 ---
