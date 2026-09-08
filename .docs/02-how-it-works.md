@@ -6,8 +6,10 @@ The pipeline runs in **two operation modes**:
 
 | Mode | Trigger | Flow |
 |------|---------|------|
-| **Full Pipeline Mode** | `/start` command or "start the pipeline", "begin development" | PM → Tech Lead → Dev (FE + BE parallel) → QA (FE + BE parallel) → corrections loop → conclusion |
-| **Direct Task Mode** | Direct/specific request ("add an endpoint", "fix bug in X") | Single layer (or both) → Dev → QA → report. Skips PM and Tech Lead entirely; QA is skipped only for trivial tasks (e.g., change a color) |
+| **New Execution** | `/delivery-pipeline:new` command or "start the pipeline", "begin development" | Workflow Router → Solution Designer / Planning Analyst → Tech Lead → Dev (FE + BE parallel) → QA (FE + BE parallel) → corrections loop → conclusion |
+| **Resume** | `/delivery-pipeline:resume` command | Loads `pipeline.yaml` → identifies incomplete steps → continues from the last persisted state. Completed work is never repeated |
+
+Both modes are orchestrated from the `delivery-pipeline` skill, which is the single entry point for project execution.
 
 ---
 
@@ -17,62 +19,97 @@ The execution state lives in three artifacts:
 
 | Artifact | Location | Purpose |
 |---|---|---|
-| **`pipeline.yaml`** | Project root | Single source of truth for progress. Tracks `current_step` and, per step: `status`, `notes`, `updated_at`, and `problems`. **Only the orchestrator writes it.** |
-| **`.opencode/plan/active.txt`** | `.opencode/plan/` | Points to the active planning context folder. Created by PM, read by all phases, **deleted at pipeline conclusion**. |
-| **`.opencode/plan/<context>/`** | `.opencode/plan/` | Planning folder: `epics/` (PM output) and `tasks/` (Tech Lead output). |
+| **`pipeline.yaml`** | `.opencode/pipeline.yaml` | Single source of truth for progress. Tracks `current_step`, `current_agent`, and per step: `status`, `notes`, `updated_at`, `errors`, `concerns`. Also tracks task status, execution history, and resume metadata. **Only the orchestrator writes it.** |
+| **Planning folder** | `.opencode/plan/<context>/` | Generated artifacts per context. Created via the `create-folder-structure` tool with `design-docs/`, `planning/`, and `tasks/` subfolders. Unused subfolders remain empty — this is expected. |
 
-The orchestrator reads `active.txt` at startup and passes the active context folder to all subagents via the `Task` tool prompt.
+Planning files are written to the context root (`.opencode/plan/<context>/`):
+
+```text
+index.md
+feasibility.md
+impact-analysis.md
+risks.md
+```
+
+The orchestrator reads `pipeline.yaml.name` at startup and passes the resolved context to all agents via the `Task` tool prompt using template variables from `.opencode/template/variables.md`.
 
 ---
 
-## Phase 0: Context Check / Resume
+## Step 0: Route the Request
 
-Before any phase, the orchestrator checks for existing context (`glob(".opencode/plan/active.txt")`, analysis files, epics, `pipeline.yaml`). If the pipeline was already started, it resumes from the last incomplete step instead of restarting (see the `jobfindr-pipeline-next` skill).
+Before any execution, the orchestrator invokes the `workflow-router` skill. The router classifies the incoming request and selects the entry point:
+
+| Route | When |
+|-------|------|
+| **Solution Designer** | No codebase exists; requirements unclear; design exploration needed |
+| **Planning Analyst** | Codebase exists; medium/large changes; feasibility/impact analysis needed |
+| **Tech Lead** | Requirements already defined; scope small; implementation obvious |
+
+The router never creates files and never modifies source code — it only classifies and routes.
 
 ---
 
-## Phase 1: Product Manager (conditional — Full Pipeline only)
+## Step 1: Solution Designer (design flow)
 
 | | |
 |---|---|
-| Input | Requirement / existing analysis document |
-| Agent | `Product Manager` (serial) |
-| Rules | Asks questions **only if no plan exists**. If `active.txt` + analysis/epics already exist, the phase is **skipped** (`status: "skipped"`). |
-| Output | `.opencode/plan/<context>/epics/` with `index.md` + one `.md` per epic (Objective, Deliverables, Tasks, Acceptance Criteria); writes `active.txt`; updates `pipeline.yaml`. |
+| Input | User request / undefined requirements |
+| Agent | `Solution Designer` (primary) |
+| Rules | Research approaches (docs + web), present ≥ 2 options with trade-offs, **wait for user approval**. Design documents are only generated after approval. |
+| Output | `.opencode/plan/<context>/design-docs/` with `index.md` + one `design-NN-*.md` per design decision |
+
+If a codebase exists, the pipeline automatically chains the **Planning Analyst** after the Solution Designer to validate the design against the actual code. If no codebase exists, proceeds directly to the Tech Lead.
 
 ---
 
-## Phase 2: Tech Lead (Full Pipeline only)
+## Step 2: Planning Analyst (planning flow)
 
 | | |
 |---|---|
-| Input | Epics from `.opencode/plan/<context>/epics/` |
-| Agent | `Tech Lead` (serial) |
-| Output | `.opencode/plan/<context>/tasks/` with `index.md` + one `TASK-NN-<context-task>.md` per task (dependencies, execution order, mermaid dependency graph, and frontend/backend allocation) |
+| Input | Approved design documents (chained) or the request itself (independent flow) |
+| Agent | `Planning Analyst` (primary) |
+| Rules | Evaluates feasibility, impact, and risks against the codebase. Presents findings and **waits for user approval**. Planning documents are only generated after approval. |
+| Output | `.opencode/plan/<context>/` with `index.md`, `feasibility.md`, `impact-analysis.md`, `risks.md` |
+
+The orchestrator MUST verify planning files were physically created on disk before proceeding.
 
 ---
 
-## Phase 3: Development (parallel)
+## Step 3: Tech Lead
+
+| | |
+|---|---|
+| Input | Approved design/planning documents or a direct user request |
+| Agent | `Tech Lead` (subagent) |
+| Output | `.opencode/plan/<context>/tasks/` with `index.md` + one `TASK-NN-<context-task>.md` per task (dependencies, execution order, ownership, file overlap warnings, parallelization plan) |
+
+---
+
+## Step 4: Development (parallel)
 
 | | |
 |---|---|
 | Input | Tech Lead tasks |
-| Agents | `Senior Frontend` + `Senior Backend` — triggered **simultaneously** via `Task` tool |
-| Output | Implementation of the assigned tasks + layer validation (lint, build, start/stop the app with HTTP checks) |
+| Agents | `Senior Frontend` + `Senior Backend` — dispatched **simultaneously** via `Task` tool, one agent per task |
+| Output | Implementation of the assigned tasks + layer validation (build, lint, test) |
+
+The orchestrator maximizes parallel execution whenever task dependencies allow. When multiple tasks modify the same file, they are sequenced or use a merge strategy.
 
 ---
 
-## Phase 4: QA Review (parallel)
+## Step 5: QA Review (parallel)
 
 | | |
 |---|---|
-| Input | Implemented code + Tech Lead tasks (+ epics/recommendations if they exist) |
+| Input | Implemented code + Tech Lead tasks + git diff |
 | Agent | `QA Reviewer` — **one instance per layer** (frontend and backend in parallel) |
 | Output | Structured summary with a verdict: **Approved** or **Corrections needed** |
 
+QA reviews are dispatched as `subagent_type: "QA Reviewer"` — the review area (frontend/backend) is passed in the prompt, not as the agent type.
+
 ---
 
-## Phase 5: Corrections Loop (isolated per layer)
+## Step 6: Corrections Loop (isolated per layer)
 
 For each layer independently:
 
@@ -84,39 +121,39 @@ For each layer independently:
 
 ---
 
-## Phase 6: Conclusion
+## Step 7: Conclusion
 
-1. Confirm both layers are approved.
-2. Update `pipeline.yaml` to `current_step: "completed"`.
-3. Summarize and **commit** the changes following the project conventions.
-4. **Remove `.opencode/plan/active.txt`**.
-5. Load the learning skills in sequence: `learning-improvement` → `continuous-learning` → `session-save`.
-6. Update `AGENTS.md` if necessary (tests, commands, scripts).
+1. Confirm both layers are approved and no pending work remains.
+2. Update `pipeline.yaml` to `status: completed`, record final errors/concerns, set `updated_at`.
+3. Load the mandatory STOP chain in sequence: `learning-improvement` → `continuous-learning` → `session-save`.
+4. The STOP chain is part of the pipeline — the session does not end before it completes.
 
 ---
 
 ## How Agents Communicate
 
-- Agents are invoked through the `Task` tool by `subagent_type`:
-  `Product Manager` → `Tech Lead` → `Senior Frontend` / `Senior Backend` → `QA Reviewer`.
-- Every agent must return a **non-empty structured summary** (what was implemented, validation results, errors) back to the orchestrator.
-- `pipeline.yaml` is the single source of truth for state transitions — only the orchestrator updates it.
+- Primary agents (`Solution Designer`, `Planning Analyst`) are dispatched using their proper agent type name via `Task` with `subagent_type` matching the agent name — never as `general`.
+- Subagents (`Tech Lead`, `Senior Frontend`, `Senior Backend`, `QA Reviewer`) are dispatched with their task instructions inline.
+- Every agent must return a **non-empty structured summary** using the [standard agent response format](../skills/delivery-pipeline/references/agent-response-format.md).
+- `pipeline.yaml` is the single source of truth for state transitions — only the orchestrator updates it, after every agent execution and before dispatching the next agent.
 
 ---
 
 ## How Validations Are Performed
 
-- QA review per layer, comparing the code against Tech Lead tasks (functional requirements, acceptance criteria) and, when present, PM epics and planning recommendations.
-- Layer-specific checks: lint, build, tests, and app start/stop with HTTP verification.
-- Architectural checks (e.g., no business logic in the frontend, provider isolation and statelessness in the backend).
+- QA review per layer, comparing the code against Tech Lead tasks (functional requirements, acceptance criteria) and the relevant git diff.
+- Layer-specific checks run via `run-package-command`: build, lint, typecheck, test.
+- Architectural checks (e.g., responsibilities properly separated, no obvious design violations).
+- For `apps/web` tests, QA checks Playwright E2E pass/fail counts, not just the exit code.
 
 ---
 
 ## How Failures Are Handled
 
 - QA corrections reopen the implementation step, followed by re-invocation of the implementation agent and QA revalidation (per layer).
-- Non-code failures (tests, spawn issues, port conflicts, build problems) are reported in the agent summaries and recorded in the `problems` array of `pipeline.yaml`.
-- Apps started during validation are stopped (cleanup) after the checks.
+- Non-code failures (tests, spawn issues, port conflicts, build problems) are reported in the agent summaries and recorded in the `errors` and `concerns` arrays of `pipeline.yaml`.
+- A named agent dispatch failure is retried up to 3 consecutive attempts; after that the step is aborted and reported.
+- Execution can always be resumed from `.opencode/pipeline.yaml` via `delivery-pipeline:resume`; completed work is never repeated.
 
 ---
 
@@ -129,40 +166,40 @@ For each layer independently:
                      │  Requirement      │
                      └─────────┬─────────┘
                                │
-                ┌──────────────┴──────────────┐
-                │        Operation Mode       │
-                ▼                             ▼
-     Full Pipeline Mode              Direct Task Mode
-     (/start, epics, resume)         (specific request)
-                │                             │
-                ▼                             │
-  Phase 0 — Context Check / Resume            │
-  (pipeline.yaml, active.txt)                 │
-                │                             │
-                ▼                             │
-  Phase 1 — Product Manager                   │
-  (conditional — skips if plan        ┌───────┴──────┐
-   already exists)                     ▼              ▼
-                │                Senior FE      Senior BE
-                ▼                (+ QA FE)      (+ QA BE)
-  Phase 2 — Tech Lead                 │              │
-  (epics → tasks)                     └──────┬───────┘
-                │                            │
-                ▼                     Corrections loop
-  Phase 3 — Development               (per layer,
-  FE + BE parallel                    until approval)
-                │                            │
-                ▼                            │
-  Phase 4 — QA Review                        │
-  FE + BE parallel                           │
-                │                            │
-                └─────────┬──────────────────┘
-                          │
-                          ▼
-             Phase 6 — Conclusion
-             (commit, remove active.txt,
-              learning skills)
-                          │
-                          ▼
-                       Output
+                 ┌─────────────┴─────────────┐
+                 │       Workflow Router     │
+                 └──┬────────┬──────────┬────┘
+                    ▼        ▼          ▼
+            ┌─────────┐ ┌─────────┐ ┌──────────┐
+            │Solution │ │Planning │ │  Tech    │
+            │Designer │ │Analyst  │ │  Lead    │
+            └────┬────┘ └────┬────┘ └────┬─────┘
+                 │           │           │
+                 ▼           ▼           ▼
+          design-docs/   planning/    tasks/
+                 │           │           │
+                 └───────────┼───────────┘
+                             ▼
+                 ┌──────────────────────┐
+                 │  Development          │
+                 │  (FE + BE parallel)   │
+                 └─────────┬────────────┘
+                           ▼
+                 ┌──────────────────────┐
+                 │  QA Review            │
+                 │  (FE + BE parallel)   │
+                 └─────────┬────────────┘
+                           │
+                 Corrections loop (per layer,
+                 until approval)
+                           │
+                           ▼
+                 ┌──────────────────────┐
+                 │  Conclusion           │
+                 │  (pipeline completed, │
+                 │   STOP chain)         │
+                 └─────────┬────────────┘
+                           │
+                           ▼
+                        Output
 ```
