@@ -213,6 +213,9 @@ Before opening the PR to `main`, a **merge auxiliary branch** must be created fr
         dlvr-ppln/<project-name>-merge_aux
                         │
                         ▼
+        Remove project-specific docs & artifacts
+                        │
+                        ▼
               Conflict resolution
                         │
                         ▼
@@ -230,6 +233,19 @@ The auxiliary branch name must be exactly the current branch name with `-merge_a
 ```text
 dlvr-ppln/<project-name>-merge_aux
 ```
+
+### Project-Specific Content Removal (mandatory before PR)
+
+Before opening the PR from `-merge_aux` to `main`, **all project-specific content must be removed** from the branch:
+
+```text
+✓ Project-specific documentation (docs/README sections about a single project)
+✓ Project-specific docs files and examples
+✓ Project-specific artifacts, workflows, or examples
+✓ Any reference that ties the harness to a particular codebase
+```
+
+`main` must receive only **generic, codebase-agnostic** content. If after removing the project-specific content the remaining changes are too project-bound, do **not** open the PR — keep the change in the project branch.
 
 ### Re-test Battery Requirement
 
