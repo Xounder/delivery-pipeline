@@ -6,37 +6,43 @@ There are **4 critical points** where human intervention is mandatory:
 
 ---
 
-## 1. Requirements Clarification (Phase 1 — PM)
+## 1. Requirements / Approach Clarification (Solution Designer / Planning Analyst)
 
 ```
-┌──────────┐   "I want to add filters"   ┌──────────────┐
-│  User     │ ──────────────────────────▶ │  Product Mgr  │
-└──────────┘                              └───────┬──────┘
-                                                  │
-                          ┌────────────────────────┘
-                          ▼
-                ┌─────────────────────┐
-                │ PM asks:            │
-                │ "What kinds of      │
-                │  filters? Which     │
-                │  fields? Where in   │
-                │  the UI?"           │
-                └─────────┬───────────┘
-                          │
-                          ▼
-                ┌─────────────────────┐
-                │ User answers        │
-                │ → PM generates      │
-                │   epics             │
-                └─────────────────────┘
+┌──────────┐   "I want to add filters"   ┌──────────────────────┐
+│  User     │ ──────────────────────────▶ │  Workflow Router      │
+└──────────┘                              └───────────┬──────────┘
+                                                      │
+                                          ┌───────────┴───────────┐
+                                          ▼                       ▼
+                                ┌────────────────┐      ┌──────────────────┐
+                                │ Solution       │      │ Planning Analyst  │
+                                │ Designer       │      │ (codebase exists) │
+                                └───────┬────────┘      └────────┬─────────┘
+                                        │                        │
+                              ┌─────────┴────────┐   ┌───────────┴──────────┐
+                              ▼                  ▼   ▼                      ▼
+                    ┌──────────────────┐  ┌──────────────┐      ┌──────────────────┐
+                    │ Presents ≥2      │  │ Presents     │      │ Presents         │
+                    │ options with     │  │ feasibility, │      │ analysis and     │
+                    │ trade-offs       │  │ impact, risks│      │ asks for         │
+                    │ and asks for the │  │ and asks for │      │ clarification    │
+                    │ user's choice    │  │ the user's   │      │ if unclear       │
+                    └────────┬─────────┘  │ approval     │      └──────────────────┘
+                             │           └──────┬───────┘
+                             ▼                  │
+                    ┌──────────────────┐        │
+                    │ User approves →  │◀───────┘
+                    │ documents created│
+                    └──────────────────┘
 
- NOTE: If active.txt already exists with prior context,
- the PM SKIPS this step and reuses the existing context.
+ NOTE: Approval must be explicit (semantic wording).
+ Design/planning documents are NEVER created before approval.
 ```
 
 ---
 
-## 2. Improvement Plan Review (Phase 6 — Continuous Learning)
+## 2. Improvement Plan Review (STOP chain — Continuous Learning)
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -81,7 +87,7 @@ There are **4 critical points** where human intervention is mandatory:
 
 ---
 
-## 3. QA ↔ Developer Correction Loop (Phase 5)
+## 3. QA ↔ Developer Correction Loop (corrections loop)
 
 ```
 ┌────────────┐   issues   ┌────────────┐

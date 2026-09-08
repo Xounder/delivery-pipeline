@@ -1,19 +1,543 @@
 {
-  "generatedAt": "2026-06-18T02:23:59.187Z",
+  "generatedAt": "2026-09-08T02:23:17.517Z",
   "mode": "docs",
   "summary": {
-    "totalFiles": 104,
-    "totalMdFiles": 95,
+    "totalFiles": 112,
+    "totalMdFiles": 105,
     "totalJsonFiles": 5,
-    "totalYamlFiles": 4,
+    "totalYamlFiles": 2,
     "totalTxtFiles": 0,
-    "totalHeadings": 1828,
-    "totalCodeBlocks": 588,
-    "totalListItems": 1701
+    "totalHeadings": 1929,
+    "totalCodeBlocks": 580,
+    "totalListItems": 1827
   },
   "files": {
+    ".opencode/.docs/01-what-is-this.md": {
+      "size": 5623,
+      "lines": 170,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "What is `delivery-pipeline`?"
+        },
+        {
+          "level": 2,
+          "text": "Goals"
+        },
+        {
+          "level": 2,
+          "text": "Approach: SRDD"
+        },
+        {
+          "level": 2,
+          "text": "Influences"
+        },
+        {
+          "level": 2,
+          "text": "Workflow: `delivery-pipeline`"
+        },
+        {
+          "level": 2,
+          "text": "Conceptual Structure"
+        },
+        {
+          "level": 2,
+          "text": "Principles"
+        }
+      ],
+      "totalHeadings": 7,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 22,
+      "sections": [
+        "What is `delivery-pipeline`?",
+        "Goals",
+        "Approach: SRDD",
+        "Influences",
+        "Workflow: `delivery-pipeline`",
+        "Conceptual Structure",
+        "Principles"
+      ]
+    },
+    ".opencode/.docs/02-how-it-works.md": {
+      "size": 7534,
+      "lines": 169,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "How does the `delivery-pipeline` work now (last-version)?"
+        },
+        {
+          "level": 2,
+          "text": "Operation Modes"
+        },
+        {
+          "level": 2,
+          "text": "Pipeline State — How Context is Propagated"
+        },
+        {
+          "level": 2,
+          "text": "Phase 0: Context Check / Resume"
+        },
+        {
+          "level": 2,
+          "text": "Phase 1: Product Manager (conditional — Full Pipeline only)"
+        },
+        {
+          "level": 2,
+          "text": "Phase 2: Tech Lead (Full Pipeline only)"
+        },
+        {
+          "level": 2,
+          "text": "Phase 3: Development (parallel)"
+        },
+        {
+          "level": 2,
+          "text": "Phase 4: QA Review (parallel)"
+        },
+        {
+          "level": 2,
+          "text": "Phase 5: Corrections Loop (isolated per layer)"
+        },
+        {
+          "level": 2,
+          "text": "Phase 6: Conclusion"
+        },
+        {
+          "level": 2,
+          "text": "How Agents Communicate"
+        },
+        {
+          "level": 2,
+          "text": "How Validations Are Performed"
+        },
+        {
+          "level": 2,
+          "text": "How Failures Are Handled"
+        },
+        {
+          "level": 2,
+          "text": "Workflow Diagram (Actual)"
+        }
+      ],
+      "totalHeadings": 14,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 20,
+      "sections": [
+        "How does the `delivery-pipeline` work now (last-version)?",
+        "Operation Modes",
+        "Pipeline State — How Context is Propagated",
+        "Phase 0: Context Check / Resume",
+        "Phase 1: Product Manager (conditional — Full Pipeline only)",
+        "Phase 2: Tech Lead (Full Pipeline only)",
+        "Phase 3: Development (parallel)",
+        "Phase 4: QA Review (parallel)",
+        "Phase 5: Corrections Loop (isolated per layer)",
+        "Phase 6: Conclusion",
+        "How Agents Communicate",
+        "How Validations Are Performed",
+        "How Failures Are Handled",
+        "Workflow Diagram (Actual)"
+      ]
+    },
+    ".opencode/.docs/03-self-learning.md": {
+      "size": 6110,
+      "lines": 147,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Self-Learning Flow"
+        },
+        {
+          "level": 2,
+          "text": "What Qualifies as a Learning"
+        },
+        {
+          "level": 2,
+          "text": "Where Learnings Are Extracted From"
+        },
+        {
+          "level": 2,
+          "text": "How Learnings Are Validated"
+        },
+        {
+          "level": 2,
+          "text": "Where They Are Stored"
+        },
+        {
+          "level": 2,
+          "text": "How Learnings Are Used"
+        },
+        {
+          "level": 2,
+          "text": "How Knowledge Is Separated (Global vs Local)"
+        },
+        {
+          "level": 2,
+          "text": "Chain Enforcement"
+        },
+        {
+          "level": 2,
+          "text": "Autolearning Cycle"
+        },
+        {
+          "level": 2,
+          "text": "Conclusion"
+        }
+      ],
+      "totalHeadings": 10,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 7,
+      "sections": [
+        "Self-Learning Flow",
+        "What Qualifies as a Learning",
+        "Where Learnings Are Extracted From",
+        "How Learnings Are Validated",
+        "Where They Are Stored",
+        "How Learnings Are Used",
+        "How Knowledge Is Separated (Global vs Local)",
+        "Chain Enforcement",
+        "Autolearning Cycle",
+        "Conclusion"
+      ]
+    },
+    ".opencode/.docs/04-human-in-the-loop.md": {
+      "size": 6093,
+      "lines": 139,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Human-in-the-Loop — Points of Human Intervention"
+        },
+        {
+          "level": 2,
+          "text": "1. Requirements Clarification (Phase 1 — PM)"
+        },
+        {
+          "level": 2,
+          "text": "2. Improvement Plan Review (Phase 6 — Continuous Learning)"
+        },
+        {
+          "level": 2,
+          "text": "3. QA ↔ Developer Correction Loop (Phase 5)"
+        },
+        {
+          "level": 2,
+          "text": "4. Prior Session Context Injection (Autoloader Plugin)"
+        }
+      ],
+      "totalHeadings": 5,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 0,
+      "sections": [
+        "Human-in-the-Loop — Points of Human Intervention",
+        "1. Requirements Clarification (Phase 1 — PM)",
+        "2. Improvement Plan Review (Phase 6 — Continuous Learning)",
+        "3. QA ↔ Developer Correction Loop (Phase 5)",
+        "4. Prior Session Context Injection (Autoloader Plugin)"
+      ]
+    },
+    ".opencode/.docs/05-skills.md": {
+      "size": 7399,
+      "lines": 170,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Skills Description"
+        },
+        {
+          "level": 2,
+          "text": "Catalog"
+        },
+        {
+          "level": 2,
+          "text": "Orchestration Skills"
+        },
+        {
+          "level": 3,
+          "text": "`jobfindr-pipeline`"
+        },
+        {
+          "level": 3,
+          "text": "`jobfindr-pipeline-next`"
+        },
+        {
+          "level": 2,
+          "text": "Learning Chain Skills (STOP Hook)"
+        },
+        {
+          "level": 3,
+          "text": "`learning-improvement`"
+        },
+        {
+          "level": 3,
+          "text": "`continuous-learning`"
+        },
+        {
+          "level": 3,
+          "text": "`session-save`"
+        },
+        {
+          "level": 2,
+          "text": "Support Skills"
+        },
+        {
+          "level": 3,
+          "text": "`codebase-analysis`"
+        },
+        {
+          "level": 3,
+          "text": "`doc-audit`"
+        },
+        {
+          "level": 3,
+          "text": "`06-branding`"
+        },
+        {
+          "level": 2,
+          "text": "Skill Relationship Diagram"
+        }
+      ],
+      "totalHeadings": 14,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 0,
+      "sections": [
+        "Skills Description",
+        "Catalog",
+        "Orchestration Skills",
+        "`jobfindr-pipeline`",
+        "`jobfindr-pipeline-next`",
+        "Learning Chain Skills (STOP Hook)",
+        "`learning-improvement`",
+        "`continuous-learning`",
+        "`session-save`",
+        "Support Skills",
+        "`codebase-analysis`",
+        "`doc-audit`",
+        "`06-branding`",
+        "Skill Relationship Diagram"
+      ]
+    },
+    ".opencode/.docs/06-submodule-branches.md": {
+      "size": 9408,
+      "lines": 330,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Git Submodule — Branches and Promotion"
+        },
+        {
+          "level": 2,
+          "text": "Using as a Git Submodule"
+        },
+        {
+          "level": 2,
+          "text": "Project-Specific Branches"
+        },
+        {
+          "level": 3,
+          "text": "Branch Naming Convention"
+        },
+        {
+          "level": 2,
+          "text": "Why Use Project-Specific Branches?"
+        },
+        {
+          "level": 2,
+          "text": "⚠️ WARNING — Pay Attention When Cloning the Submodule"
+        },
+        {
+          "level": 2,
+          "text": "Promoting Changes to the Shared Harness"
+        },
+        {
+          "level": 2,
+          "text": "When to Create a Pull Request"
+        },
+        {
+          "level": 3,
+          "text": "Requirements Before Creating a Pull Request"
+        },
+        {
+          "level": 3,
+          "text": "Merge Auxiliary Branch"
+        },
+        {
+          "level": 3,
+          "text": "Project-Specific Content Removal (mandatory before PR)"
+        },
+        {
+          "level": 3,
+          "text": "Re-test Battery Requirement"
+        },
+        {
+          "level": 2,
+          "text": "Final Decision Flow"
+        },
+        {
+          "level": 2,
+          "text": "Branch Responsibilities"
+        },
+        {
+          "level": 3,
+          "text": "`main`"
+        },
+        {
+          "level": 3,
+          "text": "`dlvr-ppln/<project-name>`"
+        }
+      ],
+      "totalHeadings": 16,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 0,
+      "sections": [
+        "Git Submodule — Branches and Promotion",
+        "Using as a Git Submodule",
+        "Project-Specific Branches",
+        "Branch Naming Convention",
+        "Why Use Project-Specific Branches?",
+        "⚠️ WARNING — Pay Attention When Cloning the Submodule",
+        "Promoting Changes to the Shared Harness",
+        "When to Create a Pull Request",
+        "Requirements Before Creating a Pull Request",
+        "Merge Auxiliary Branch",
+        "Project-Specific Content Removal (mandatory before PR)",
+        "Re-test Battery Requirement",
+        "Final Decision Flow",
+        "Branch Responsibilities",
+        "`main`",
+        "`dlvr-ppln/<project-name>`"
+      ]
+    },
+    ".opencode/.docs/07-submodule-install.md": {
+      "size": 5886,
+      "lines": 254,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Git Submodule — Installation and Setup"
+        },
+        {
+          "level": 2,
+          "text": "Installing the Submodule in a Codebase"
+        },
+        {
+          "level": 2,
+          "text": "Cloning a Codebase that Contains the Submodule"
+        },
+        {
+          "level": 2,
+          "text": "Installing the opencode Plugin Dependencies"
+        },
+        {
+          "level": 2,
+          "text": "Commit Convention"
+        },
+        {
+          "level": 3,
+          "text": "Project-Specific Commits"
+        },
+        {
+          "level": 3,
+          "text": "Commit Rules"
+        },
+        {
+          "level": 2,
+          "text": "Recommended Submodule Setup Flow"
+        },
+        {
+          "level": 2,
+          "text": "Relationship Between Codebases"
+        },
+        {
+          "level": 2,
+          "text": "Separation of Responsibilities"
+        },
+        {
+          "level": 3,
+          "text": "`delivery-pipeline`"
+        },
+        {
+          "level": 3,
+          "text": "Codebases"
+        },
+        {
+          "level": 2,
+          "text": "Harness Evolution"
+        }
+      ],
+      "totalHeadings": 13,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 6,
+      "sections": [
+        "Git Submodule — Installation and Setup",
+        "Installing the Submodule in a Codebase",
+        "Cloning a Codebase that Contains the Submodule",
+        "Installing the opencode Plugin Dependencies",
+        "Commit Convention",
+        "Project-Specific Commits",
+        "Commit Rules",
+        "Recommended Submodule Setup Flow",
+        "Relationship Between Codebases",
+        "Separation of Responsibilities",
+        "`delivery-pipeline`",
+        "Codebases",
+        "Harness Evolution"
+      ]
+    },
+    ".opencode/.github/pull_request_template.md": {
+      "size": 1352,
+      "lines": 35,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 2,
+          "text": "Description"
+        },
+        {
+          "level": 2,
+          "text": "Promotion Context"
+        },
+        {
+          "level": 2,
+          "text": "What was removed before this PR"
+        },
+        {
+          "level": 2,
+          "text": "Validation"
+        },
+        {
+          "level": 2,
+          "text": "Checklist"
+        }
+      ],
+      "totalHeadings": 5,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 18,
+      "sections": [
+        "Description",
+        "Promotion Context",
+        "What was removed before this PR",
+        "Validation",
+        "Checklist"
+      ]
+    },
     ".opencode/agents/00-planning-agent.md": {
-      "size": 6480,
+      "size": 6468,
       "lines": 229,
       "type": "markdown",
       "headings": [
@@ -116,7 +640,7 @@
       ]
     },
     ".opencode/agents/01-solution-designer.md": {
-      "size": 7022,
+      "size": 7010,
       "lines": 224,
       "type": "markdown",
       "headings": [
@@ -236,8 +760,8 @@
       ]
     },
     ".opencode/agents/02-tech-lead.md": {
-      "size": 5510,
-      "lines": 265,
+      "size": 6711,
+      "lines": 278,
       "type": "markdown",
       "headings": [
         {
@@ -332,7 +856,7 @@
       "totalHeadings": 22,
       "totalCodeBlocks": 0,
       "codeBlocks": [],
-      "totalListItems": 64,
+      "totalListItems": 73,
       "sections": [
         "Tech Lead Agent",
         "Role",
@@ -359,8 +883,8 @@
       ]
     },
     ".opencode/agents/03-senior-frontend.md": {
-      "size": 4240,
-      "lines": 168,
+      "size": 4467,
+      "lines": 169,
       "type": "markdown",
       "headings": [
         {
@@ -447,7 +971,7 @@
       "totalHeadings": 20,
       "totalCodeBlocks": 0,
       "codeBlocks": [],
-      "totalListItems": 52,
+      "totalListItems": 53,
       "sections": [
         "Senior Frontend Agent",
         "Role",
@@ -472,7 +996,7 @@
       ]
     },
     ".opencode/agents/04-senior-backend.md": {
-      "size": 4310,
+      "size": 4309,
       "lines": 191,
       "type": "markdown",
       "headings": [
@@ -590,8 +1114,8 @@
       ]
     },
     ".opencode/agents/05-qa-reviewer.md": {
-      "size": 4260,
-      "lines": 195,
+      "size": 4685,
+      "lines": 198,
       "type": "markdown",
       "headings": [
         {
@@ -674,7 +1198,7 @@
       "totalHeadings": 19,
       "totalCodeBlocks": 0,
       "codeBlocks": [],
-      "totalListItems": 62,
+      "totalListItems": 65,
       "sections": [
         "QA Reviewer Agent",
         "Role",
@@ -6684,8 +7208,8 @@
       ]
     },
     ".opencode/architecture/docs/testing-strategy.md": {
-      "size": 2488,
-      "lines": 111,
+      "size": 3191,
+      "lines": 118,
       "type": "markdown",
       "headings": [
         {
@@ -6721,6 +7245,10 @@
           "text": "apps/web"
         },
         {
+          "level": 4,
+          "text": "Playwright E2E Authoring Rules"
+        },
+        {
           "level": 3,
           "text": "apps/api"
         },
@@ -6741,7 +7269,7 @@
           "text": "References"
         }
       ],
-      "totalHeadings": 13,
+      "totalHeadings": 14,
       "totalCodeBlocks": 1,
       "codeBlocks": [
         {
@@ -6749,7 +7277,7 @@
           "lines": 3
         }
       ],
-      "totalListItems": 12,
+      "totalListItems": 16,
       "sections": [
         "Testing Strategy",
         "Purpose",
@@ -6759,6 +7287,7 @@
         "packages/calendar",
         "packages/ui",
         "apps/web",
+        "Playwright E2E Authoring Rules",
         "apps/api",
         "Test Tooling (Recommended)",
         "CI Rules",
@@ -11185,8 +11714,8 @@
       "sections": []
     },
     ".opencode/commands/delivery-pipeline-resume.md": {
-      "size": 183,
-      "lines": 6,
+      "size": 321,
+      "lines": 8,
       "type": "markdown",
       "headings": [],
       "totalHeadings": 0,
@@ -11349,7 +11878,7 @@
       ]
     },
     ".opencode/OPENCODE_PLUGINS.md": {
-      "size": 12822,
+      "size": 13123,
       "lines": 302,
       "type": "markdown",
       "headings": [
@@ -11439,49 +11968,8 @@
         }
       ],
       "totalHeadings": 21,
-      "totalCodeBlocks": 10,
-      "codeBlocks": [
-        {
-          "language": "(none)",
-          "lines": 4
-        },
-        {
-          "language": "ts",
-          "lines": 7
-        },
-        {
-          "language": "ts",
-          "lines": 1
-        },
-        {
-          "language": "ts",
-          "lines": 18
-        },
-        {
-          "language": "ts",
-          "lines": 41
-        },
-        {
-          "language": "ts",
-          "lines": 11
-        },
-        {
-          "language": "ts",
-          "lines": 6
-        },
-        {
-          "language": "ts",
-          "lines": 8
-        },
-        {
-          "language": "ts",
-          "lines": 2
-        },
-        {
-          "language": "ts",
-          "lines": 1
-        }
-      ],
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
       "totalListItems": 20,
       "sections": [
         "OpenCode Plugin Development Guide",
@@ -11508,8 +11996,8 @@
       ]
     },
     ".opencode/package-lock.json": {
-      "size": 65018,
-      "lines": 1994,
+      "size": 9327,
+      "lines": 335,
       "type": "json",
       "topKeys": [
         "name",
@@ -11519,41 +12007,19 @@
       ]
     },
     ".opencode/package.json": {
-      "size": 182,
-      "lines": 13,
+      "size": 70,
+      "lines": 6,
       "type": "json",
       "topKeys": [
-        "scripts",
-        "dependencies",
-        "devDependencies"
+        "dependencies"
       ]
     },
     ".opencode/pipeline.yaml": {
-      "size": 1383,
-      "lines": 68,
+      "size": 6393,
+      "lines": 111,
       "type": "yaml",
       "topKeys": [
         "pipeline"
-      ]
-    },
-    ".opencode/pnpm-lock.yaml": {
-      "size": 38350,
-      "lines": 1242,
-      "type": "yaml",
-      "topKeys": [
-        "lockfileVersion",
-        "settings",
-        "importers",
-        "packages",
-        "snapshots"
-      ]
-    },
-    ".opencode/pnpm-workspace.yaml": {
-      "size": 96,
-      "lines": 4,
-      "type": "yaml",
-      "topKeys": [
-        "allowBuilds"
       ]
     },
     ".opencode/project-structure.md": {
@@ -11579,9 +12045,111 @@
         "Project Structure"
       ]
     },
+    ".opencode/README.md": {
+      "size": 8675,
+      "lines": 160,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Delivery Pipeline"
+        },
+        {
+          "level": 2,
+          "text": "⚠️ IMPORTANT NOTE"
+        },
+        {
+          "level": 2,
+          "text": "Overview"
+        },
+        {
+          "level": 2,
+          "text": "How the Workflow Works"
+        },
+        {
+          "level": 2,
+          "text": "Self-Learning Flow"
+        },
+        {
+          "level": 2,
+          "text": "Human-in-the-Loop"
+        },
+        {
+          "level": 2,
+          "text": "Skills Description"
+        },
+        {
+          "level": 2,
+          "text": "Separation of Responsibilities"
+        },
+        {
+          "level": 2,
+          "text": "Git Submodule Usage"
+        },
+        {
+          "level": 2,
+          "text": "Summary"
+        }
+      ],
+      "totalHeadings": 10,
+      "totalCodeBlocks": 0,
+      "codeBlocks": [],
+      "totalListItems": 4,
+      "sections": [
+        "Delivery Pipeline",
+        "⚠️ IMPORTANT NOTE",
+        "Overview",
+        "How the Workflow Works",
+        "Self-Learning Flow",
+        "Human-in-the-Loop",
+        "Skills Description",
+        "Separation of Responsibilities",
+        "Git Submodule Usage",
+        "Summary"
+      ]
+    },
+    ".opencode/skills/codebase-analysis/output/combined-report.json": {
+      "size": 555648,
+      "lines": 21574,
+      "type": "json",
+      "topKeys": [
+        "generatedAt",
+        "mode",
+        "implementation",
+        "documentation"
+      ]
+    },
+    ".opencode/skills/codebase-analysis/output/combined-report.md": {
+      "size": 17892,
+      "lines": 353,
+      "type": "markdown",
+      "headings": [
+        {
+          "level": 1,
+          "text": "Codebase Analysis — Combined"
+        },
+        {
+          "level": 1,
+          "text": "Combined Report"
+        }
+      ],
+      "totalHeadings": 2,
+      "totalCodeBlocks": 1,
+      "codeBlocks": [
+        {
+          "language": "(none)",
+          "lines": 346
+        }
+      ],
+      "totalListItems": 18,
+      "sections": [
+        "Codebase Analysis — Combined",
+        "Combined Report"
+      ]
+    },
     ".opencode/skills/codebase-analysis/output/docs-report.json": {
-      "size": 409486,
-      "lines": 16898,
+      "size": 409046,
+      "lines": 16881,
       "type": "json",
       "topKeys": [
         "generatedAt",
@@ -11594,8 +12162,8 @@
       ]
     },
     ".opencode/skills/codebase-analysis/output/docs-report.md": {
-      "size": 12528,
-      "lines": 191,
+      "size": 12708,
+      "lines": 193,
       "type": "markdown",
       "headings": [
         {
@@ -11608,7 +12176,7 @@
       "codeBlocks": [
         {
           "language": "(none)",
-          "lines": 184
+          "lines": 186
         }
       ],
       "totalListItems": 18,
@@ -11617,8 +12185,8 @@
       ]
     },
     ".opencode/skills/codebase-analysis/output/implementation-report.json": {
-      "size": 103359,
-      "lines": 4689,
+      "size": 110658,
+      "lines": 5003,
       "type": "json",
       "topKeys": [
         "generatedAt",
@@ -11632,8 +12200,8 @@
       ]
     },
     ".opencode/skills/codebase-analysis/output/implementation-report.md": {
-      "size": 5221,
-      "lines": 162,
+      "size": 5441,
+      "lines": 168,
       "type": "markdown",
       "headings": [
         {
@@ -11646,23 +12214,12 @@
       "codeBlocks": [
         {
           "language": "(none)",
-          "lines": 155
+          "lines": 161
         }
       ],
       "totalListItems": 0,
       "sections": [
         "Codebase Analysis — Implementation"
-      ]
-    },
-    ".opencode/skills/codebase-analysis/scripts/package.json": {
-      "size": 173,
-      "lines": 10,
-      "type": "json",
-      "topKeys": [
-        "name",
-        "type",
-        "private",
-        "dependencies"
       ]
     },
     ".opencode/skills/codebase-analysis/SKILL.md": {
@@ -11827,8 +12384,8 @@
       ]
     },
     ".opencode/skills/delivery-pipeline/references/failure-recovery.md": {
-      "size": 1099,
-      "lines": 40,
+      "size": 1754,
+      "lines": 51,
       "type": "markdown",
       "headings": [
         {
@@ -11842,9 +12399,13 @@
         {
           "level": 3,
           "text": "Git Diff Tool Limitations"
+        },
+        {
+          "level": 3,
+          "text": "Abandoned Pipeline Detection"
         }
       ],
-      "totalHeadings": 3,
+      "totalHeadings": 4,
       "totalCodeBlocks": 2,
       "codeBlocks": [
         {
@@ -11856,16 +12417,17 @@
           "lines": 1
         }
       ],
-      "totalListItems": 7,
+      "totalListItems": 11,
       "sections": [
         "Failure Recovery",
         "Resume Metadata Accuracy",
-        "Git Diff Tool Limitations"
+        "Git Diff Tool Limitations",
+        "Abandoned Pipeline Detection"
       ]
     },
     ".opencode/skills/delivery-pipeline/references/parallelization-rules.md": {
-      "size": 477,
-      "lines": 32,
+      "size": 1146,
+      "lines": 49,
       "type": "markdown",
       "headings": [
         {
@@ -11879,10 +12441,14 @@
         {
           "level": 2,
           "text": "Not Allowed"
+        },
+        {
+          "level": 2,
+          "text": "Shared Config File Ownership"
         }
       ],
-      "totalHeadings": 3,
-      "totalCodeBlocks": 2,
+      "totalHeadings": 4,
+      "totalCodeBlocks": 3,
       "codeBlocks": [
         {
           "language": "text",
@@ -11891,13 +12457,18 @@
         {
           "language": "text",
           "lines": 3
+        },
+        {
+          "language": "text",
+          "lines": 6
         }
       ],
       "totalListItems": 3,
       "sections": [
         "Parallelization Rules",
         "Allowed",
-        "Not Allowed"
+        "Not Allowed",
+        "Shared Config File Ownership"
       ]
     },
     ".opencode/skills/delivery-pipeline/references/task-tracking.md": {
@@ -11924,8 +12495,8 @@
       ]
     },
     ".opencode/skills/delivery-pipeline/SKILL.md": {
-      "size": 12463,
-      "lines": 409,
+      "size": 14298,
+      "lines": 422,
       "type": "markdown",
       "headings": [
         {
@@ -12056,7 +12627,7 @@
       "totalHeadings": 31,
       "totalCodeBlocks": 0,
       "codeBlocks": [],
-      "totalListItems": 117,
+      "totalListItems": 121,
       "sections": [
         "Delivery Pipeline Skill",
         "Purpose",
@@ -12731,8 +13302,8 @@
       ]
     },
     ".opencode/template/task-template.md": {
-      "size": 1276,
-      "lines": 130,
+      "size": 1879,
+      "lines": 144,
       "type": "markdown",
       "headings": [
         {
@@ -12817,6 +13388,10 @@
         },
         {
           "level": 2,
+          "text": "Edge Cases"
+        },
+        {
+          "level": 2,
           "text": "Testing"
         },
         {
@@ -12832,6 +13407,10 @@
           "text": "Manual Validation"
         },
         {
+          "level": 3,
+          "text": "E2E Test Authoring Guidance (Playwright)"
+        },
+        {
           "level": 2,
           "text": "Definition of Done"
         },
@@ -12840,10 +13419,10 @@
           "text": "References"
         }
       ],
-      "totalHeadings": 26,
+      "totalHeadings": 28,
       "totalCodeBlocks": 0,
       "codeBlocks": [],
-      "totalListItems": 34,
+      "totalListItems": 40,
       "sections": [
         "Task Template",
         "Task Information",
@@ -12865,10 +13444,12 @@
         "Expected Changes",
         "Constraints",
         "Validation Rules",
+        "Edge Cases",
         "Testing",
         "Unit Tests",
         "Integration Tests",
         "Manual Validation",
+        "E2E Test Authoring Guidance (Playwright)",
         "Definition of Done",
         "References"
       ]
@@ -12887,6 +13468,270 @@
   },
   "errors": [],
   "headingIndex": {
+    "what is `delivery-pipeline`?": [
+      ".opencode/.docs/01-what-is-this.md"
+    ],
+    "goals": [
+      ".opencode/.docs/01-what-is-this.md",
+      ".opencode/architecture/generation-algorithm.md",
+      ".opencode/template/design-template.md"
+    ],
+    "approach: srdd": [
+      ".opencode/.docs/01-what-is-this.md"
+    ],
+    "influences": [
+      ".opencode/.docs/01-what-is-this.md"
+    ],
+    "workflow: `delivery-pipeline`": [
+      ".opencode/.docs/01-what-is-this.md"
+    ],
+    "conceptual structure": [
+      ".opencode/.docs/01-what-is-this.md"
+    ],
+    "principles": [
+      ".opencode/.docs/01-what-is-this.md"
+    ],
+    "how does the `delivery-pipeline` work now (last-version)?": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "operation modes": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "pipeline state — how context is propagated": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "phase 0: context check / resume": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "phase 1: product manager (conditional — full pipeline only)": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "phase 2: tech lead (full pipeline only)": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "phase 3: development (parallel)": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "phase 4: qa review (parallel)": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "phase 5: corrections loop (isolated per layer)": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "phase 6: conclusion": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "how agents communicate": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "how validations are performed": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "how failures are handled": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "workflow diagram (actual)": [
+      ".opencode/.docs/02-how-it-works.md"
+    ],
+    "self-learning flow": [
+      ".opencode/.docs/03-self-learning.md",
+      ".opencode/README.md"
+    ],
+    "what qualifies as a learning": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "where learnings are extracted from": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "how learnings are validated": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "where they are stored": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "how learnings are used": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "how knowledge is separated (global vs local)": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "chain enforcement": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "autolearning cycle": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "conclusion": [
+      ".opencode/.docs/03-self-learning.md"
+    ],
+    "human-in-the-loop — points of human intervention": [
+      ".opencode/.docs/04-human-in-the-loop.md"
+    ],
+    "1. requirements clarification (phase 1 — pm)": [
+      ".opencode/.docs/04-human-in-the-loop.md"
+    ],
+    "2. improvement plan review (phase 6 — continuous learning)": [
+      ".opencode/.docs/04-human-in-the-loop.md"
+    ],
+    "3. qa ↔ developer correction loop (phase 5)": [
+      ".opencode/.docs/04-human-in-the-loop.md"
+    ],
+    "4. prior session context injection (autoloader plugin)": [
+      ".opencode/.docs/04-human-in-the-loop.md"
+    ],
+    "skills description": [
+      ".opencode/.docs/05-skills.md",
+      ".opencode/README.md"
+    ],
+    "catalog": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "orchestration skills": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`jobfindr-pipeline`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`jobfindr-pipeline-next`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "learning chain skills (stop hook)": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`learning-improvement`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`continuous-learning`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`session-save`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "support skills": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`codebase-analysis`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`doc-audit`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "`06-branding`": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "skill relationship diagram": [
+      ".opencode/.docs/05-skills.md"
+    ],
+    "git submodule — branches and promotion": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "using as a git submodule": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "project-specific branches": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "branch naming convention": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "why use project-specific branches?": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "⚠️ warning — pay attention when cloning the submodule": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "promoting changes to the shared harness": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "when to create a pull request": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "requirements before creating a pull request": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "merge auxiliary branch": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "project-specific content removal (mandatory before pr)": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "re-test battery requirement": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "final decision flow": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "branch responsibilities": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "`main`": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "`dlvr-ppln/<project-name>`": [
+      ".opencode/.docs/06-submodule-branches.md"
+    ],
+    "git submodule — installation and setup": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "installing the submodule in a codebase": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "cloning a codebase that contains the submodule": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "installing the opencode plugin dependencies": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "commit convention": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "project-specific commits": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "commit rules": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "recommended submodule setup flow": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "relationship between codebases": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "separation of responsibilities": [
+      ".opencode/.docs/07-submodule-install.md",
+      ".opencode/README.md"
+    ],
+    "`delivery-pipeline`": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "codebases": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "harness evolution": [
+      ".opencode/.docs/07-submodule-install.md"
+    ],
+    "description": [
+      ".opencode/.github/pull_request_template.md",
+      ".opencode/template/design-template.md",
+      ".opencode/template/design-template.md",
+      ".opencode/template/design-template.md",
+      ".opencode/template/planning-template.md",
+      ".opencode/template/planning-template.md",
+      ".opencode/template/planning-template.md",
+      ".opencode/template/task-template.md"
+    ],
+    "promotion context": [
+      ".opencode/.github/pull_request_template.md"
+    ],
+    "what was removed before this pr": [
+      ".opencode/.github/pull_request_template.md"
+    ],
+    "validation": [
+      ".opencode/.github/pull_request_template.md"
+    ],
+    "checklist": [
+      ".opencode/.github/pull_request_template.md"
+    ],
     "planning analyst agent": [
       ".opencode/agents/00-planning-agent.md"
     ],
@@ -13201,6 +14046,7 @@
       ".opencode/architecture/architecture.md",
       ".opencode/architecture/docs/design-system.md",
       ".opencode/architecture/index.md",
+      ".opencode/README.md",
       ".opencode/template/planning-template.md"
     ],
     "core principles": [
@@ -15192,6 +16038,9 @@
       ".opencode/architecture/monorepo-structure.md",
       ".opencode/architecture/references/monorepo-details.md"
     ],
+    "playwright e2e authoring rules": [
+      ".opencode/architecture/docs/testing-strategy.md"
+    ],
     "apps/api": [
       ".opencode/architecture/docs/testing-strategy.md",
       ".opencode/architecture/monorepo-structure.md",
@@ -15385,10 +16234,6 @@
     ],
     "brkroutnxdle generation algorithm": [
       ".opencode/architecture/generation-algorithm.md"
-    ],
-    "goals": [
-      ".opencode/architecture/generation-algorithm.md",
-      ".opencode/template/design-template.md"
     ],
     "restriction implementation parity": [
       ".opencode/architecture/generation-algorithm.md"
@@ -16387,7 +17232,8 @@
       ".opencode/INDEX.md"
     ],
     "delivery pipeline": [
-      ".opencode/INDEX.md"
+      ".opencode/INDEX.md",
+      ".opencode/README.md"
     ],
     "workflow router": [
       ".opencode/INDEX.md"
@@ -16461,6 +17307,27 @@
     "project structure": [
       ".opencode/project-structure.md"
     ],
+    "⚠️ important note": [
+      ".opencode/README.md"
+    ],
+    "how the workflow works": [
+      ".opencode/README.md"
+    ],
+    "human-in-the-loop": [
+      ".opencode/README.md"
+    ],
+    "git submodule usage": [
+      ".opencode/README.md"
+    ],
+    "summary": [
+      ".opencode/README.md"
+    ],
+    "codebase analysis — combined": [
+      ".opencode/skills/codebase-analysis/output/combined-report.md"
+    ],
+    "combined report": [
+      ".opencode/skills/codebase-analysis/output/combined-report.md"
+    ],
     "codebase analysis — documentation": [
       ".opencode/skills/codebase-analysis/output/docs-report.md"
     ],
@@ -16519,10 +17386,16 @@
     "git diff tool limitations": [
       ".opencode/skills/delivery-pipeline/references/failure-recovery.md"
     ],
+    "abandoned pipeline detection": [
+      ".opencode/skills/delivery-pipeline/references/failure-recovery.md"
+    ],
     "allowed": [
       ".opencode/skills/delivery-pipeline/references/parallelization-rules.md"
     ],
     "not allowed": [
+      ".opencode/skills/delivery-pipeline/references/parallelization-rules.md"
+    ],
+    "shared config file ownership": [
       ".opencode/skills/delivery-pipeline/references/parallelization-rules.md"
     ],
     "task tracking": [
@@ -16678,15 +17551,6 @@
     ],
     "option a (recommended)": [
       ".opencode/template/design-template.md"
-    ],
-    "description": [
-      ".opencode/template/design-template.md",
-      ".opencode/template/design-template.md",
-      ".opencode/template/design-template.md",
-      ".opencode/template/planning-template.md",
-      ".opencode/template/planning-template.md",
-      ".opencode/template/planning-template.md",
-      ".opencode/template/task-template.md"
     ],
     "advantages": [
       ".opencode/template/design-template.md",
@@ -16850,6 +17714,9 @@
     "implementation guidance": [
       ".opencode/template/task-template.md"
     ],
+    "edge cases": [
+      ".opencode/template/task-template.md"
+    ],
     "testing": [
       ".opencode/template/task-template.md"
     ],
@@ -16862,14 +17729,17 @@
     "manual validation": [
       ".opencode/template/task-template.md"
     ],
+    "e2e test authoring guidance (playwright)": [
+      ".opencode/template/task-template.md"
+    ],
     "definition of done": [
       ".opencode/template/task-template.md"
     ]
   },
   "codeBlockLanguages": {
-    "text": 444,
+    "text": 445,
     "json": 46,
-    "ts": 58,
+    "ts": 49,
     "(none)": 11,
     "http": 1,
     "bash": 2,

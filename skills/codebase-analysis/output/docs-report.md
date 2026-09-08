@@ -1,6 +1,6 @@
 # Codebase Analysis — Documentation
 
-Generated: 2026-06-18T02:23:59.187Z
+Generated: 2026-09-08T02:23:17.517Z
 
 ```
 
@@ -8,21 +8,21 @@ Generated: 2026-06-18T02:23:59.187Z
 ║     Codebase — Documentation Report      ║
 ╚══════════════════════════════════════════╝
 
-Generated: 2026-06-18T02:23:59.187Z
+Generated: 2026-09-08T02:23:17.517Z
 
 ── Overview ──
-  Total files:       104
-  Markdown (.md):    95
+  Total files:       112
+  Markdown (.md):    105
   JSON:              5
-  YAML:              4
+  YAML:              2
   Text (.txt):       0
-  Total headings:    1828
-  Total code blocks: 588
-  Total list items:  1701
+  Total headings:    1929
+  Total code blocks: 580
+  Total list items:  1827
 
 ── Code Block Languages ──
-  text                 444
-  ts                   58
+  text                 445
+  ts                   49
   json                 46
   tsx                  17
   (none)               11
@@ -32,7 +32,12 @@ Generated: 2026-06-18T02:23:59.187Z
   http                 1
   mermaid              1
 
-── Duplicate Headings (250) ──
+── Duplicate Headings (254) ──
+  "goals" — 3x
+  "self-learning flow" — 2x
+  "skills description" — 2x
+  "separation of responsibilities" — 2x
+  "description" — 8x
   "role" — 6x
   "inputs" — 7x
   "responsibilities" — 12x
@@ -43,49 +48,53 @@ Generated: 2026-06-18T02:23:59.187Z
   "dependency rules" — 2x
   "parallelization rules" — 3x
   "output" — 4x
-  "retry limit (failure escalation)" — 4x
-  "1. review assigned tasks" — 3x
-  "2. review relevant code" — 2x
-  "3. implement solution" — 2x
-  "4. review changes" — 2x
-  ... and 235 more
+  ... and 239 more
 
-── All Headings (1075) ──
-  planning analyst agent                        .opencode/agents/00-planning-agent.md
-  role                                          .opencode/agents/00-planning-agent.md
-  inputs                                        .opencode/agents/00-planning-agent.md
-  responsibilities                              .opencode/agents/00-planning-agent.md
-  workflow                                      .opencode/agents/00-planning-agent.md
-  1. analyze request                            .opencode/agents/00-planning-agent.md
-  2. review design documents (if chained after solution designer) .opencode/agents/00-planning-agent.md
-  3. explore the codebase                       .opencode/agents/00-planning-agent.md
-  4. analyze feasibility                        .opencode/agents/00-planning-agent.md
-  5. analyze impact                             .opencode/agents/00-planning-agent.md
-  6. analyze risks                              .opencode/agents/00-planning-agent.md
-  7. compare approaches (independent flow only) .opencode/agents/00-planning-agent.md
-  8. approval loop                              .opencode/agents/00-planning-agent.md
-  9. create planning documents                  .opencode/agents/00-planning-agent.md
-  10. update pipeline                           .opencode/agents/00-planning-agent.md
-  planning rules                                .opencode/agents/00-planning-agent.md
-  return format                                 .opencode/agents/00-planning-agent.md
-  constraints                                   .opencode/agents/00-planning-agent.md
-  solution designer agent                       .opencode/agents/01-solution-designer.md
-  prohibited inputs                             .opencode/agents/01-solution-designer.md
-  1. understand the request                     .opencode/agents/01-solution-designer.md
-  2. map relevant documentation                 .opencode/agents/01-solution-designer.md
-  3. research approaches                        .opencode/agents/01-solution-designer.md
-  4. present options                            .opencode/agents/01-solution-designer.md
-  5. collaborative loop                         .opencode/agents/01-solution-designer.md
-  6. create design documents                    .opencode/agents/01-solution-designer.md
-  7. create design index                        .opencode/agents/01-solution-designer.md
-  8. update pipeline                            .opencode/agents/01-solution-designer.md
-  downstream validation                         .opencode/agents/01-solution-designer.md
-  design document rules                         .opencode/agents/01-solution-designer.md
-  ... and 1045 more
+── All Headings (1169) ──
+  what is `delivery-pipeline`?                  .opencode/.docs/01-what-is-this.md
+  goals                                         .opencode/.docs/01-what-is-this.md
+  approach: srdd                                .opencode/.docs/01-what-is-this.md
+  influences                                    .opencode/.docs/01-what-is-this.md
+  workflow: `delivery-pipeline`                 .opencode/.docs/01-what-is-this.md
+  conceptual structure                          .opencode/.docs/01-what-is-this.md
+  principles                                    .opencode/.docs/01-what-is-this.md
+  how does the `delivery-pipeline` work now (last-version)? .opencode/.docs/02-how-it-works.md
+  operation modes                               .opencode/.docs/02-how-it-works.md
+  pipeline state — how context is propagated    .opencode/.docs/02-how-it-works.md
+  phase 0: context check / resume               .opencode/.docs/02-how-it-works.md
+  phase 1: product manager (conditional — full pipeline only) .opencode/.docs/02-how-it-works.md
+  phase 2: tech lead (full pipeline only)       .opencode/.docs/02-how-it-works.md
+  phase 3: development (parallel)               .opencode/.docs/02-how-it-works.md
+  phase 4: qa review (parallel)                 .opencode/.docs/02-how-it-works.md
+  phase 5: corrections loop (isolated per layer) .opencode/.docs/02-how-it-works.md
+  phase 6: conclusion                           .opencode/.docs/02-how-it-works.md
+  how agents communicate                        .opencode/.docs/02-how-it-works.md
+  how validations are performed                 .opencode/.docs/02-how-it-works.md
+  how failures are handled                      .opencode/.docs/02-how-it-works.md
+  workflow diagram (actual)                     .opencode/.docs/02-how-it-works.md
+  self-learning flow                            .opencode/.docs/03-self-learning.md
+  what qualifies as a learning                  .opencode/.docs/03-self-learning.md
+  where learnings are extracted from            .opencode/.docs/03-self-learning.md
+  how learnings are validated                   .opencode/.docs/03-self-learning.md
+  where they are stored                         .opencode/.docs/03-self-learning.md
+  how learnings are used                        .opencode/.docs/03-self-learning.md
+  how knowledge is separated (global vs local)  .opencode/.docs/03-self-learning.md
+  chain enforcement                             .opencode/.docs/03-self-learning.md
+  autolearning cycle                            .opencode/.docs/03-self-learning.md
+  ... and 1139 more
 
 ── Files Scanned ──
+  .opencode/.docs/01-what-is-this.md  [7 headings, 0 code blocks]
+  .opencode/.docs/02-how-it-works.md  [14 headings, 0 code blocks]
+  .opencode/.docs/03-self-learning.md  [10 headings, 0 code blocks]
+  .opencode/.docs/04-human-in-the-loop.md  [5 headings, 0 code blocks]
+  .opencode/.docs/05-skills.md  [14 headings, 0 code blocks]
+  .opencode/.docs/06-submodule-branches.md  [16 headings, 0 code blocks]
+  .opencode/.docs/07-submodule-install.md  [13 headings, 0 code blocks]
+  .opencode/.github/pull_request_template.md  [5 headings, 0 code blocks]
   .opencode/INDEX.md  [13 headings, 0 code blocks]
-  .opencode/OPENCODE_PLUGINS.md  [21 headings, 10 code blocks]
+  .opencode/OPENCODE_PLUGINS.md  [21 headings, 0 code blocks]
+  .opencode/README.md  [10 headings, 0 code blocks]
   .opencode/agents/00-planning-agent.md  [18 headings, 0 code blocks]
   .opencode/agents/01-solution-designer.md  [18 headings, 4 code blocks]
   .opencode/agents/02-tech-lead.md  [22 headings, 0 code blocks]
@@ -136,7 +145,7 @@ Generated: 2026-06-18T02:23:59.187Z
   .opencode/architecture/docs/frontend/references/component-specs.md  [66 headings, 33 code blocks]
   .opencode/architecture/docs/logging-monitoring-strategy.md  [16 headings, 10 code blocks]
   .opencode/architecture/docs/security-architecture.md  [18 headings, 4 code blocks]
-  .opencode/architecture/docs/testing-strategy.md  [13 headings, 1 code blocks]
+  .opencode/architecture/docs/testing-strategy.md  [14 headings, 1 code blocks]
   .opencode/architecture/domain-model.md  [47 headings, 11 code blocks]
   .opencode/architecture/event-classification.md  [36 headings, 13 code blocks]
   .opencode/architecture/generation-algorithm.md  [39 headings, 12 code blocks]
@@ -160,23 +169,22 @@ Generated: 2026-06-18T02:23:59.187Z
   .opencode/commands/learning-improvement.md  [0 headings, 0 code blocks]
   .opencode/docs-catalog.md  [8 headings, 0 code blocks]
   .opencode/package-lock.json  [keys: name, lockfileVersion, requires, packages]
-  .opencode/package.json  [keys: scripts, dependencies, devDependencies]
+  .opencode/package.json  [keys: dependencies]
   .opencode/pipeline.yaml  [keys: pipeline]
-  .opencode/pnpm-lock.yaml  [keys: lockfileVersion, settings, importers, packages, snapshots]
-  .opencode/pnpm-workspace.yaml  [keys: allowBuilds]
   .opencode/project-structure.md  [1 headings, 1 code blocks]
   .opencode/skills/codebase-analysis/SKILL.md  [13 headings, 0 code blocks]
+  .opencode/skills/codebase-analysis/output/combined-report.json  [keys: generatedAt, mode, implementation, documentation]
+  .opencode/skills/codebase-analysis/output/combined-report.md  [2 headings, 1 code blocks]
   .opencode/skills/codebase-analysis/output/docs-report.json  [keys: generatedAt, mode, summary, files, errors, headingIndex, codeBlockLanguages]
   .opencode/skills/codebase-analysis/output/docs-report.md  [1 headings, 1 code blocks]
   .opencode/skills/codebase-analysis/output/implementation-report.json  [keys: generatedAt, mode, parser, summary, files, errors, dependencyCount, perPackage]
   .opencode/skills/codebase-analysis/output/implementation-report.md  [1 headings, 1 code blocks]
-  .opencode/skills/codebase-analysis/scripts/package.json  [keys: name, type, private, dependencies]
   .opencode/skills/continuous-learning/SKILL.md  [4 headings, 0 code blocks]
   .opencode/skills/delivery-pipeline/SKILL.md  [31 headings, 0 code blocks]
   .opencode/skills/delivery-pipeline/references/agent-response-format.md  [2 headings, 2 code blocks]
   .opencode/skills/delivery-pipeline/references/constraints.md  [1 headings, 0 code blocks]
-  .opencode/skills/delivery-pipeline/references/failure-recovery.md  [3 headings, 2 code blocks]
-  .opencode/skills/delivery-pipeline/references/parallelization-rules.md  [3 headings, 2 code blocks]
+  .opencode/skills/delivery-pipeline/references/failure-recovery.md  [4 headings, 2 code blocks]
+  .opencode/skills/delivery-pipeline/references/parallelization-rules.md  [4 headings, 3 code blocks]
   .opencode/skills/delivery-pipeline/references/task-tracking.md  [1 headings, 1 code blocks]
   .opencode/skills/doc-audit/SKILL.md  [11 headings, 0 code blocks]
   .opencode/skills/learning-improvement/SKILL.md  [5 headings, 0 code blocks]
@@ -186,7 +194,7 @@ Generated: 2026-06-18T02:23:59.187Z
   .opencode/template/design-template.md  [29 headings, 0 code blocks]
   .opencode/template/pipeline-template.yaml  [keys: pipeline]
   .opencode/template/planning-template.md  [36 headings, 0 code blocks]
-  .opencode/template/task-template.md  [26 headings, 0 code blocks]
+  .opencode/template/task-template.md  [28 headings, 0 code blocks]
   .opencode/template/variables.md  [0 headings, 0 code blocks]
 
 ```

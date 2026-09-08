@@ -141,6 +141,6 @@ Local Context      Local Context
 This SRDD is a living system that evolves every session. The agents run autonomously, but the **human keeps control** at two critical points:
 
 1. **Approval of document changes** — continuous-learning never edits without a "yes"
-2. **Requirements clarification** — the PM asks before assuming
+2. **Requirements/approach clarification** — the primary agents (Solution Designer / Planning Analyst) ask before assuming
 
 The result is a pipeline that **needs less and less human intervention**, because mistakes become instructions and the instructions evolve the docs in `.opencode/`.
