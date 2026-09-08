@@ -120,11 +120,11 @@ The harness provides **HOW** to work (agile, generic components); each codebase 
 
 ## Git Submodule Usage
 
-The `delivery-pipeline` is shared across codebases through **Git Submodule**. Each project uses its own **project-specific branch** (`dlvr-ppln/<project-name>`), never `main` directly.
+The `delivery-pipeline` is shared across codebases through **Git Submodule**, mounted at the `.opencode/` directory of each consuming project. Each project uses its own **project-specific branch** (`dlvr-ppln/<project-name>`), never `main` directly.
 
 > 💡 **Want to know more? See: [.docs/06-submodule-branches.md](.docs/06-submodule-branches.md)** — branch conventions, warning about cloning, PR/promotion flow, and the merge auxiliary branch.
 
-> 💡 **Want to install it? See: [.docs/07-submodule-install.md](.docs/07-submodule-install.md)** — installation, cloning, plugin dependencies, and commit conventions.
+> 💡 **Want to install it? See: [.docs/07-submodule-install.md](.docs/07-submodule-install.md)** — installation (`git submodule add <url> .opencode`), cloning, plugin dependencies, and commit conventions.
 
 ---
 

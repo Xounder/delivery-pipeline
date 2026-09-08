@@ -8,10 +8,10 @@ Go to the repository where you want to use the `delivery-pipeline`:
 cd my-codebase
 ```
 
-Add the submodule:
+Add the submodule (mounted at `.opencode`, the opencode config directory):
 
 ```bash
-git submodule add <DELIVERY_PIPELINE_REPOSITORY_URL> delivery-pipeline
+git submodule add <DELIVERY_PIPELINE_REPOSITORY_URL> .opencode
 ```
 
 Example resulting structure:
@@ -22,11 +22,11 @@ my-codebase/
 ├── src/
 ├── tests/
 ├── docs/
-├── delivery-pipeline/
-│   ├── workflows/
-│   ├── agents/
+├── .opencode/
 │   ├── skills/
-│   ├── contracts/
+│   ├── agents/
+│   ├── plugins/
+│   ├── plan/
 │   └── ...
 ├── .gitmodules
 └── .git/
@@ -40,7 +40,7 @@ git commit -m "chore: add delivery-pipeline submodule"
 git push
 ```
 
-> After adding or updating the submodule, install the opencode plugin dependencies (see below).
+> After adding or updating the submodule (`.opencode/`), install the opencode plugin dependencies (see below).
 
 ---
 
