@@ -1,14 +1,13 @@
 ---
 name: session-save
-description: >
-  Saves the session file in .opencode/sessions/ based on the evaluation from the learning-improvement skill. It is the last skill called in the STOP hook.
+description: Saves the session file in .opencode/sessions/ based on the evaluation from the learning-improvement skill. It is the last skill called in the STOP hook.
 ---
 
 # Session Save Skill
 
 ## When to use
 
-Use this skill at the end of the STOP hook, after `learning-improvement` and `continuous-learning`. It is the **third and last** of 3 skills in the chain. See `learning-improvement/SKILL.md` for the full chain description.
+Use this skill at the end of the STOP hook, after `learning-improvement` and `continuous-learning`. It is the **third and last** of 3 skills in the STOP chain — see [learning-improvement/references/stop-chain.md](../learning-improvement/references/stop-chain.md)).
 
 ## Workflow
 
@@ -40,7 +39,7 @@ Use this skill at the end of the STOP hook, after `learning-improvement` and `co
 
 ## Chain position
 
-This is the **LAST** (3rd) skill in the STOP chain: `learning-improvement` → `continuous-learning` → **`session-save`**. After saving, the chain is complete — report to the user and stop. Do not load any further skills.
+This is the **LAST** (3rd) skill in the STOP chain — see [learning-improvement/references/stop-chain.md](../learning-improvement/references/stop-chain.md). After saving, the chain is complete — report to the user and stop. Do not load any further skills.
 
 ## Tool Reference
 

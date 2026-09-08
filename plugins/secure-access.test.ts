@@ -1,5 +1,5 @@
 import { resolve, sep } from "path"
-import { realpathSync } from "fs"
+import { realpathSync, existsSync } from "fs"
 import { describe, it, expect } from "vitest"
 
 // --- Types ---
@@ -112,9 +112,13 @@ const commandRules: CommandRule[] = [
   { pattern: /^pnpm --filter (frontend|backend|@jobfindr\/types|@jobfindr\/utils)\s+(dev|build|start|lint|typecheck|test|preview|clean)$/i, type: "pnpm-filter" },
   { pattern: /^pnpm --filter backend exec tsx \.\.\/frontend\/playwright-check\.ts$/i, type: "pnpm-pw-check" },
   { pattern: /^pnpm install$/i, type: "pnpm-install" },
+  { pattern: /^pnpm typecheck$/i, type: "pnpm-typecheck" },
+  { pattern: /^pnpm lint$/i, type: "pnpm-lint" },
+  { pattern: /^pnpm run\s+\S+(\s+.*)?$/i, type: "pnpm-run" },
+  { pattern: /^pnpm test$/i, type: "pnpm-test" },
   { pattern: /^docker compose (up|down|build)$/i, type: "docker-compose" },
   { pattern: /^npx playwright .+$/i, type: "npx-playwright" },
-  { pattern: /^vitest run(?:\s+.*)?$/i, type: "vitest-run" },
+  { pattern: /^(?:\.\\node_modules\\.bin\\)?vitest(?:\.(?:CMD|ps1))? run(?:\s+.*)?$/i, type: "vitest-run" },
   { pattern: /^powershell -c "\[System\.Console\]::Beep\(\d+, \d+\)"$/i, type: "powershell-beep" },
   {
     pattern: /^git\s+(\S+)(?:\s+.*)?$/i,
@@ -177,7 +181,15 @@ const commandRules: CommandRule[] = [
   },
 ]
 
+const normalizeCommand = (cmd: string): string => {
+  if (/^rtk\s+git(?:\s+|$)/i.test(cmd)) {
+    return cmd.replace(/^rtk\s+/i, "")
+  }
+  return cmd
+}
+
 const parseCommand = (cmd: string): { type: string; args: string[] } | null => {
+  cmd = normalizeCommand(cmd)
   for (const rule of commandRules) {
     const match = cmd.match(rule.pattern)
     if (match) {
@@ -213,6 +225,17 @@ export const createPathValidator = (projectDir: string) => {
     }
     return real.startsWith(projectBoundary) || real === projectReal
   }
+}
+
+// --- Helpers for exec handler tests ---
+
+const VALID_SCRIPT_EXT = /\.(ts|js|tsx|mjs|cjs)$/i
+const DANGEROUS_SCRIPT_EXT = /\.(exe|com|bat|ps1|sh|dll)$/i
+
+const resolveScript = (directory: string, base: string, scriptArg: string): string | null => {
+  const fullPath = resolve(directory, base, scriptArg)
+  if (existsSync(fullPath)) return safeRealPath(fullPath)
+  return null
 }
 
 // ==============================
@@ -265,6 +288,10 @@ describe("parseCommand", () => {
       it(cmd, () => expect(parseCommand(cmd)?.type).toBe(expectedType))
 
     ok("pnpm install", "pnpm-install")
+    ok("pnpm typecheck", "pnpm-typecheck")
+    ok("pnpm lint", "pnpm-lint")
+    ok("pnpm run dev", "pnpm-run")
+    ok("pnpm run typecheck", "pnpm-run")
     ok("pnpm --filter frontend dev", "pnpm-filter")
     ok("pnpm --filter backend build", "pnpm-filter")
     ok("docker compose up", "docker-compose")
@@ -353,6 +380,36 @@ describe("parseCommand", () => {
     block("git add")
     block("git commit without message")
     block("git restore")
+  })
+
+  // --- rtk git alias (git shim) ---
+  describe("rtk git alias", () => {
+    const ok = (cmd: string) =>
+      it(cmd, () => expect(parseCommand(cmd)?.type).toBe("git"))
+
+    const block = (cmd: string) =>
+      it(cmd, () => expect(() => parseCommand(cmd)).toThrow(VALIDATION_ERROR))
+
+    ok("rtk git status")
+    ok("rtk git status --short")
+    ok("rtk git diff")
+    ok("rtk git diff HEAD")
+    ok("rtk git log --oneline -5")
+    ok("rtk git add src/file.ts")
+    ok("rtk git commit -m 'fix bug'")
+    ok("rtk git checkout main")
+    ok("rtk git push origin main")
+    ok("rtk git pull upstream main")
+    ok("rtk git stash")
+    ok("rtk git branch")
+    ok("rtk git fetch")
+    ok("rtk git reset --hard")
+
+    block("rtk git add")
+    block("rtk git commit without message")
+    block("rtk git restore")
+    block("rtk git push origin --exec evil")
+    block("rtk git pull --upload-pack evil")
   })
 
   // --- Fase 27: Node/TSX flag blocking ---
@@ -826,5 +883,68 @@ describe("createPathValidator non-existent path fallback", () => {
   it("still allows existing files inside project", () => {
     expect(isInside(__filename)).toBe(true)
     expect(isInside(__dirname)).toBe(true)
+  })
+})
+
+// --- pnpm test ---
+describe("pnpm test command", () => {
+  it("recognizes pnpm test", () => {
+    expect(parseCommand("pnpm test")?.type).toBe("pnpm-test")
+  })
+})
+
+// --- Vitest from node_modules/.bin ---
+describe("vitest-run from node_modules/.bin", () => {
+  const ok = (cmd: string) =>
+    it(cmd, () => expect(parseCommand(cmd)?.type).toBe("vitest-run"))
+
+  ok("vitest run")
+  ok("vitest run --reporter verbose")
+  ok(".\\node_modules\\.bin\\vitest run")
+  ok(".\\node_modules\\.bin\\vitest.CMD run")
+  ok(".\\node_modules\\.bin\\vitest.ps1 run")
+  ok(".\\node_modules\\.bin\\vitest run --reporter json")
+})
+
+// --- Script extension validation ---
+describe("script extension validation", () => {
+  it("allows .ts", () => { expect(VALID_SCRIPT_EXT.test("script.ts")).toBe(true) })
+  it("allows .js", () => { expect(VALID_SCRIPT_EXT.test("script.js")).toBe(true) })
+  it("allows .tsx", () => { expect(VALID_SCRIPT_EXT.test("script.tsx")).toBe(true) })
+  it("allows .mjs", () => { expect(VALID_SCRIPT_EXT.test("script.mjs")).toBe(true) })
+  it("allows .cjs", () => { expect(VALID_SCRIPT_EXT.test("script.cjs")).toBe(true) })
+  it("blocks .exe", () => { expect(VALID_SCRIPT_EXT.test("script.exe")).toBe(false) })
+  it("blocks .bat", () => { expect(VALID_SCRIPT_EXT.test("script.bat")).toBe(false) })
+  it("blocks .ps1", () => { expect(VALID_SCRIPT_EXT.test("script.ps1")).toBe(false) })
+  it("blocks .sh", () => { expect(VALID_SCRIPT_EXT.test("script.sh")).toBe(false) })
+  it("blocks .dll", () => { expect(VALID_SCRIPT_EXT.test("script.dll")).toBe(false) })
+})
+
+describe("dangerous extension detection", () => {
+  it("detects .exe as dangerous", () => { expect(DANGEROUS_SCRIPT_EXT.test("evil.exe")).toBe(true) })
+  it("detects .com as dangerous", () => { expect(DANGEROUS_SCRIPT_EXT.test("evil.com")).toBe(true) })
+  it("detects .bat as dangerous", () => { expect(DANGEROUS_SCRIPT_EXT.test("script.bat")).toBe(true) })
+  it("detects .ps1 as dangerous", () => { expect(DANGEROUS_SCRIPT_EXT.test("script.ps1")).toBe(true) })
+  it("detects .sh as dangerous", () => { expect(DANGEROUS_SCRIPT_EXT.test("script.sh")).toBe(true) })
+  it("detects .dll as dangerous", () => { expect(DANGEROUS_SCRIPT_EXT.test("lib.dll")).toBe(true) })
+  it("allows .ts as safe", () => { expect(DANGEROUS_SCRIPT_EXT.test("script.ts")).toBe(false) })
+  it("allows .mjs as safe", () => { expect(DANGEROUS_SCRIPT_EXT.test("script.mjs")).toBe(false) })
+})
+
+// --- resolveScript helper ---
+describe("resolveScript with workdir fallback", () => {
+  it("resolves script relative to directory", () => {
+    const result = resolveScript(__dirname, __dirname, "secure-access.test.ts")
+    expect(result).not.toBeNull()
+  })
+
+  it("returns null for non-existent script", () => {
+    const result = resolveScript(__dirname, __dirname, "nonexistent-file.xyz")
+    expect(result).toBeNull()
+  })
+
+  it("resolves script via base override", () => {
+    const result = resolveScript(__dirname, __dirname, "secure-access.test.ts")
+    expect(result?.endsWith("secure-access.test.ts")).toBe(true)
   })
 })

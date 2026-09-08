@@ -1,6 +1,6 @@
 # Codebase Analysis — Implementation
 
-Generated: 2026-06-12T03:16:15.976Z
+Generated: 2026-09-07T01:09:22.038Z
 
 ```
 
@@ -8,203 +8,160 @@ Generated: 2026-06-12T03:16:15.976Z
 ║     Codebase — Implementation Report     ║
 ╚══════════════════════════════════════════╝
 
-Generated: 2026-06-12T03:16:15.976Z
+Generated: 2026-09-07T01:09:22.038Z
 Parser:    regex
 
 ── Overview ──
-  Total files:      139 (TS: 111, TSX: 28)
-  Total imports:    321
-  Total exports:    290
-  Functions:        201
-  Arrow functions:  4
-  Classes:          31
-  Interfaces:       38
-  Type aliases:     113
-  React components: 4
+  Total files:      87 (TS: 47, TSX: 40)
+  Total imports:    267
+  Total exports:    167
+  Functions:        145
+  Arrow functions:  31
+  Classes:          4
+  Interfaces:       69
+  Type aliases:     6
+  React components: 5
 
 ── Per Package ──
-  frontend:
-    Files:        38
-    Imports:      90
-    Exports:      52
-    Declarations: 90
-  backend:
-    Files:        92
-    Imports:      226
-    Exports:      183
-    Declarations: 255
-  packages/types:
-    Files:        8
-    Imports:      5
-    Exports:      46
-    Declarations: 35
-  packages/utils:
-    Files:        1
-    Imports:      0
-    Exports:      9
-    Declarations: 7
+  apps/web:
+    Files:        51
+    Imports:      186
+    Exports:      65
+    Declarations: 151
+  apps/api:
+    Files:        11
+    Imports:      41
+    Exports:      19
+    Declarations: 26
+  packages/shared:
+    Files:        3
+    Imports:      1
+    Exports:      22
+    Declarations: 11
+  packages/domain:
+    Files:        11
+    Imports:      25
+    Exports:      28
+    Declarations: 36
+  packages/calendar:
+    Files:        6
+    Imports:      10
+    Exports:      23
+    Declarations: 19
+  packages/ui:
+    Files:        5
+    Imports:      4
+    Exports:      10
+    Declarations: 12
 
 ── Top Dependencies ──
-  @jobfindr/types                46
-  react                          22
-  fastify                        11
-  ../../../shared/logger/logger.ts 11
-  @/types                        10
-  ../config/companies.ts         8
-  ../../../config/env.ts         8
-  @/hooks                        6
-  ../../normalization/services/skill-extraction.ts 6
-  ../services/normalization-pipeline.ts 5
-  ../services/retry-system.ts    5
-  ../../normalization/services/html-cleaner.ts 5
-  ../config/company-registry.ts  5
-  ./AutocompleteInput            4
-  @/store/searchStore            4
+  @brkroutnxdle/shared           51
+  react                          47
+  express                        9
+  ./types.js                     7
+  ../services/api                6
+  @brkroutnxdle/domain           6
+  ../contexts/CalendarContext    6
+  ../middleware/auth.js          6
+  ../contexts/SettingsContext    5
+  @tanstack/react-query          5
+  ../contexts/PreviewContext     5
+  ../middleware/errorHandler.js  5
+  ../contexts/BlockContext       4
+  ../contexts/TaskContext        4
+  ../services/localStorage       3
 
-── Exported API Surface (2) ──
-  types:
-    function       getMatchThresholdLabel         packages/types/src/match.types.ts
-    function       getTrustVisibility             packages/types/src/trust.types.ts
+── Exported API Surface (1) ──
+  web:
+    function       useCalendarEvents              apps/web/src/hooks/useCalendar.ts
 
 ── Files Scanned ──
-  apps/backend/src/app.ts
-  apps/backend/src/cache/aggregated-cache.ts
-  apps/backend/src/cache/in-memory-cache.ts
-  apps/backend/src/cache/provider-cache-layer.ts
-  apps/backend/src/config/env.ts
-  apps/backend/src/index.ts
-  apps/backend/src/modules/matchmaking/domain/match-types.ts
-  apps/backend/src/modules/matchmaking/services/match-explanation.ts
-  apps/backend/src/modules/matchmaking/services/match-thresholds.ts
-  apps/backend/src/modules/matchmaking/services/semantic-matching.ts
-  apps/backend/src/modules/matchmaking/services/similarity-engine.ts
-  apps/backend/src/modules/matchmaking/services/synonym-dictionary.ts
-  apps/backend/src/modules/matchmaking/services/user-skill-parser.ts
-  apps/backend/src/modules/matchmaking/services/weighted-match-scoring.ts
-  apps/backend/src/modules/normalization/services/benefits-parser.ts
-  apps/backend/src/modules/normalization/services/html-cleaner.ts
-  apps/backend/src/modules/normalization/services/remote-detection.ts
-  apps/backend/src/modules/normalization/services/salary-parser.ts
-  apps/backend/src/modules/normalization/services/seniority-parser.ts
-  apps/backend/src/modules/normalization/services/skill-extraction.ts
-  apps/backend/src/modules/normalization/services/skill-normalizer.ts
-  apps/backend/src/modules/providers/ashby/ashby-provider.ts
-  apps/backend/src/modules/providers/config/companies.ts
-  apps/backend/src/modules/providers/config/company-registry.ts
-  apps/backend/src/modules/providers/domain/api-provider.ts
-  apps/backend/src/modules/providers/domain/base-provider.ts
-  apps/backend/src/modules/providers/domain/job-provider.interface.ts
-  apps/backend/src/modules/providers/domain/json-provider.ts
-  apps/backend/src/modules/providers/domain/provider-registry.ts
-  apps/backend/src/modules/providers/domain/provider-type.ts
-  apps/backend/src/modules/providers/greenhouse/greenhouse-provider.ts
-  apps/backend/src/modules/providers/gupy/gupy-provider.ts
-  apps/backend/src/modules/providers/lever/lever-provider.ts
-  apps/backend/src/modules/providers/routes/admin-companies.ts
-  apps/backend/src/modules/providers/services/company-discovery.ts
-  apps/backend/src/modules/providers/services/company-sync.ts
-  apps/backend/src/modules/providers/services/normalization-pipeline.ts
-  apps/backend/src/modules/providers/services/provider-engine.ts
-  apps/backend/src/modules/providers/services/provider-fallback.ts
-  apps/backend/src/modules/providers/services/provider-health.ts
-  apps/backend/src/modules/providers/services/provider-loader.ts
-  apps/backend/src/modules/providers/services/provider-status-route.ts
-  apps/backend/src/modules/providers/services/resilience/backoff-config.ts
-  apps/backend/src/modules/providers/services/resilience/circuit-breaker.ts
-  apps/backend/src/modules/providers/services/resilience/quota-manager.ts
-  apps/backend/src/modules/providers/services/retry-system.ts
-  apps/backend/src/modules/providers/workday/workday-provider.ts
-  apps/backend/src/modules/ranking/domain/ranking-types.ts
-  apps/backend/src/modules/ranking/services/composite-score.ts
-  apps/backend/src/modules/ranking/services/large-company-priority.ts
-  apps/backend/src/modules/ranking/services/match-score-weight.ts
-  apps/backend/src/modules/ranking/services/ranking-engine.ts
-  apps/backend/src/modules/ranking/services/recency-ranking.ts
-  apps/backend/src/modules/ranking/services/salary-ranking.ts
-  apps/backend/src/modules/ranking/services/trust-score-weight.ts
-  apps/backend/src/modules/scraping/http/axios-client.ts
-  apps/backend/src/modules/scraping/parsing/html-parser.ts
-  apps/backend/src/modules/scraping/playwright/playwright-setup.ts
-  apps/backend/src/modules/scraping/services/anti-blocking-layer.ts
-  apps/backend/src/modules/scraping/services/rate-limiter.ts
-  apps/backend/src/modules/scraping/services/request-queue.ts
-  apps/backend/src/modules/scraping/services/retry-manager.ts
-  apps/backend/src/modules/scraping/services/timeout-wrapper.ts
-  apps/backend/src/modules/scraping/services/user-agent-rotation.ts
-  apps/backend/src/modules/search/controllers/search-controller.ts
-  apps/backend/src/modules/search/dto/search-dto.ts
-  apps/backend/src/modules/search/services/aggregation-service.ts
-  apps/backend/src/modules/search/services/pagination.ts
-  apps/backend/src/modules/search/services/timeout-manager.ts
-  apps/backend/src/modules/search/validation/search-validation.ts
-  apps/backend/src/modules/suggestions/suggestions-controller.ts
-  apps/backend/src/modules/trust/cache/trust-cache.ts
-  apps/backend/src/modules/trust/services/company-reputation.ts
-  apps/backend/src/modules/trust/services/hidden-companies-config.ts
-  apps/backend/src/modules/trust/services/manual-override.ts
-  apps/backend/src/modules/trust/services/provider-reputation.ts
-  apps/backend/src/modules/trust/services/trust-engine.ts
-  apps/backend/src/modules/trust/services/trust-score-formula.ts
-  apps/backend/src/shared/logger/logger.ts
-  apps/backend/src/shared/metrics/error-monitoring.ts
-  apps/backend/src/shared/metrics/metrics.ts
-  apps/backend/src/shared/metrics/provider-metrics.ts
-  apps/backend/src/shared/metrics/timeout-monitoring.ts
-  apps/backend/src/shared/middleware/anti-spam.ts
-  apps/backend/src/shared/middleware/error-handler.ts
-  apps/backend/src/shared/middleware/rate-limiter.ts
-  apps/backend/src/shared/middleware/sanitization.ts
-  apps/backend/src/shared/middleware/secure-headers.ts
-  apps/backend/src/shared/middleware/validation.ts
-  apps/backend/src/shared/services/provider-isolation.ts
-  apps/backend/src/shared/services/request-batching.ts
-  apps/backend/src/shared/streaming/partial-streaming.ts
-  apps/frontend/src/App.tsx
-  apps/frontend/src/components/ApplyCta.tsx
-  apps/frontend/src/components/AutocompleteInput.tsx
-  apps/frontend/src/components/CompanyFilters.tsx
-  apps/frontend/src/components/CountryFilter.tsx
-  apps/frontend/src/components/EmptyState.tsx
-  apps/frontend/src/components/ExpandableDescription.tsx
-  apps/frontend/src/components/FiltersPanel.tsx
-  apps/frontend/src/components/JobCard.tsx
-  apps/frontend/src/components/Layout.tsx
-  apps/frontend/src/components/LoadingSkeleton.tsx
-  apps/frontend/src/components/LoadingStates.tsx
-  apps/frontend/src/components/MatchExplanationModal.tsx
-  apps/frontend/src/components/MatchSummary.tsx
-  apps/frontend/src/components/Modal.tsx
-  apps/frontend/src/components/Pagination.tsx
-  apps/frontend/src/components/RemoteModeFilter.tsx
-  apps/frontend/src/components/SearchBar.tsx
-  apps/frontend/src/components/SenioritySelector.tsx
-  apps/frontend/src/components/SkillsTagsInput.tsx
-  apps/frontend/src/components/SortToggle.tsx
-  apps/frontend/src/components/TrustExplanationModal.tsx
-  apps/frontend/src/components/TrustFilters.tsx
-  apps/frontend/src/components/UserSkillsInput.tsx
-  apps/frontend/src/components/UserSkillsModal.tsx
-  apps/frontend/src/contexts/SkillsModalContext.tsx
-  apps/frontend/src/hooks/index.ts
-  apps/frontend/src/hooks/useDebounce.ts
-  apps/frontend/src/hooks/useJobSearch.ts
-  apps/frontend/src/hooks/useSuggestions.ts
-  apps/frontend/src/main.tsx
-  apps/frontend/src/pages/HomePage.tsx
-  apps/frontend/src/services/api.ts
-  apps/frontend/src/store/searchStore.ts
-  apps/frontend/src/test-setup.ts
-  apps/frontend/src/types/index.ts
-  apps/frontend/src/utils/explain.ts
-  apps/frontend/src/utils/index.ts
-  packages/types/src/api.types.ts
-  packages/types/src/index.ts
-  packages/types/src/match.types.ts
-  packages/types/src/normalized-job.ts
-  packages/types/src/provider.types.ts
-  packages/types/src/ranking.types.ts
-  packages/types/src/search-dto.ts
-  packages/types/src/trust.types.ts
-  packages/utils/src/index.ts
+  apps/api/src/index.ts
+  apps/api/src/middleware/auth.ts
+  apps/api/src/middleware/errorHandler.ts
+  apps/api/src/middleware/rateLimiter.ts
+  apps/api/src/routes/auth.ts
+  apps/api/src/routes/calendars.ts
+  apps/api/src/routes/events.ts
+  apps/api/src/services/calendar-client.ts
+  apps/api/src/services/google-oauth.ts
+  apps/api/src/services/session.ts
+  apps/api/src/types.ts
+  apps/web/src/App.tsx
+  apps/web/src/components/CalendarView.tsx
+  apps/web/src/components/DevModeBadge.tsx
+  apps/web/src/components/DevModePanel.tsx
+  apps/web/src/components/ErrorBoundary.tsx
+  apps/web/src/components/ErrorFallback.tsx
+  apps/web/src/components/Header.tsx
+  apps/web/src/components/MainLayout.tsx
+  apps/web/src/components/SettingsModal.tsx
+  apps/web/src/components/Sidebar.tsx
+  apps/web/src/contexts/AuthContext.tsx
+  apps/web/src/contexts/BlockContext.tsx
+  apps/web/src/contexts/CalendarContext.tsx
+  apps/web/src/contexts/DevModeContext.tsx
+  apps/web/src/contexts/PreviewContext.tsx
+  apps/web/src/contexts/SettingsContext.tsx
+  apps/web/src/contexts/TaskContext.tsx
+  apps/web/src/features/blocks/BlockCard.tsx
+  apps/web/src/features/blocks/BlockModal.tsx
+  apps/web/src/features/blocks/BlockPanel.tsx
+  apps/web/src/features/completion/CompletionAction.tsx
+  apps/web/src/features/completion/ConflictDialog.tsx
+  apps/web/src/features/completion/RefreshButton.tsx
+  apps/web/src/features/completion/TokenRetryModal.tsx
+  apps/web/src/features/preview/AllocationFailurePanel.tsx
+  apps/web/src/features/preview/CalculateWeekButton.tsx
+  apps/web/src/features/preview/DeleteEventDialog.tsx
+  apps/web/src/features/preview/PreviewToolbar.tsx
+  apps/web/src/features/preview/SaveButton.tsx
+  apps/web/src/features/shared/CreateActionModal.tsx
+  apps/web/src/features/tasks/TaskCard.tsx
+  apps/web/src/features/tasks/TaskModal.tsx
+  apps/web/src/features/tasks/TaskPanel.tsx
+  apps/web/src/hooks/useBlocks.ts
+  apps/web/src/hooks/useCalendar.ts
+  apps/web/src/hooks/useCalendarRefresh.ts
+  apps/web/src/hooks/useCompletion.ts
+  apps/web/src/hooks/useDevMode.ts
+  apps/web/src/hooks/useSaveSchedule.ts
+  apps/web/src/hooks/useScheduleEditing.ts
+  apps/web/src/hooks/useScheduleGeneration.ts
+  apps/web/src/hooks/useSettings.ts
+  apps/web/src/hooks/useTasks.ts
+  apps/web/src/hooks/useUnsavedChanges.ts
+  apps/web/src/main.tsx
+  apps/web/src/pages/DashboardPage.tsx
+  apps/web/src/pages/LoginPage.tsx
+  apps/web/src/services/api.ts
+  apps/web/src/services/calendarCache.ts
+  apps/web/src/services/diffCalculator.ts
+  apps/web/src/services/localStorage.ts
+  packages/calendar/src/index.ts
+  packages/calendar/src/internal/metadata.ts
+  packages/calendar/src/internal/normalizer.ts
+  packages/calendar/src/internal/types.ts
+  packages/calendar/src/public/index.ts
+  packages/calendar/src/public/operations.ts
+  packages/domain/src/index.ts
+  packages/domain/src/internal/allocationReporter.ts
+  packages/domain/src/internal/availabilityCalculator.ts
+  packages/domain/src/internal/priorityScorer.ts
+  packages/domain/src/internal/shuffleEngine.ts
+  packages/domain/src/internal/slotBuilder.ts
+  packages/domain/src/internal/taskDistributor.ts
+  packages/domain/src/internal/types.ts
+  packages/domain/src/internal/validator.ts
+  packages/domain/src/public/generateSchedule.ts
+  packages/domain/src/public/index.ts
+  packages/shared/src/constants/index.ts
+  packages/shared/src/index.ts
+  packages/shared/src/types/index.ts
+  packages/ui/src/components/BottomSheet.tsx
+  packages/ui/src/components/Button.tsx
+  packages/ui/src/components/FAB.tsx
+  packages/ui/src/components/Modal.tsx
+  packages/ui/src/index.ts
 
 ```
