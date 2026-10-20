@@ -1,0 +1,385 @@
+# Archived completed execution before calendar-scheduling-recovery.
+pipeline:
+  name: "ui-ux-modernization"
+  status: completed
+  started_at: "2026-10-03T00:00:00"
+  updated_at: "2026-10-18T19:00:00"
+  current_step: completed
+  current_agent: null
+  steps:
+    solution-designer:
+      status: completed
+      notes: "Approved: Option C (component library). Mantine 8.3.18 pinned (v9 needs React 19.2). 8 design docs written to design-docs/. Dark tier included, all phases one delivery."
+      updated_at: "2026-10-03T18:05:00"
+      errors: []
+      concerns:
+        - "Original brief diagnosis was wrong: design-tokens.css (84 lines) and CalendarStyles.css (181 lines) already exist and are imported in main.tsx; they are bypassed by ~100 inline style objects, not absent."
+        - "@mantine/schedule rejected (needs React 19.2; would break .fc-* E2E assertions)."
+        - "R-CAL-01 businessHours may de-emphasise the .fc-timegrid-slot(14:00) element that TASK-01/TASK-02 click - highest-risk change."
+        - "DashboardPage.tsx touched by migration Phases 4/5/6 - must have a single owner, never parallel."
+        - "No lint script configured in apps/web."
+    planning-analyst:
+      status: completed
+      notes: "8 planning docs written. Design validated against real code: 4 blocking + 18 material corrections recorded as mandatory constraints (user chose to fold into planning rather than amend the design). Baseline build PASS, 524.63 kB raw / 156.62 kB gzip."
+      updated_at: "2026-10-03T18:20:00"
+      errors:
+        - "First dispatch returned an empty response and created no files; retry (attempt 2 of 3) succeeded."
+      concerns:
+        - "B1: Mantine SegmentedControl renders radio inputs, not buttons - breaks TASK-02 button:has-text selectors."
+        - "B2: native select/input are load-bearing for E2E in TaskModal.tsx and CreateActionModal.tsx."
+        - "B3: FullCalendar businessHours would shade the asserted Sunday 14:00 slot - deferred, CSS-only workday tint."
+        - "B4: #3CC4BD with white text is ~2.1:1 contrast - dark tier needs dark text or a darker fill."
+        - "DashboardPage.tsx is 567 lines (over the 400-line rule) and shared by phases 4/5/6 - mandatory split, single owner."
+        - "No lint script in apps/web - no lint gate exists."
+    tech-lead:
+      status: completed
+      notes: "15 tasks + dependencies.md + index.md created. Max safe parallelism 3 (Phase 6 lanes only); the other 12 tasks are serialized by 8 cross-phase overlap flags."
+      updated_at: "2026-10-03T19:10:00"
+      errors: []
+      concerns:
+        - "Deviation from file-impact.md: TASK-07 owns calendar/CalendarToolbar.tsx, TASK-08 owns CalendarView.tsx. TASK-07 is forbidden from adding props to FullCalendar."
+        - "Deviation from dispatch-plan.md: Phase 4 split into TASK-05 (shell) and TASK-06 (StatusBar + DashboardPage split) because both own DashboardPage.tsx."
+        - "Header.tsx overlap introduced by the decomposition: TASK-05 then TASK-07, strictly sequential."
+        - "No backend task exists - apps/api is out of scope."
+    senior-frontend:
+      status: completed
+      notes: "All 15 tasks completed and QA approved. Both builds, permanent browser runner and existing tests 9/9 PASS; QA established fresh-server provenance by HTTP probe before rerun. Historical errors below were resolved during delivery."
+      updated_at: "2026-10-18T18:15:00"
+      errors:
+        - "Latest TASK-08 retry: builds passed; apps/web tests failed (7 passed, 2 failed) because TASK-01 and TASK-02 timed out navigating to localhost:5173. Re-run the test gate after diagnosing/fixing the validation environment or actual test failure; 9/9 acceptance remains unmet."
+        - "Requested subagent type gpt-6-luna is unavailable: task tool reports it is not a valid agent type. Same dispatch retried 3 times; all failed. Cannot continue this step with the requested agent type."
+        - "Resume dispatch reached maximum tool steps during read-only investigation; no edits or validation were completed. A prior partial TASK-08 attempt exists in the worktree and needs alignment with the task specification."
+        - "TASK-05 attempt 2: reached MAXIMUM TOOL STEPS before applying any fix; no files modified and no validation gate was run."
+        - "TASK-05 attempt 3: dispatch was rejected by the operator at the permission prompt. No attempt consumed, no files modified."
+        - "TASK-05 attempt 3: apps/web build FAILS - src/components/Sidebar.tsx(68,31) TS2322 'Property keepMounted does not exist on type AccordionPanelProps'. @mantine/core 8.3.18 AccordionPanel declares no keepMounted prop. Build left broken in the working tree; the E2E gate was never reached."
+      concerns:
+        - "TASK-05 root cause A (4 TASK-02 failures): attempt 1 initialised Accordion openSection to \"tasks\"; HEAD baseline is null. TASK-02.spec.ts:52-54 requires sections collapsed by default, so the click collapsed the panel and the Accordion label intercepted pointer events. Fix = initial null. ALREADY APPLIED on disk (Sidebar.tsx:13)."
+        - "TASK-05 root cause B (TASK-01 failure): orchestrator hypothesis was wrong - not the Accordion. AppShellMain carries min-height:100dvh with no flex-grow and the AppShell root has no base layout CSS, so Main collapsed to content height and broke DashboardPage's height:100% chain (.fc-view-harness resolved to hidden 32x). Fix = height:100% + minHeight:0 + overflow:auto on AppShell.Main. ALREADY APPLIED on disk (MainLayout.tsx:35-39,52-55)."
+        - "The task file's keepMounted requirement (criterion 8, design D-07) is NOT SATISFIABLE on @mantine/core 8.3.18 - the prop does not exist. The task file needs a correction, and drag-and-drop liveness with collapsed-by-default sections is still unverified."
+        - "TASK-05 scope conflict resolved by the orchestrator: criterion 2 (100vh fallback + 100dvh) is impossible without an owned stylesheet. Inline height styles are authorised as an explicit deviation; the 100vh fallback is DEFERRED to TASK-09, which owns apps/web/src/styles/**. Colour styling must still use --brk-* tokens with no hardcoded hex."
+        - "Unverified risk: MainLayout renders AppShellNavbar, which may itself emit an <aside>, giving two <aside> elements against the Sidebar literal <aside>. Conditional remedy: component=\"div\" on AppShellNavbar - only if TASK-02's aside assertion actually fails."
+        - "Tooling limits hit by subagents: Windows MAX_PATH blocks reading @mantine/core internals under node_modules/.pnpm (~250+ chars); shell guard blocks node -e."
+        - "TASK-06 first dispatch hit the tool-step limit after partial implementation; follow-up completed the remaining work and all three validation gates passed."
+      tasks:
+        - id: TASK-01
+          title: "Dependencies and PostCSS"
+          phase: 1
+          depends_on: []
+          status: completed
+        - id: TASK-02
+          title: "Design tokens and reset"
+          phase: 2
+          depends_on: [TASK-01]
+          status: completed
+        - id: TASK-03
+          title: "Mantine theme and providers"
+          phase: 2
+          depends_on: [TASK-01, TASK-02]
+          status: completed
+        - id: TASK-04
+          title: "packages/ui wrappers"
+          phase: 3
+          depends_on: [TASK-03]
+          status: completed
+        - id: TASK-05
+          title: "App shell layout"
+          phase: 4
+          depends_on: [TASK-04]
+          status: completed
+          attempts: 4
+          errors:
+            - "Attempt 1: Mantine Accordion UI intercepted clicks (TaskPanel '+ New', selects) causing E2E timeouts; Header/Sidebar restructuring broke TASK-02 interaction flow (4/9)."
+            - "Attempt 2: exhausted the tool-step budget in read-only diagnosis."
+            - "Attempt 3: added an invalid keepMounted attribute that broke the apps/web build (TS2322)."
+          deviations:
+            - "Criterion 8 (accordion panels keepMounted) is NOT SATISFIABLE on @mantine/core 8.3.18 - AccordionPanelProps declares no keepMounted. Removed; panels unmount when closed. TASK-05 step 3, criterion 8 and edge case at TASK-05-app-shell-layout.md:111,150,197 plus design-03:245 and design-07 D-07 are now stale and must be corrected by TASK-15."
+            - "Criterion 2's 100vh fallback is deferred to TASK-09 (owns apps/web/src/styles/**); inline height styles were authorised as an explicit deviation."
+          notes: "Green after 4 dispatches. Sidebar.tsx:13 openSection initial null (root cause of the 4 TASK-02 failures); MainLayout.tsx:35-39,52-55 height chain (root cause of the TASK-01 calendar failure). Gate: build packages/ui PASS, build apps/web PASS, test apps/web 9/9 PASS."
+        - id: TASK-06
+          title: "StatusBar and DashboardPage split"
+          phase: 4
+          depends_on: [TASK-05]
+          status: completed
+          attempts: 2
+          errors:
+            - "Dispatch reached maximum tool steps after creating dashboardTypes.ts, StatusBar.tsx, useCalendarNavigation.ts, useDashboardModals.ts, and useExternalDrop.ts; DashboardModals.tsx, DashboardPage.tsx rewrite, and validation remain."
+          concerns:
+            - "DashboardPage.tsx is 346 lines; future edits should extract the action-row cluster rather than exceed the 350-line target."
+          notes: "Completed: StatusBar, extracted dashboard types/hooks, stateless DashboardModals, DashboardPage rewritten to 346 lines. Gate PASS: build packages/ui, build apps/web, test apps/web 9/9 (TASK-01: 1 E2E + 4 computeDiff unit; TASK-02: 4 E2E)."
+        - id: TASK-07
+          title: "Calendar toolbar and ownership"
+          phase: 5
+          depends_on: [TASK-06]
+          status: completed
+          attempts: 1
+          errors:
+            - "Implementation complete, but dispatch reached maximum tool steps before build packages/ui, build apps/web, or test apps/web; validation remains."
+          concerns:
+            - "TASK-07 moved the date title and Today control fully into CalendarToolbar, resolving the task's ownership prose in favor of steps 2/3, R-16, and design-04 despite the M15 table's title assignment to AppShell.Header."
+          notes: "Completed CalendarToolbar, theme map, Header ownership move, and DashboardPage mount. Validation PASS: build packages/ui, build apps/web (930 modules), test apps/web 9/9. DashboardPage.tsx verified at 319 lines; E2E files untouched."
+        - id: TASK-08
+          title: "Event content renderer"
+          phase: 5
+          depends_on: [TASK-07]
+          status: completed
+          attempts: 4
+          errors:
+            - "Initial E2E run reported 7 passed / 2 navigation timeouts at localhost:5173; immediate rerun passed all 9 tests, indicating a transient test-server startup/environment issue."
+          notes: "Completed EventContent renderer and project-owned event class emission. Reduced CalendarView.tsx by four lines to satisfy the <=373 line criterion. build packages/ui PASS; build apps/web PASS; test apps/web PASS 9/9, including both prior navigation scenarios."
+        - id: TASK-09
+          title: "Calendar stylesheet reskin"
+          phase: 5
+          depends_on: [TASK-08]
+          status: completed
+          notes: "Calendar stylesheet reskin complete: all partials scoped to .brk-calendar-google, no !important, CSS-only weekday tint, event styles and contrast-documented dark palette. build packages/ui PASS; build apps/web PASS; test apps/web 9/9 PASS."
+          concerns:
+            - "Visual/manual validation not performed. Existing main.tsx import list lacked @mantine/modals/styles.css; agent appended only the three authorized calendar imports and left prior imports unchanged."
+        - id: TASK-10
+          title: "Lane 6A - tasks and blocks"
+          phase: 6
+          depends_on: [TASK-09]
+          status: completed
+          notes: "All six owned task/block files reviewed or migrated. packages/ui build PASS; apps/web build PASS; tests PASS 9/9. No inline styles, each file under 400 lines. Manual flow checks not performed."
+        - id: TASK-11
+          title: "Lane 6B - preview, completion, shared"
+          phase: 6
+          depends_on: [TASK-09]
+          status: completed
+          notes: "Existing migrations in all ten owned files reviewed; no additional edits needed. Native controls and closed-dialog unmounting preserved. Both builds PASS; tests PASS 9/9. Manual flow checks not performed."
+        - id: TASK-12
+          title: "Lane 6C - settings, dev, errors, login"
+          phase: 6
+          depends_on: [TASK-09]
+          status: completed
+          notes: "Seven owned files migrated. Permanent apps/web/qa/task12-browser-validation.ts runner passed all five real-browser flows using mocked OAuth/API; both builds passed; existing suite passed all 9 with one resource-related retry. Awaiting QA verification of runner."
+          concerns:
+            - "Cannot mark complete until timezone performance, settings reload persistence, error recovery, dev-token authentication and login navigation are manually verified."
+        - id: TASK-13
+          title: "Post-merge validation"
+          phase: 6
+          depends_on: [TASK-10, TASK-11, TASK-12]
+          status: completed
+          notes: "Merge validation report created; packages/ui and web builds passed; fresh existing suite 9/9 passed without retries. Ten reconciliation checks reviewed; final audit must exhaustively check line caps/DOM criteria."
+        - id: TASK-14
+          title: "Dead CSS cleanup"
+          phase: 7
+          depends_on: [TASK-13]
+          status: completed
+          notes: "Pruned dead global/token/calendar CSS; organized imports. Both builds and E2E 9/9 passed. @mantine/modals/styles.css is not exported by installed package and cannot be imported; verified build failure then removed unsupported import. Visual/tier checks remain for audit."
+        - id: TASK-15
+          title: "Final audit"
+          phase: 7
+          depends_on: [TASK-14]
+          status: completed
+          notes: "QA APPROVED: drag integration recovered; isolated browser workflows PASS; ordered builds and tests 9/9 PASS. QA HTTP probe confirmed port unavailable immediately before final suite, establishing fresh-server evidence."
+    senior-backend:
+      status: not_applicable
+      notes: "apps/api is out of scope for this delivery. No backend task was created."
+      updated_at: "2026-10-03T19:10:00"
+      errors: []
+      concerns: []
+      tasks: []
+    qa-frontend:
+      status: completed
+      notes: "APPROVED. Reviewed migration and recovery; both builds PASS; existing tests 9/9 PASS with fresh-server evidence. Automated browser workflows and contrast recorded; human visual/physical touch review not performed."
+      updated_at: "2026-10-18"
+      errors: []
+      concerns:
+        - "Human visual review and physical touch-device testing not performed; automated Chromium evidence recorded."
+    qa-backend:
+      status: not_applicable
+      notes: "No backend tasks or changes in delivery scope."
+      updated_at: null
+      errors: []
+      concerns: []
+  tasks: [TASK-01, TASK-02, TASK-03, TASK-04, TASK-05, TASK-06, TASK-07, TASK-08, TASK-09, TASK-10, TASK-11, TASK-12, TASK-13, TASK-14, TASK-15]
+  history:
+    - step: qa-frontend
+      status: completed
+      updated_at: "2026-10-18T19:00:00"
+      note: "APPROVED; both builds and tests 9/9 PASS. Failed HTTP connection before final suite establishes fresh-server evidence without process inspection."
+    - step: senior-frontend
+      task: TASK-15
+      status: partial
+      updated_at: "2026-10-18T18:30:00"
+      note: "Recovery fixed external task dragging; isolated permanent QA runner fully PASS; ordered builds and tests 9/9 PASS. Handing off for final QA and strict existing-suite fresh-server provenance."
+    - step: senior-frontend
+      task: TASK-15
+      status: partial
+      updated_at: "2026-10-18T18:15:00"
+      note: "Resume recovery passed ordered builds and 9/9 tests; mobile overflow was stale geometry. Permanent browser checks passed through creation/deletion but task drag exhausted retries; assertion correction needs recovery validation."
+    - step: solution-designer
+      status: completed
+      updated_at: "2026-10-03T18:05:00"
+      note: "Option C approved by user. Mantine 8.3.18. 8 design docs written."
+    - step: planning-analyst
+      status: completed
+      updated_at: "2026-10-03T18:20:00"
+      note: "4 blocking + 18 material corrections recorded as mandatory constraints. 8 planning docs written."
+    - step: tech-lead
+      status: completed
+      updated_at: "2026-10-03T19:10:00"
+      note: "15 tasks created, all senior-frontend. No backend task."
+    - step: senior-frontend
+      task: TASK-05
+      status: failed
+      updated_at: "2026-10-03T19:10:00"
+      note: "AppShell + Mantine Accordion broke pointer events. 5/9 E2E failures (4 TASK-02 + 1 TASK-01 calendar render). Build OK. Needs reverting/fixing to preserve E2E DOM."
+    - step: pipeline-repair
+      status: completed
+      updated_at: "2026-10-04T13:55:00"
+      note: "delivery-pipeline:resume. pipeline.yaml would not parse: 5 stray duplicate 'status: failed' keys written at 2-space indentation inside nested blocks. Repaired, recovery_required set to true."
+    - step: senior-frontend
+      task: TASK-05
+      status: failed
+      updated_at: "2026-10-04T13:55:00"
+      note: "Attempt 2 exhausted the tool-step budget in read-only diagnosis. Both root causes identified (Accordion initial state + AppShell.Main height chain); reported no file writes."
+    - step: senior-frontend
+      task: TASK-05
+      status: resumed
+      updated_at: "2026-10-04T13:55:00"
+      note: "Attempt 3 prepared with both fixes pre-diagnosed and the inline-style scope conflict resolved, but the dispatch was rejected at the permission prompt. No attempt consumed."
+    - step: senior-frontend
+      task: TASK-05
+      status: failed
+      updated_at: "2026-10-04T13:55:00"
+      note: "Attempt 3 ran: found FIX 1 and FIX 2 already applied on disk (writes not accounted for by any reported attempt), then added an invalid keepMounted attribute that BREAKS the apps/web build (TS2322). Gate never reached. 3-attempt ceiling exhausted; remaining work is a one-token removal plus the gate."
+    - step: senior-frontend
+      task: TASK-05
+      status: completed
+      updated_at: "2026-10-04T14:42:00"
+      note: "Recovery dispatch cleared the blocker: removed the invalid keepMounted attribute (TS2322 gone). Gate GREEN - build packages/ui PASS, build apps/web PASS, test apps/web 9/9 PASS (5 TASK-01 + 4 TASK-02). 2 lines changed in one file. TASK-05 deviations recorded (criterion 8 impossible on Mantine 8.3.18; 100vh fallback deferred to TASK-09)."
+    - step: senior-frontend
+      task: TASK-06
+      status: partial
+      updated_at: "2026-10-17T23:04:00"
+      note: "Created dashboardTypes.ts, StatusBar.tsx, useCalendarNavigation.ts, useDashboardModals.ts, and useExternalDrop.ts. Dispatch reached maximum tool steps before DashboardModals.tsx, DashboardPage.tsx rewrite, or validation. Follow-up must complete and validate."
+    - step: senior-frontend
+      task: TASK-06
+      status: completed
+      updated_at: "2026-10-17T23:12:00"
+      note: "Completed DashboardModals and DashboardPage rewrite (346 lines), corrected external-drop handler to the verbatim date construction, and fixed drag-data types. build packages/ui PASS; build apps/web PASS; test apps/web 9/9 PASS."
+    - step: senior-frontend
+      task: TASK-07
+      status: resumed
+      updated_at: "2026-10-17T23:16:00"
+      note: "User requested continuation after the earlier dispatch was rejected; resuming sequential TASK-07."
+    - step: senior-frontend
+      task: TASK-07
+      status: partial
+      updated_at: "2026-10-17T23:20:00"
+      note: "Implemented CalendarToolbar/calendarTheme/Header ownership move and DashboardPage mount (346 lines), plus weekRange helper. Tool-step ceiling reached before any validation gate; follow-up must run ui build, web build, and 9/9 tests."
+    - step: senior-frontend
+      task: TASK-07
+      status: completed
+      updated_at: "2026-10-17T23:24:00"
+      note: "Validation follow-up passed: build packages/ui, build apps/web (930 modules), test apps/web 9/9 (TASK-01 5/5, TASK-02 4/4). DashboardPage.tsx is 319 lines; no E2E files modified."
+    - step: senior-frontend
+      task: TASK-08
+      status: partial
+      updated_at: "2026-10-18T01:05:00"
+      note: "Resume dispatch reached the tool-step limit during investigation without edits or validation. Follow-up should align existing partial implementation to TASK-08 markup contract and run the validation gate."
+    - step: senior-frontend
+      task: TASK-08
+      status: resumed
+      updated_at: "2026-10-18T01:05:00"
+      note: "Re-dispatching with partial worktree findings to complete implementation and validations."
+    - step: senior-frontend
+      task: TASK-08
+      status: failed
+      updated_at: "2026-10-18T01:10:00"
+      note: "User requested subagent type gpt-6-luna. Dispatch failed as unknown agent type on 3 consecutive attempts; unable to continue implementation or validation with the requested type."
+    - step: senior-frontend
+      task: TASK-08
+      status: partial
+      updated_at: "2026-10-18T01:15:00"
+      note: "Retry aligned the EventContent renderer and simplified CalendarView; packages/ui and apps/web builds passed. E2E had 7 passing and 2 failures: both navigation to localhost:5173 timed out. TASK-08 remains in progress pending successful 9/9 test gate."
+    - step: senior-frontend
+      task: TASK-08
+      status: completed
+      updated_at: "2026-10-18T01:20:00"
+      note: "Reran apps/web E2E after the transient 7/9 navigation-timeout run; all 9/9 passed in 40.2s, builds passed, no further changes needed."
+    - step: senior-frontend
+      task: TASK-08
+      status: completed
+      updated_at: "2026-10-18T01:25:00"
+      note: "Reduced CalendarView.tsx by four lines to satisfy the stated smaller-than-373-line baseline; apps/web build and test 9/9 passed again."
+    - step: senior-frontend
+      task: TASK-09
+      status: completed
+      updated_at: "2026-10-18T01:35:00"
+      note: "Rewrote CalendarStyles.css and added calendar token, events and dark partials; appended ordered imports. build packages/ui, build apps/web, test apps/web 9/9 all passed."
+    - step: senior-frontend
+      task: TASK-10
+      status: completed
+      updated_at: "2026-10-18"
+      note: "Parallel lane 6A returned: six owned files updated, builds passed, tests 9/9 passed. Manual checks not performed."
+    - step: senior-frontend
+      task: TASK-11
+      status: completed
+      updated_at: "2026-10-18"
+      note: "Parallel lane 6B returned: existing ten-file migration reviewed; builds passed and tests 9/9 passed; no additional edits needed."
+    - step: senior-frontend
+      task: TASK-12
+      status: partial
+      updated_at: "2026-10-18"
+      note: "Parallel lane 6C returned: seven-file migration and builds/tests 9/9 passed; mandatory manual validation blocked by unavailable interactive browser capability."
+    - step: qa-frontend
+      task: TASK-12
+      status: blocked
+      updated_at: "2026-10-18"
+      note: "QA reviewed seven-file diffs and passed both builds plus E2E 9/9. Approval withheld: required manual flows cannot be tested with available browser capabilities."
+    - step: senior-frontend
+      task: TASK-12
+      status: completed
+      updated_at: "2026-10-18"
+      note: "Authorized permanent browser QA runner implemented and passed five required flows; both builds passed; all 9 existing tests passed with one resource-related retry. No existing specs/config/app source changed by this dispatch."
+    - step: senior-frontend
+      task: TASK-13
+      status: completed
+      updated_at: "2026-10-18"
+      note: "Consolidated builds passed and fresh E2E 9/9 passed with no retries. Merge validation report created; remaining exhaustive checks delegated to final audit."
+    - step: senior-frontend
+      task: TASK-14
+      status: completed
+      updated_at: "2026-10-18"
+      note: "Dead CSS cleaned and imports organized; builds and E2E 9/9 passed. Confirmed installed Mantine modals has no styles.css export, documenting import-order deviation."
+    - step: senior-frontend
+      task: TASK-15
+      status: partial
+      updated_at: "2026-10-18"
+      note: "Final audit corrected contrast and docs, verified 77/77 source line caps and builds/E2E. Mobile overflow remains; new permanent runner scenario failed three attempts and escalated for recovery."
+  handoff:
+    validation_exception: "User requested autonomous continuation. A permanent reusable TASK-12 browser QA runner outside apps/web/e2e is authorized to verify the five mandatory flows; existing E2E specs/config remain immutable. No disposable verification scripts."
+    phase_6_results: "TASK-10 and TASK-11 implementation gates passed. TASK-12 implementation and automated gates passed; manual browser validation outstanding. No lint script configured."
+    context: "ui-ux-modernization"
+    selected_approach: "Option C - component library. @mantine/core@8.3.18 (v9 requires React 19.2+). Dark tier included, all phases one delivery."
+    design_summary: "Mantine 8.3.18 + tokens-to-semantic-light-to-dark([data-mantine-color-scheme]) teal theme; AppShell shell with single aside Sidebar + StatusBar; calendar keeps FullCalendar DOM but gets a --fc-* custom-property layer, a React CalendarToolbar, and an eventContent renderer replacing the eventDidMount DOM injection; packages/ui becomes a thin Mantine brand wrapper."
+    planning_summary: "7 strictly sequential phases; 32 mandatory constraints (B1-B4 blocking, M1-M18 material, P-1-P-10 process); Phase 6 is the only parallel phase (3 file-disjoint lanes); DashboardPage.tsx (567 lines) is single-owner and must be split; gate per phase = build packages/ui -> build apps/web -> test apps/web; no lint gate; businessHours deferred."
+    task_summary: "15 tasks, all senior-frontend, no backend. Order 01-09 sequential, 10/11/12 parallel, then 13, 14, 15."
+    acceptance_criteria:
+      - "All 9 Playwright copy assertions preserved verbatim"
+      - "All 7 Playwright DOM assertions preserved"
+      - "apps/web/e2e/** unmodified"
+      - "build packages/ui + build apps/web + test apps/web pass (9/9)"
+      - "Dark tier contrast meets WCAG AA (B4: #3CC4BD + white text is ~2.1:1 and fails)"
+      - "No file exceeds 400 lines"
+    dependencies:
+      - "@mantine/core@8.3.18"
+      - "@mantine/hooks@8.3.18"
+      - "@mantine/modals@8.3.18"
+      - "@mantine/notifications@8.3.18"
+      - "@tabler/icons-react@^3.48.0"
+      - "postcss@^8.4"
+      - "postcss-preset-mantine@^1.18"
+      - "postcss-simple-vars@^7.0.1"
+    additional_context:
+      - "User request: modernize the layout/UX-UI. Current interface is too simple; the calendar area looks like a plain table and must be redesigned into a polished calendar experience."
+      - "Baseline bundle before any change: 524.63 kB raw / 156.62 kB gzip. Baseline E2E: 9/9 passing."
+  resume:
+    last_completed_agent: Senior Frontend
+    last_completed_step: senior-frontend
+    recovery_required: false
+    recovery_reason: null
+    next_task: null
+    pipeline_file_repaired_at: "2026-10-04T13:55:00"
