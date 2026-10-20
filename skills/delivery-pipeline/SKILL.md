@@ -59,9 +59,11 @@ Responsibilities:
 
 1. Validate `pipeline.yaml` parses via `read-pipeline-state`. If it fails (e.g., duplicate YAML keys), repair/rewrite the file first, then load state.
 2. Load pipeline state.
-3. Identify incomplete steps.
-4. Resume execution from the last known state.
-5. Avoid re-executing completed work.
+3. Reconcile `resume.next_task`, `current_step`, and recovery metadata against per-task statuses, step statuses, and execution history before choosing work. Resume pointers may be stale; never use them alone.
+4. Identify the next incomplete task or QA gate whose dependencies are satisfied. Preserve completed work; do not restart an earlier task merely because a pointer names it.
+5. If task statuses and history conflict, inspect the relevant task artifact and latest validation/QA evidence before changing status. Do not infer completion from implementation notes alone.
+6. Persist corrected resume pointers and recovery metadata, record the reconciliation in history, and update `updated_at`. Validate with `read-pipeline-state` before dispatching an agent.
+7. Resume from the reconciled state. If all tasks and QA gates are complete, follow completion/closure requirements instead of re-running implementation.
 
 ## Pipeline State
 
@@ -364,43 +366,7 @@ See [references/failure-recovery.md](references/failure-recovery.md)
 
 ## Pipeline Updates
 
-After EVERY agent dispatch completes, BEFORE dispatching the next agent, update `pipeline.yaml` with:
-
-* The completed step's status (completed / failed / errors)
-* errors and concerns returned by the agent
-* updated_at timestamp
-
-This is mandatory — missed updates cause recovery failures and loss of execution history.
-
-Validate the file after every write: call `read-pipeline-state` before dispatching the next agent. An invalid `pipeline.yaml` (e.g., duplicate YAML keys under a step) blocks recovery and must be repaired first.
-
-After every agent execution update:
-
-* status
-* notes
-* updated_at
-* errors
-* concerns
-
-and append a history record.
-
-Implementation task status must also be updated.
-
-Examples:
-
-[ ] TASK-01 Create User Endpoint
-[X] TASK-02 Create User Screen
-
-Errors and concerns examples:
-
-```
-errors:
-  - "Build failed (TS error: info.event.revert() possibly undefined)"
-  - "Subagent created files outside task scope (test helper script)"
-concerns:
-  - "Shell blocked npx tsc — subagent used pnpm build workdir instead"
-  - "Subagent could not verify lint (no lint script configured)"
-```
+Follow [references/pipeline-updates.md](references/pipeline-updates.md) after every agent execution, before dispatching the next agent. It defines mandatory state updates, history records, task tracking, and YAML validation.
 
 ### Pipeline Completion
 
