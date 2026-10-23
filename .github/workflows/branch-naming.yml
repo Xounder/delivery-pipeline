@@ -1,0 +1,20 @@
+name: Validate branch name
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  validate-branch-name:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check branch prefix
+        env:
+          BRANCH_NAME: ${{ github.head_ref }}
+        run: |
+          if [[ "$BRANCH_NAME" != dlvr-ppln/* ]] ||
+             [[ "$BRANCH_NAME" == "dlvr-ppln/" ]]; then
+            echo "::error::Branch must start with dlvr-ppln/ and have a name."
+            exit 1
+          fi
