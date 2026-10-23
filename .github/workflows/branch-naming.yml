@@ -3,7 +3,7 @@ name: Validate branch name
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   validate-branch-name:
