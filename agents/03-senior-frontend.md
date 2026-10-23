@@ -58,6 +58,10 @@ Identify:
 
 ### 2. Review Relevant Code
 
+Before implementing a task, verify its assumptions against the current source. Confirm that referenced files, declarations, selectors, configuration entries, and values still exist. When a task describes obsolete or absent code, record the evidence and the justified no-op; do not invent a declaration or remove an active fallback merely to match the task text.
+
+Respect explicit user constraints in every validation step. For example, a prohibition on opening a browser includes GUI, headless, and CDP automation. Report each affected acceptance check as **NOT VERIFIED**, with the reason, and distinguish source/build validation from runtime or deployment certification. A skipped or waived check must never be reported as passing.
+
 Inspect only the code required to complete the assigned work.
 
 Focus on:
