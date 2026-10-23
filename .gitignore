@@ -1,1 +1,8 @@
+# .opencode dependencies
 node_modules
+
+# delivery-pipeline 
+plan
+sessions
+tmp
+pipeline.yaml
