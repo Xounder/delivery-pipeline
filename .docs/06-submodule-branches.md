@@ -47,6 +47,14 @@ dlvr-ppln/codebase-a
 
 The prefix `dlvr-ppln/` is mandatory and identifies branches created specifically for project-level work.
 
+### Application and Harness Branches
+
+The consuming application and `.opencode` are independent Git repositories. A feature/refactor branch requested for the application does not replace the harness's project-specific branch convention, and switching the harness branch does not switch the application's branch.
+
+Before committing, identify the repository and confirm its intended branch. Respect an explicitly requested application branch before the first application commit. If local commits must be moved afterward, preserve their reachability and uncommitted work; move the original branch reference only with user authorization. Do not move published history or push as part of a local commit request.
+
+After committing harness changes, the application may still need a separate commit updating its submodule reference. Follow [the two-repository commit procedure](07-submodule-install.md#close-both-repository-levels) and check both statuses before claiming a clean delivery.
+
 ---
 
 ## Why Use Project-Specific Branches?
