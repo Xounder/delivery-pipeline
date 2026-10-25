@@ -12,7 +12,7 @@ Use this skill after `learning-improvement` in the STOP hook. It is the **second
 ## Workflow
 
  1. **Receive evaluation** — read the output of the `learning-improvement` skill as a **summary and complement**, NOT as the single source of truth. The evaluation highlights key points but may omit process/orchestration issues. You MUST independently verify the session history.
- 2. **Analyze existing docs** — consult `.opencode/docs-catalog.md` to map which file to modify, then review the relevant files:
+  2. **Analyze existing docs** — first attempt to consult `.opencode/docs-catalog.md` to map which file to modify. If it is absent, record that fact and use the existing `.opencode/README.md`, `.opencode/.docs/`, and relevant agent/skill references as the documentation map. Do not repeatedly search for the missing catalog or create a replacement just to proceed. Then review the relevant files:
     - `project-structure.md` — keep updated if important folders/files changed
     - `docs-catalog.md` — keep updated if new `.md` files were created in `.opencode/` **(excluding `.opencode/plan/`)**; **remove completely** the entries for files that no longer exist in the project tree (do not leave strikethrough markdown)
     - `AGENTS.md` — commands, scripts, conventions
@@ -27,6 +27,8 @@ Use this skill after `learning-improvement` in the STOP hook. It is the **second
     - Check if shell restrictions blocked commands — agent docs may need allowed-command documentation
     - Check if the orchestrator violated constraints (fixed code, ran build directly) — SKILL.md may need stronger rules
     - Check if new `.md` files were created in `.opencode/` (excluding `plan/`) — `docs-catalog.md` and `INDEX.md` need updating
+    - Verify referenced guides exist. Report missing references as gaps; do not invent their instructions or infer that an absent guide authorized a behavior.
+    - Separate reusable harness improvements from project-specific facts. Package-manager choices, accepted lint findings, domains, and task waivers belong to the consuming project's context, not unconditional rules for every project.
  3. **Create change plan** — list files and proposed changes, with justification based on session learnings. **Do NOT edit any files during this step** — planning only.
     - **If the evaluation contains WRONG or IMPROV items, you MUST propose at least one doc improvement to prevent recurrence.** Never conclude "no changes needed" when failures exist. Examples: missing convention in AGENTS.md, unclear rule in a SKILL.md, incomplete checklist in an agent doc.
 4. **Present plan to the user** — display clearly in chat using the template format. **Do NOT edit any files during this step** — presentation only:
@@ -46,23 +48,24 @@ Use this skill after `learning-improvement` in the STOP hook. It is the **second
    Would you like to apply these changes?
    ```
 5. **Wait for user response**:
-   - If **yes**: apply all changes
-   - If **adjustments**: user informs what to adjust
-     - **RE-PLAN PHASE**: Create NEW plan (do NOT edit files), present updated `<changes>` template, wait for "yes"
-     - **NEVER edit files between receiving 'adjustments' and receiving 'yes' on updated plan**
-6. **Chain to `session-save` IMMEDIATELY** — after applying changes (or determining no changes are needed), you MUST load the `session-save` skill without waiting for user input. Never stop after step 5.
+    - If **yes**: apply all changes
+    - If **no** or **defer**: leave documents unchanged and proceed to session-save, recording that the proposal was declined or deferred
+    - If **adjustments**: user informs what to adjust
+      - **RE-PLAN PHASE**: Create NEW plan (do NOT edit files), present updated `<changes>` template, wait for "yes"
+      - **NEVER edit files between receiving 'adjustments' and receiving 'yes' on updated plan**
+6. **Chain to `session-save` IMMEDIATELY after the approval decision is resolved** — after applying approved changes, an explicit refusal/deferral, or determining no changes are needed, load `session-save`. While a proposal is awaiting approval, pause and wait; do not edit files, silently treat the proposal as accepted, or claim the STOP chain is complete. Once the decision is resolved, do not wait for another user message before saving.
 
 ## Rules
 
 - Never modify application source code (only docs in `.opencode/`)
 - **ONLY modify .md files in .opencode/ — ignore .opencode/node_modules, .opencode/plan, .opencode/.gitignore, .opencode/package-lock.json, .opencode/package.json, .opencode/pipeline.yaml**
-- **ALWAYS consult .opencode/docs-catalog.md to identify which file to modify before making any changes**
-- **Evaluate modification type** — for each proposed change, determine whether the best approach is: (a) edit an existing doc in place, (b) add/remove sections from an existing doc, or (c) create a new doc or skill. When creating new files, ensure correct cross-references in `INDEX.md`, `docs-catalog.md`, and the new file itself. Consult `docs-catalog.md` first to verify no existing file already covers the need.
+- **ALWAYS attempt to consult .opencode/docs-catalog.md before planning changes; if absent, use and disclose the existing-documentation fallback above**
+- **Evaluate modification type** — for each proposed change, determine whether the best approach is: (a) edit an existing doc in place, (b) add/remove sections from an existing doc, or (c) create a new doc or skill. Prefer the existing owner document rather than duplicating rules. For new files, include cross-reference changes in the proposal using the indexes/catalogs that actually exist; if `INDEX.md` or `docs-catalog.md` is absent, use the existing README documentation map. Do not create missing indexes without proposing and receiving approval for them.
 - **ALWAYS present detailed change proposal to user and wait for explicit confirmation before modifying any file**
 - **Change proposal MUST use the <changes> template format**
 - Always justify each proposed change based on the session evaluation
 - If no changes are needed **and the evaluation has no WRONG or IMPROV items**, inform the user and proceed. If WRONG or IMPROV items exist, you MUST propose a change — do not skip.
 - After applying changes, **do not save session** — this is the responsibility of the `session-save` skill
 - **AFTER analyzing existing docs, CHECK if session learnings indicate need for NEW skill/agent/document creation**
-- **ALWAYS consult .opencode/docs-catalog.md FIRST to verify no existing file covers the need and identify correct location for new file**
+- **Use the catalog or its documented fallback FIRST to verify whether an existing file covers the need and identify the correct location**
 - **If new file needed, include in change proposal with file path, why (session context), why correct location (docs-catalog mapping), and template content**
