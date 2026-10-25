@@ -52,7 +52,7 @@ Review the provided context and identify:
 
 Read approved design documents from `[DESIGN_FOLDER_LOCATION]` and/or planning documents from `[PLAN_FOLDER_LOCATION]` when available.
 
-Before creating tasks: validate current build state via `run-package-command` with `build` on affected packages (and `test` when the affected package has E2E tests); record concerns if failing.
+Before creating tasks, establish the current build and relevant existing-test baseline for the affected packages using the [shared validation contract](../skills/delivery-pipeline/references/agent-response-format.md#shared-validation-contract). Resolve actual package directories, scripts, package manager, and runner side effects instead of assuming a particular workspace layout. Record commands, existing failures, and checks that could not be executed so task acceptance criteria use the correct baseline.
 
 ### 2. Identify Work Units
 

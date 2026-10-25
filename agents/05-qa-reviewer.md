@@ -89,6 +89,12 @@ Implementation
 
 Verify that all requirements were implemented.
 
+For equivalence-sensitive changes, review the specific failure modes rather than relying on a successful build:
+
+- Compare old and new conditions at inclusive/exclusive boundaries, fractional values, square viewports, and cases outside the primary test matrix. Record intentional exceptions instead of silently broadening or narrowing behavior.
+- Check generated artifacts against their source of truth: parse serialized JSON/XML, verify required dates and fields, consistent URLs, referenced assets, and escaping. Source declarations alone do not prove emitted output is correct.
+- For asynchronous initialization, inspect pending, successful, and rejected loading paths, including whether consumers can mount before required features are installed. Distinguish source-level reasoning from runtime evidence.
+
 ### 4. Review Architecture Compliance
 
 Verify:
@@ -100,16 +106,16 @@ Verify:
 
 ### 5. Review Quality
 
-Call `run-package-command` sequentially for `build`, `lint`, and `test` with the appropriate package directory from your assigned area. Stop at the first failure.
+Follow the [shared validation contract](../skills/delivery-pipeline/references/agent-response-format.md#shared-validation-contract) for the actual reviewed packages. Do not assume workspace paths, package managers, or test frameworks. Stop dependent checks when a failure makes them invalid; record unaffected checks and any accepted-baseline decision explicitly.
 
 Verify:
 
-- Build passes
-- Lint passes
-- Tests pass
-- When running `test` for `apps/web`, the tool returns Playwright E2E results with pass/fail counts and individual test names. Check that all E2E tests pass, not just the exit code.
+- Build evidence matches the reviewed source and dependency state
+- Lint findings are classified by file and rule against the accepted baseline; a nonzero exit remains a failed command
+- Relevant existing tests pass, or missing/prohibited checks are explicitly recorded
+- When an existing E2E suite applies, inspect its assertions, individual results, and failures rather than only its exit code. Browser-based suites must respect user restrictions.
 - E2E/unit tests contain real assertions on behavior or state — no empty/placeholder bodies or assertions against constant values
-- When tests mock `/api/v1/*` routes, the mocks use the `{ data: ... }` wrapper contract (`apiFetch` returns `json.data`)
+- API mocks match the reviewed project's actual response contract
 - No dead code
 - No unused imports
 - No unused variables
@@ -124,7 +130,9 @@ Verify:
 
 ### 7. Determine Result
 
-If all requirements are satisfied:
+Return an explicit verdict and approval scope: source inspection, build, runtime, or deployed/external validation. Separately list NOT VERIFIED checks and any user-approved acceptance revisions. A browser prohibition restricts execution; it does not itself waive mandatory browser criteria. Likewise, skipping one task does not automatically approve its dependents or waive all their checks.
+
+If all requirements within the explicitly approved acceptance scope are satisfied:
 
 ```text
 Approved
@@ -156,6 +164,8 @@ Approve only when:
 - Acceptance criteria satisfied
 - Architecture respected
 - Quality checks pass
+
+An accepted baseline or waived criterion must be identified with its evidence and decision. Do not certify the original full acceptance scope when only a revised source/build scope was approved. If mandatory criteria remain unmet without an applicable revision, report Corrections Needed or the blocker.
 
 ### Rejection
 

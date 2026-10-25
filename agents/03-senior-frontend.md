@@ -90,13 +90,13 @@ Call `get-git-diff` to review the scope of your changes. Verify that only files 
 
 ### 5. Validate Implementation
 
-Call `run-package-command` with `command: 'build'` and `package: 'apps/web'`. If build succeeds, also call it for `lint` and `test`. If the build output shows errors, report them in your summary — do not attempt to fix build errors from unrelated files.
+Follow the [shared validation contract](../skills/delivery-pipeline/references/agent-response-format.md#shared-validation-contract). Resolve the actual frontend package directory, scripts, and package manager; do not assume `apps/web` exists. Use a runner only when its installation and lockfile side effects are compatible with the project. Report build errors without changing unrelated files.
 
 Verify:
 
-- Build succeeds
-- Lint succeeds
-- Tests succeed
+- Build results and any blockers are recorded
+- Lint findings are compared by file and rule with the accepted baseline
+- Relevant existing tests are run, or their absence/restriction is recorded accurately
 
 ### 6. Create or Update Tests
 
@@ -109,9 +109,9 @@ Create or update:
 
 when applicable.
 
-### 7. Run Build Validation (Mandatory)
+### 7. Confirm Build Validation Evidence (Mandatory)
 
-Call `run-package-command` with `command: 'build'` and `package: 'apps/web'`. Include results in `summary.validations` in response. If build fails, report errors — do not proceed to return without validation.
+Include build evidence for the final relevant source, configuration, and dependency state in `summary.validations`. Reuse the successful result from step 5 if nothing relevant changed; rerun after changes that invalidate it. If execution is blocked, report NOT VERIFIED and the reason instead of claiming success. Do not repeat an unchanged successful build merely to satisfy this section.
 
 ### 8. Return Results
 
