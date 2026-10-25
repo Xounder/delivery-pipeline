@@ -62,6 +62,7 @@ Responsibilities:
 3. Identify incomplete steps.
 4. Resume execution from the last known state.
 5. Avoid re-executing completed work.
+6. Reconcile task lists, step status, current agent, and resume instructions against the latest evidence. Existing files alone are not proof of completion; follow [Failure Recovery](references/failure-recovery.md).
 
 ## Pipeline State
 
@@ -112,6 +113,8 @@ Responsible for:
 
 **Dispatch stalls/failures:** If a named agent dispatch fails or stalls (e.g., a model-resolution error such as `Model not found: opencode/...`), retry the SAME dispatch up to 3 consecutive attempts. If all 3 attempts fail, ABORT the step and REPORT the error — never fall back to dispatching as `general` or any other agent type to work around a failed dispatch.
 
+Record every dispatch outcome, including cancellation, usage-limit blocks, and incomplete responses, before another dispatch. Do not treat a user cancellation as a transient failure to retry automatically. If a quota or unavailable capability requires an external change, persist the blocker and wait for resolution rather than exhausting identical retries. Inspect any partial output before an authorized retry so it can be completed without overwriting existing work.
+
 ### Orchestrator Must Never Do Agent Work
 
 The orchestrator must **never** implement, write, or modify source code directly. Its sole responsibility is dispatching agents, managing state, and passing context.
@@ -119,9 +122,9 @@ The orchestrator must **never** implement, write, or modify source code directly
 If an agent:
 - Returns an error → re-call the same agent with the error context
 - Returns a partial result → re-call to complete the remaining work
-- Returns non-standard format → re-call with format requirements
+- Returns non-standard format → re-call for a format-only correction, retaining existing evidence and avoiding unnecessary implementation or validation
 - Asks a question → respond to the agent directly (do not resolve it yourself)
-- Times out → verify output dir; if files were created, mark done; otherwise re-call with higher timeout
+- Times out → inspect output, diff, acceptance evidence, and validation results; record partial work or awaiting QA as appropriate. Files being present is not sufficient to mark a task done. Re-call the responsible agent for missing work or evidence.
 
 **Never fix agent output yourself.** If an agent's code has a bug or build error, re-call the agent with the error details. Do not edit the agent's files, run build commands, or patch the code manually.
 
@@ -159,6 +162,9 @@ The orchestrator should consolidate and pass:
 * Acceptance criteria
 * Relevant dependencies
 * Previous execution results
+* Current user restrictions, approved acceptance revisions, actual package directories/scripts, package manager, and environment-recovery constraints
+
+Persist new restrictions and acceptance decisions before subsequent dispatches. Record the affected task/check, the user's decision, and any dependent criteria requiring clarification. An execution restriction (such as no browser) is not an implicit waiver; a skipped task is not a passing task. If a dependent gate cannot be satisfied, obtain an applicable acceptance decision before proceeding. Pass these constraints and decisions to implementation agents and QA on every relevant handoff.
 
 ## Workflow
 
@@ -344,15 +350,15 @@ Repeat until approved.
 
 Workflow completes when:
 
-* All tasks are completed
-* All QA reviews are approved
-* No pending work remains
+* All applicable implementation tasks are completed; any user-authorized skipped tasks are explicitly identified
+* All QA reviews are approved within the recorded acceptance scope
+* No mandatory work remains under that scope; unexecuted or waived checks and follow-ups are disclosed rather than reported as passing
 
 Upon completion, the orchestrator MUST:
 
-1. Update `pipeline.yaml` status to `completed`, record final errors/concerns, set `updated_at`.
+1. Update `pipeline.yaml` status to `completed`, record final errors/concerns and the actual approval scope, set `updated_at`, and reconcile all task/step/resume fields. Distinguish accepted baseline failures and outstanding external/runtime checks from successful validations.
 2. Invoke the mandatory STOP chain: load `learning-improvement` skill → after it completes, load `continuous-learning` skill → after it completes, load `session-save` skill.
-3. Do NOT return to the user or end the session before the STOP chain completes. The STOP chain is part of the pipeline, not optional cleanup.
+3. Complete the STOP chain before the final delivery response. If continuous-learning requires user approval, present its proposal and pause for that decision; this is a pending approval, not a completed or abandoned chain. After the decision is resolved, continue to session-save without waiting for another instruction. The STOP chain is part of the pipeline, not optional cleanup.
 
 ## Parallelization Rules
 
@@ -386,6 +392,8 @@ and append a history record.
 
 Implementation task status must also be updated.
 
+Keep historical failures as history, with resolution references, rather than leaving them indistinguishable from active blockers. Reconcile duplicated task lists, `current_step`, `current_agent`, pause/dispatch flags, and resume instructions after transitions. Use the actual event time; do not invent timestamps or leave an agent marked active after its dispatch ended. See [Task Tracking](references/task-tracking.md).
+
 Examples:
 
 [ ] TASK-01 Create User Endpoint
@@ -404,8 +412,8 @@ concerns:
 
 ### Pipeline Completion
 
-When all steps are completed (all tasks approved by QA):
-1. Update `pipeline.status` to `completed`
+When all applicable tasks are approved by QA under the recorded acceptance scope and any user-authorized skips are identified:
+1. Update `pipeline.status` to `completed` with the actual approval scope, final validation results, and unresolved follow-ups
 2. Invoke the STOP chain: `learning-improvement` → `continuous-learning` → `session-save`
 
 ## References
