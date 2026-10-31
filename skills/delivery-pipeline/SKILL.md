@@ -21,7 +21,9 @@ Before dispatching any agent, the orchestrator MUST:
 1. Read `variables.md` to load all variable definitions
 2. Resolve `[PLAN_FOLDER_LOCATION]` by substituting `<context>` with `pipeline.yaml.name`
 3. Resolve all dependent variables (`[DESIGN_FOLDER_LOCATION]`, `[TASKS_FOLDER_LOCATION]`, etc.)
-4. Pass the resolved values to the agent as part of the execution context
+4. Resolve architecture variables (`[ARCHITECTURE_FOLDER_LOCATION]`, `[ARCHITECTURE_ENTRY_FILE]`, `[ARCHITECTURE_INDEX_FILE]`, `[ARCHITECTURE_TEMPLATE_FILE]`, `[DOCS_CATALOG_FILE]`, `[PROJECT_STRUCTURE_FILE]`)
+5. Pass the resolved values to the agent as part of the execution context
+6. Resolve `[BATCH_HANDOFF_TEMPLATE_FILE]` and `[BATCH_HANDOFF_FILE]` for durable, per-batch recovery.
 
 Example:
 - `pipeline.yaml.name = "documentation-analysis"`
@@ -40,12 +42,12 @@ Starts a new delivery workflow.
 
 Responsibilities:
 
-1. Generate a context name.
-2. Create the planning folder structure using the `create-folder-structure` tool. The tool creates `design-docs/`, `planning/`, and `tasks/` subfolders. If the selected workflow does not use all folders, unused ones remain empty — this is expected.
-3. Create [PIPELINE_FILE] using [PIPELINE_TEMPLATE_FILE].
-4. Invoke the Workflow Router skill.
-5. Execute the selected workflow.
-6. Persist progress after every agent execution.
+1. Check whether [PIPELINE_FILE] already exists **before** creating folders or writing state. If it is incomplete, default to [Resume Execution](#resume-execution); replacing it requires explicit user approval. Before any authorized replacement, reconcile Git and uncommitted user changes, and durably preserve the prior state, history and referenced artifacts inside the repo at a non-overwriting archive path. Verify the preservation by read-back; if it fails or conflicts with user changes, stop without replacing state or artifacts.
+2. For a genuinely new execution, generate a neutral context name and initialize [PIPELINE_FILE] from [PIPELINE_TEMPLATE_FILE] with that context and actual start/update timestamps. Leave task, batch and blocker lists empty, `current_batch: null`, and recovery fields neutral; do not copy product-specific values or evidence from a previous execution.
+3. Create the planning folder structure using the `create-folder-structure` tool. The tool creates `design-docs/`, `planning/`, and `tasks/` subfolders. If the selected workflow does not use all folders, unused ones remain empty — this is expected.
+4. Check whether the architecture documentation set is complete: `.opencode/architecture/` with `[ARCHITECTURE_ENTRY_FILE]` (`.opencode/architecture/architecture.md`) and `[ARCHITECTURE_INDEX_FILE]`, `[DOCS_CATALOG_FILE]` (`.opencode/docs-catalog.md`), `[PROJECT_STRUCTURE_FILE]` (`.opencode/project-structure.md`), and the INDEX.md `# Architecture` section. If any piece is missing (including when a codebase exists without these docs), execute the [Architecture Initialization Flow](references/execution-phases.md#architecture-initialization-flow) before routing.
+5. Invoke the Workflow Router skill and execute the selected workflow.
+6. Persist progress after every agent execution. After Tech Lead, persist all known unfinished tasks exactly once in bounded `pipeline.batches`, including future `pending` batches, before implementation; set `current_batch` only when a batch actually starts and dispatch only within it under [session-batch gates](references/session-batches.md).
 
 ### Resume Execution
 
@@ -53,15 +55,16 @@ Responsibilities:
 delivery-pipeline:resume
 ```
 
-Resumes the last execution from [PIPELINE_FILE].
+Resumes the last execution from [PIPELINE_FILE] and the current batch's durable handoff. Do not treat this command alone as proof of a new session.
 
 Responsibilities:
 
-1. Validate `pipeline.yaml` parses via `read-pipeline-state`. If it fails (e.g., duplicate YAML keys), repair/rewrite the file first, then load state.
-2. Load pipeline state.
-3. Identify incomplete steps.
-4. Resume execution from the last known state.
-5. Avoid re-executing completed work.
+1. Load pipeline state.
+2. Identify incomplete steps.
+3. Resume execution from the last known state.
+4. Avoid re-executing completed work.
+5. If the `architecture-initializer` step is `pending` (or `running` without output) and the architecture documentation set is missing or incomplete (no `[ARCHITECTURE_ENTRY_FILE]`, no `[DOCS_CATALOG_FILE]`, no `[PROJECT_STRUCTURE_FILE]`, or empty INDEX.md `# Architecture` section), resume the [Architecture Initialization Flow](references/execution-phases.md#architecture-initialization-flow). Never re-run it when the step is `completed` or when the documentation set is already complete. For legacy pipelines without the step, infer from the files — skip if the set is complete, otherwise run it.
+6. Follow [Resume and legacy recovery](references/session-batches.md#resume-and-legacy-recovery): reconcile Git, validations, active session ID and missing STOP checkpoints before any new dispatch. A still-`running` current batch may resume in the same session if reconciled and budget-safe; a `closing` batch resumes missing closeout only. Never advance to a later batch in the same principal session after closure. When session identity is unavailable, request explicit user confirmation of a fresh session before advancing.
 
 ## Pipeline State
 
@@ -71,8 +74,12 @@ Pipeline state is stored in:
 [PIPELINE_FILE]
 ```
 
-The pipeline file is the source of truth for workflow execution.
+The pipeline file is the source of truth for workflow execution; a per-batch handoff under `[PLAN_FOLDER_LOCATION]/references/` preserves detailed evidence outside the two-file session retention policy.
 It must be updated after every agent execution by the orchestrator.
+
+Populate `pipeline.tasks` from approved task artifacts: use unique IDs, actual titles and owners; start task, implementation, QA and validation statuses as pending. Record `open_findings` and precise evidence as work proceeds. A code/config QA approval or authorized implementation commit may coexist with deferred or blocked runtime acceptance: leave the task unfinished until full acceptance is evidenced. Record `feat_commit`/`docs_commit` only for commits that exist and were authorized; otherwise keep null with the pending reason. See [Task Tracking](references/task-tracking.md) and [Task Commit](references/execution-phases.md#task-commit).
+
+Use `blocked_by` only for current blockers with an ID, unmet requirement and fresh observed evidence (no secrets); clear resolved blockers. After each attempt, append actual outcomes and attempts to `history`, and update `resume.next_action` with the exact next step and `resume.recovery_notes` with partial artifacts, uncertainty and reconciliation needs (or null when none). Set optional `history_archive` only to an existing readable record of preserved history. `commit_recovery` is for legacy migration only, never new initialization. Follow [Failure Recovery](references/failure-recovery.md) and [Resume and legacy recovery](references/session-batches.md#resume-and-legacy-recovery); do not infer validation from files or reports without evidence.
 
 ## Responsibilities
 
@@ -80,6 +87,7 @@ It must be updated after every agent execution by the orchestrator.
 
 Responsible for:
 
+* Invoking Architecture Initializer (only when the architecture documentation set is missing or incomplete)
 * Invoking Workflow Router
 * Invoking Solution Designer
 * Invoking Planning Analyst
@@ -88,6 +96,7 @@ Responsible for:
 * Invoking Senior Backend agents
 * Invoking QA Frontend
 * Invoking QA Backend
+* Creating per-task commits (implementation + docs) after QA approval
 
 ### State Management
 
@@ -101,14 +110,15 @@ Responsible for:
 * Tracking concerns
 * Maintaining execution history
 * Supporting workflow recovery
+* Recording batch assignments, principal-context budget, closeout checkpoints and exact next action
 
 ### Agent Dispatch Rules
 
-**Primary agents** (Planning Analyst, Solution Designer) are defined with `mode: primary` in their agent files. They must be dispatched using their proper agent type name via `task` with `subagent_type` matching the agent name. Do NOT dispatch primary agents as `general` or any other type — this skips their workflow and prevents file creation.
+**Budget authorization is separate from policy:** a `continue` result alone never authorizes a new implementation or QA dispatch. Before each dispatch (including a parallel group), apply the [principal context budget gate](references/session-batches.md#principal-context-budget-guidance-not-a-hard-limit) to measured intake, additional principal work and the closeout reserve.
+
+**Primary agents** (Architecture Initializer, Planning Analyst, Solution Designer) are defined with `mode: primary` in their agent files. They must be dispatched using their proper agent type name via `task` with `subagent_type` matching the agent name. Do NOT dispatch primary agents as `general` or any other type — this skips their workflow and prevents file creation.
 
 **Subagents** (Senior Frontend, Senior Backend, QA) use `mode: subagent` and are dispatched using their proper agent type name via `task` with `subagent_type` matching the agent name, with their task instructions inline.
-
-**QA dispatch naming:** "QA Frontend" and "QA Backend" are review AREAS, not agent type names. QA work is always dispatched as `subagent_type: "QA Reviewer"` — one instance per review area (frontend or backend). Dispatching `subagent_type: "QA Backend"` or `"QA Frontend"` directly is INVALID and fails with `Unknown agent type`. The review area is passed in the task prompt, not as the agent type.
 
 **Dispatch stalls/failures:** If a named agent dispatch fails or stalls (e.g., a model-resolution error such as `Model not found: opencode/...`), retry the SAME dispatch up to 3 consecutive attempts. If all 3 attempts fail, ABORT the step and REPORT the error — never fall back to dispatching as `general` or any other agent type to work around a failed dispatch.
 
@@ -121,7 +131,7 @@ If an agent:
 - Returns a partial result → re-call to complete the remaining work
 - Returns non-standard format → re-call with format requirements
 - Asks a question → respond to the agent directly (do not resolve it yourself)
-- Times out → verify output dir; if files were created, mark done; otherwise re-call with higher timeout
+- Times out → inspect output and last known validations/QA; files alone do not prove completion. Persist partial output and attempts, then re-call the same agent only if budget and retry gates allow.
 
 **Never fix agent output yourself.** If an agent's code has a bug or build error, re-call the agent with the error details. Do not edit the agent's files, run build commands, or patch the code manually.
 
@@ -155,6 +165,7 @@ The orchestrator should consolidate and pass:
 * Selected approach
 * Approved planning artifacts
 * Design summaries (passed from SD to PA when chained)
+* Architecture base summary (passed from the Architecture Initializer to downstream agents)
 * Task summaries
 * Acceptance criteria
 * Relevant dependencies
@@ -166,7 +177,16 @@ The orchestrator should consolidate and pass:
 flowchart TD
 
 A[User Request]
---> B[Workflow Router]
+--> AI{Architecture Docs Complete?}
+
+AI -->|No| ABI[Architecture Initializer]
+
+ABI --> ABI_APPROVAL{Base Approved?}
+
+ABI_APPROVAL -->|No| ABI
+ABI_APPROVAL -->|Yes| B[Workflow Router]
+
+AI -->|Yes| B[Workflow Router]
 
 B -->|Design Needed| SD[Solution Designer]
 B -->|Implementation Analysis| PA[Planning Analyst]
@@ -198,161 +218,13 @@ QAFE -->|Approved| DONE[Completed]
 QABE -->|Approved| DONE
 ```
 
-### Step 1 - Route Request
+## Execution Phases
 
-Invoke:
+The detailed phase execution — Architecture Initialization Flow, Routing, Solution Designer Flow, Planning Flow, Tech Lead Flow, Parallel Execution, QA, Corrections, Task Commit, and Completion — is documented in [references/execution-phases.md](references/execution-phases.md).
 
-```text
-workflow-router
-```
+## Session Batches
 
-The router determines whether the request should be handled by:
-
-* Solution Designer
-* Planning Analyst
-* Tech Lead
-
-### Solution Designer Flow
-
-When Solution Designer is selected:
-
-1. Execute Solution Designer.
-2. Present approaches to the user.
-3. Wait for semantic approval.
-4. Repeat design loop until approved.
-5. Generate design documents.
-6. Update pipeline.
-
-If a codebase exists:
-  7. Execute Planning Analyst (pass design_summary and design-docs/ path as context).
-  8. Present planning analysis to the user.
-  9. Wait for semantic approval.
-  10. Repeat planning loop until approved.
-  11. Generate planning documents.
-  12. Update pipeline.
-  13. Execute Tech Lead.
-
-If no codebase exists:
-  7. Execute Tech Lead directly.
-
-Design documents must not be created before approval.
-Planning documents must not be created before approval.
-
-### Planning Flow
-
-When Planning Analyst is selected:
-
-1. Execute Planning Analyst as a primary agent — invoke using the agent's full workflow directly (not via `task` with `subagent_type`).
-2. Present approaches to the user.
-3. Wait for semantic approval.
-4. Repeat planning loop until approved.
-5. Planning Analyst generates planning documents (index.md, feasibility.md, impact-analysis.md, risks.md) in `[PLAN_FOLDER_LOCATION]`.
-6. Orchestrator MUST verify planning files were physically created before proceeding. If files are missing, re-dispatch the Planning Analyst with the file creation requirement.
-7. Update pipeline.
-8. Execute Tech Lead.
-
-Planning documents must not be created before approval.
-
-### Tech Lead Flow
-
-Execute Tech Lead.
-
-Expected outputs:
-
-* Task files
-* Task dependencies
-* Ownership assignments
-* Execution order
-
-Update pipeline.
-
-### Parallel Development Phase
-
-Read task ownership and dependencies.
-
-Tasks without unmet dependencies may execute immediately.
-
-The orchestrator must maximize parallel execution whenever dependencies allow.
-
-### Parallel Execution Phase
-
-Dispatch **multiple** Senior Frontend/Backend agents simultaneously when independent tasks are available. Do not limit to one agent per role — if 3 frontend tasks are independent, create 3 Senior Frontend agents in parallel. Each agent receives exactly one task.
-
-Pass:
-
-* Assigned task (one per agent)
-* Acceptance criteria
-* Relevant context
-* Dependency information
-* Task file path for exact step-by-step code
-* Standard response format requirement — instruct the agent to return using the [standard agent response format](references/agent-response-format.md)
-
-Update pipeline after every completed task.
-
-**Important: one agent per task** — never assign multiple tasks to a single agent if they can run in parallel.
-
-### Concurrent File Modification Prevention
-
-When multiple tasks modify the same file, assign them sequentially or use a merge strategy. Review task file lists for overlaps before parallel dispatch. If overlap is detected, choose one of:
-
-1. **Sequence**: Run tasks that touch the same file sequentially, in a logical order (e.g., type changes first, then component changes, then layout changes).
-2. **Parallel with non-overlapping sections**: If tasks affect clearly separate sections of the same file (different functions, different JSX branches), dispatch in parallel and instruct each agent to only modify its designated lines.
-3. **Merge agent**: When 3+ tasks overlap on the same file, consider dispatching a single agent with all related tasks to minimize merge conflicts.
-
-The Tech Lead should flag file overlaps in the task metadata so the orchestrator can plan the dispatch order early.
-
-### QA Phase
-
-Execute:
-
-* QA Frontend
-* QA Backend
-
-in parallel whenever possible.
-
-Provide:
-
-* Original task
-* Acceptance criteria
-* Relevant implementation context
-* Git diff for files modified by the reviewed task
-
-QA validates implementation against requirements.
-
-Exactly one QA Frontend instance reviews frontend work.
-
-Exactly one QA Backend instance reviews backend work.
-
-### Corrections Loop
-
-If QA returns:
-
-```text
-Corrections Needed
-```
-
-The orchestrator must:
-
-1. Update pipeline.
-2. Send feedback to the responsible implementation agent.
-3. Re-execute implementation.
-4. Re-execute QA.
-
-Repeat until approved.
-
-### Completion
-
-Workflow completes when:
-
-* All tasks are completed
-* All QA reviews are approved
-* No pending work remains
-
-Upon completion, the orchestrator MUST:
-
-1. Update `pipeline.yaml` status to `completed`, record final errors/concerns, set `updated_at`.
-2. Invoke the mandatory STOP chain: load `learning-improvement` skill → after it completes, load `continuous-learning` skill → after it completes, load `session-save` skill.
-3. Do NOT return to the user or end the session before the STOP chain completes. The STOP chain is part of the pipeline, not optional cleanup.
+[Bounded Delivery Sessions](references/session-batches.md) defines scope slicing, the mandatory batch schema, budget checks, early-stop task carryover, durable handoff, per-batch STOP closure and idempotent resume. A completed batch does **not** imply all tasks or runtime checks passed. At unknown context usage stop new work; do not manufacture telemetry. The context-budget tool becomes discoverable only after restarting OpenCode; never require it in an already-running harness.
 
 ## Parallelization Rules
 
@@ -372,8 +244,6 @@ After EVERY agent dispatch completes, BEFORE dispatching the next agent, update 
 
 This is mandatory — missed updates cause recovery failures and loss of execution history.
 
-Validate the file after every write: call `read-pipeline-state` before dispatching the next agent. An invalid `pipeline.yaml` (e.g., duplicate YAML keys under a step) blocks recovery and must be repaired first.
-
 After every agent execution update:
 
 * status
@@ -384,7 +254,7 @@ After every agent execution update:
 
 and append a history record.
 
-Implementation task status must also be updated.
+Implementation task status must also be updated, including the commit SHAs (`feat_commit`, `docs_commit`) created for each finalized task.
 
 Examples:
 
@@ -404,9 +274,9 @@ concerns:
 
 ### Pipeline Completion
 
-When all steps are completed (all tasks approved by QA):
-1. Update `pipeline.status` to `completed`
-2. Invoke the STOP chain: `learning-improvement` → `continuous-learning` → `session-save`
+When all tasks have full QA **and runtime** acceptance, follow [Execution Phases — Completion](references/execution-phases.md#completion); close bounded batches independently even while the pipeline remains in progress.
+
+**Mandatory closeout capacity:** protect the current model's effective `limits.dispatchReserve` returned by `read-context-budget` (derived from `.opencode/context-budget.json`) for the complete closeout, including `learning-improvement` → `continuous-learning` → `session-save`, durable handoff and final state/commit verification. These skills must run in order at every applicable batch or planning-session closeout, not only at final product completion. Stop new work early enough to preserve that capacity; `continue` never permits spending the reserve on implementation. If capacity cannot cover closeout, stop earlier or reduce scope. Follow the [resumable closeout checkpoints](references/session-batches.md#closeout-state-machine-resume-each-missing-checkpoint-only): approval waits or interruptions leave closeout pending, never skipped or falsely complete.
 
 ## References
 
@@ -414,6 +284,8 @@ When all steps are completed (all tasks approved by QA):
 - [Task Tracking](references/task-tracking.md)
 - [Parallelization Rules](references/parallelization-rules.md)
 - [Failure Recovery](references/failure-recovery.md)
+- [Execution Phases](references/execution-phases.md)
+- [Bounded Delivery Sessions](references/session-batches.md)
 - [Constraints](references/constraints.md)
 
 ## Constraints
