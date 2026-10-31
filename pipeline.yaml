@@ -1,829 +1,208 @@
 pipeline:
-  name: "codebase-quality-seo"
+  name: github-projects-integration
   status: completed
-  started_at: "2026-10-03T00:00:00"
-  updated_at: "2026-10-23T14:57:42-03:00"
-  completed_at: "2026-10-23T14:57:42-03:00"
+  started_at: "2026-10-30T23:02:38.4307012-03:00"
+  updated_at: "2026-10-31T12:47:58.0338676-03:00"
+  completed_at: "2026-10-31T12:26:31.0426248-03:00"
   current_step: completed
-  current_agent: null
-  completion_scope: "All implementation tasks approved under user-authorized source/build-only gate; TASK14 skipped by user. Browser/deployment/social validation not performed and not certified."
+  completion_scope: "All5tasks approved by respective QA under deterministic source/build/Node scope;14suitesPASS. Browser/realnetwork/deployment not performed or certified."
   final_errors: []
   final_concerns:
-    - "npm run lint still fails with six pre-existing accessibility errors and zero warnings; no regression. Build PASS465modules."
-    - "User prohibited browser launches. Runtime rendering/CLS/animations/navigation/accessibility-tree/13-width comparisons NOT VERIFIED."
-    - "No deployment or external validator performed: headers/routing/crawl HTTP responses/social previews/GoogleRichResults/profile reachability remain NOT VERIFIED."
+    - "RootlintFAIL6existingContactForm/MenuBaraccessibilityfindings;no newfindings,harnesseslintPASS."
+    - "Browserrendering/layout/CLS/focus/accessibilitytree/tabvisibility/privatebrowserstorage/CORS/productionHTTP/realratelimitNOTVERIFIED,norwaived."
+    - "Nodefetch/storage mocks exerciseactualservice;notrealnetwork/browsercertification. Service malformedJSON/quotaHTTP503timingpathsnotalltested."
+    - "StaticBokumonlinkmaystaleifrenamed/deleted;configfilterfuturecoursesmustbemaintainedforunrecognizedsignals."
+  stop_chain:
+    status: completed
+    evaluation: completed
+    continuous_learning: completed
+    session_save: completed
+    session_file: ".opencode/sessions/20261031-12-47-github-projects-integration-session.tmp"
+    decision: "User approved proposal (sim); applied existing shared validation reference service-boundary guidance, reviewed diff and git diff --check PASS. Session saved,2retained."
+    proposed_docs:
+      - ".opencode/skills/delivery-pipeline/references/agent-response-format.md: add actual service-boundary regression guidance; distinguish mocked production execution from helper/static checks and real runtime certification."
+    documentation_map: "docs-catalog.md absent; used .opencode/README.md and existing shared validation reference. No new harness docs proposed."
+  current_agent: null
   dispatch_blocked: false
-  paused_at: null
   pause_reason: null
-  resume_note: "Completed source/build-only delivery after Stage4 QA Approved. TASK01..13 and15..22 completed, TASK14 skipped explicitly. Browser not opened after user prohibition. No incomplete implementation remains; outstanding runtime/deployment checks are disclosed follow-ups, not claimed passed."
   steps:
     workflow-router:
       status: completed
-      notes: "Routed to Planning Analyst. Codebase exists. Request is analysis-first (audit + improvement plan) with large cross-cutting scope (bugs, code organization, hacks, poor implementation, avoidable complexity, SEO, responsive design). Approach is known (refactor in place, no behavior/branding change), so Solution Designer is not required."
-      updated_at: "2026-10-03T00:05:00"
+      notes: "Existing React/Vite portfolio; medium integration requiring API, refresh, filtering and fallback decisions. Route to Planning Analyst for impact analysis and approval."
       errors: []
       concerns: []
     solution-designer:
       status: not-applicable
-      notes: null
-      updated_at: null
-      errors: []
-      concerns: []
     planning-analyst:
       status: completed
-      notes: "COMPLETE. Audit performed, user approved findings + Approach A + breakpoints 600/768/1024/1440/1920 + SEO client-only-with-prerender-readiness + toolchain unblock. 4 planning documents physically created and verified on disk. 68 work items: Stage 1 (Toolchain Baseline & Correctness) 21, Stage 2 (Organisation, DRY & KISS) 17, Stage 3 (Responsive & Design-System Consolidation) 13, Stage 4 (SEO & Performance) 17. Severity: 7 Critical / 24 High / 25 Medium / 12 Low. Breaking-change surface confirmed EMPTY. 7 explicitly accepted out-of-scope items recorded (OOS-1..OOS-7)."
-      updated_at: "2026-10-03T01:00:00"
-      errors:
-        - "npm run lint/build NOT RUN: pnpm runner fails with ERR_PNPM_IGNORED_BUILDS (esbuild@0.25.12 build scripts blocked by pnpm 11 policy); direct node_modules/.bin invocations blocked by sandbox allowlist. Lint/typecheck baseline remains UNVERIFIED — work item W1.3 must record exact counts."
+      updated_at: "2026-10-30T23:44:34.0902219-03:00"
+      agent_task_id: ses_e704dc7a1ffedDQRsAZoZqqf92
+      notes: "Four planning documents verified; classification corrected using README/tree/batch evidence,24exact exclusions,no whitelist. User's explicit hide-exercises direction supersedes retaining exercise entries:7/8 curated entries filtered,Bokumon retained. No source edits; build/lint not rerun for docs. Report corrected to standard root arrays."
+      errors: []
       concerns:
-        - "Untracked files pnpm-workspace.yaml and pnpm-lock.yaml still at repo root (side effect of failed validation). NOT deleted by the agent — assigned to work item W1.2. Must not be committed."
-        - "5 Open Questions block individual tasks (not stages): #646cff branding intent (Button.css:15 -> W3.5); mainMotionValue 200 vs 100 (HomePage.tsx:23,28 -> W2.10); divider pseudo-element intent (MenuSectionButton.css:56-67 -> W1.15); lint baseline counts (all stage exits); real pixel dimensions of the 14 images (W4.7)."
-        - "W3.5 is the ONLY work item permitted to change a pixel (#646cff hover border) and is gated on visual verification first."
-        - "Highest-probability regressions: R2/R3 — removing the 6 order-dependent (orientation: landscape) blocks, and re-attempting the vh->dvh fix already tried (1fed2df) and reverted (1e7e6e3). Both require a captured screenshot baseline before Stage 3."
-        - "Max-1-concurrent-editor files identified in impact-analysis.md overlap map: HomePage.tsx (13 items), MenuSectionButton.css (9), HomePageScroll.tsx (9), data.ts (6), DefaultCard.css (7). Tech Lead MUST sequence these."
-        - "create-folder-structure left design-docs/ and planning/ empty — expected, unused by this flow."
+        - "No Solution Designer documents; independent analysis."
+        - "User approved hiding course/exercise repositories; document explicit configurable rules and current matches."
+        - "GitHub OG image probe returned429; local placeholder recommended."
+        - "Lint baseline6 errors in ContactForm/MenuBar; no automated test script."
+        - "Client-side fetch adds no initialHTML SEO; runtime/browser/deployment unverified under carried no-browser restriction."
+        - "Unauthenticated API60requests/hour/IP; cache/fallback and shared-IP rate limit handling required."
     tech-lead:
       status: completed
-      notes: "COMPLETE. 22 task files + index.md created and verified in .opencode/plan/codebase-quality-seo/tasks/. All owned by senior-frontend (no backend exists). 68/68 W-IDs covered exactly once (TASK-14 is a zero-W-ID Stage 3 verification gate). Distribution 8/5/4/5 across hard-separated stages. 13 parallel batches, max concurrency 5; every multi-task batch has a verified disjoint file set. Max-1-concurrent-editor files (HomePage.tsx 13, MenuSectionButton.css 9, HomePageScroll.tsx 9, DefaultCard.css 7, data.ts 6) sequenced with per-file merge ledgers. Every task carries the 5 project invariants, task-specific Edge Cases, File Overlap Warning, and npm run lint + npm run build acceptance criteria."
-      updated_at: "2026-10-03T01:45:00"
-      errors:
-        - "run-package-command build FAILED: exit 1, [ERR_PNPM_IGNORED_BUILDS] Ignored build scripts: esbuild@0.25.12. Fails during the tool's dependency-install step, before any project script runs. Reproduced twice."
-        - "run-package-command test FAILED: exit 1 at the same install blocker; also no test script exists (OOS-7)."
+      updated_at: "2026-10-30T23:57:15.7054683-03:00"
+      agent_task_id: ses_e70275359ffeemKVDgZvz2iYTN
+      notes: "5taskfiles+index physically verified. DAG01+02parallel->03->04->05. No write overlaps. Baseline buildPASS,lint6oldfindings; Node striptypes importPASS. Report-only correction completed with root arrays; no reruns."
+      errors: []
       concerns:
-        - "TASK-01 is the single blocking task. Nothing can be validated until the toolchain unblock lands."
-        - "4 Stage 4 tasks not locally verifiable: TASK-18 (social validators), TASK-19 (Google Rich Results Test), TASK-21 (deployed headers + /scroll 200), TASK-22 (bundle measurement). All require deployment or a real browser; recorded as pending Stage 4 exit."
-        - "No screenshot tooling configured. TASK-14 defines a manual browser-capture fallback; the 13-width diff is the primary regression gate and its fidelity depends on that fallback."
-        - "5 open questions remain in feasibility.md. Two are gated not decided: #646cff intent (TASK-16, defaults to no-op token rename) and MOTION_VALUE 200 vs 100 (TASK-10/TASK-17, extract but do not resolve). The <html lang> question (TASK-19) needs the site's actual language confirmed."
-        - "CONFLICT: <article> wrapping (TASK-17, TASK-20) collides with the accepted nested-interactive <a>-wrapping-<button> structure (OOS-4). Both tasks require the placement decision to be recorded and escalated rather than silently restructured."
-        - "Canonical production origin is UNCONFIRMED (risks.md O6). TASK-18 hardcodes it into index.html while TASK-19 establishes src/data/seo.ts as source of truth — must be reconciled; a wrong canonical is worse than none."
+        - "Browser/deployed/layout/a11y-tree checks unverified; not waived."
+        - "Lint exits1 with6oldfindings."
+        - "Standalone verification script outside tsc with no Node types; no framework."
+        - "Service partial-page and shared-inflight runtime not yet tested; source review currently planned."
+        - "Pre-existing YAML template LSP diagnostics unchanged."
     senior-frontend:
       status: completed
-      task14_status: skipped
-      task14_notes: "Skipped by explicit user instruction after three cancelled dispatches. No approved baseline produced; dependent screenshot acceptance criterion waived for progression, never reported PASS."
-      task15_status: completed
-      task15_final_qa: "Approved source-only. Continuous boundaries, all six compact regimes, exact600 winner, token integrity confirmed. Screenshots/browser/overflow NOT VERIFIED per user. Legacy1000 exception documented."
-      task16_status: completed
-      task16_result: "CSS tokens/colors, narrow overflow caps, hover endpoint consolidation, exact1rem clamp simplification and centered menu completed. Build PASS/lint7 baseline errors0 warnings/diff check PASS. Prefixed clamp retained because cross-browser support required; uncertain vh retained. No browser."
-      task16_errors: []
-      task16_concerns:
-        - "Implementation calls partial due browser gates and retained necessary prefix path; source QA must distinguish justified no-op from unfinished code."
-      task17_status: completed
-      task21_status: completed
-      task21_result: "Four safe unique headers added preserving rewrite; source had no prior content-type header. No Inter fontface or content-visibility/intrinsic-size600 rule exists, so font removal no-op and note records discrepancy without invented optimization. Observer.5 unchanged. Build PASS/lint6 old errors0 warnings."
-      task21_errors: []
-      task21_concerns:
-        - "Deployment header/routing checks NOT VERIFIED; no browser or deployment. Task source assumptions obsolete, evidence recorded."
-      task18_status: completed
-      task18_result: "Head SEO, correct WebP favicon, robots/sitemap exactly two routes, real OG/favicon/applePNG/manifest assets, minimal existing-copy noscript added. Build PASS, lint6 baseline errors0 warnings. Canonical user confirmed; TASK19 consolidates repeated static origin strings. No browser/deployment validation."
-      task18_errors: []
-      task18_concerns:
-        - "Origin duplication temporarily present until TASK19 metadata module consolidation. Deployed/social validators unverified."
-      task19_status: completed
-      task19_correction_result: "Shared SEO source now includes truthful lastmod2026-10-22 and generators for robots/sitemap served by devmiddleware and emitted production, redundant newly-createdpublic duplicates removed. Build PASS, XMLexact2routes/date and byte-identical generated artifacts verified; no browser/server."
-      task19_correction_errors: []
-      task20_status: completed
-      task20_result: "Image dimensions measured via Pillow/SVGviewBox, loading priorities and metadata added; useId associated hidden contactlabel; year-only/range-endpoint time semantics preserve copy and existingarticle/alt. Build PASS/lint6 baselineerrors0warnings. RuntimeCLS/renderedsize/accessibility NOT VERIFIED."
-      task20_errors: []
-      task20_concerns:
-        - "Fixed dimensions reflect intrinsicratios; CSS sizes vary. Browser prohibited, no layout/CLS certification. Initial dispatch usage limit, retry completed."
-      task22_status: completed
-      task22_report_status: "Standard YAML list fields returned; no further edits/commands. All changed files and initial/static vs dynamic payload figures recorded."
-      task22_result: "LazyScroll route/eagerhome, asyncLazyMotion+mstrict with feature-install mountgate, ErrorBoundaryoutsideSuspense. Build PASS/lint6 baselineerrors0warnings. Initial staticJS338.48kB/117.75gzip ->242.27/87.44; dynamicScroll2.54/1.12 andfeatures53.27/18.62. Agent report needs required list fields before QA."
-      task22_errors: []
-      task22_concerns:
-        - "Browser directloads/navigation/animation/console NOT VERIFIED. Initial dispatch usage limit, retry completed."
-      task19_result: "SEO module + dependency-free Vite metadata/JSON-LD/crawl generation added, actual English lang retained, alt handling and shared text/profile URLs centralized. Build PASS/lint6 baseline errors0 warnings. Orchestrator source read found generated sitemap omits required lastmod and sourcepublic files remain duplicated. Re-dispatch for focused correction before next tasks."
-      task19_errors:
-        - "vite.config.ts generated sitemap has no lastmod despite TASK18 requirement; generated/source crawl data consistency needs clarification."
-      task19_concerns:
-        - "Google/profile reachability/browser checks NOT VERIFIED."
-      canonical_origin: "https://portfolio-renan-fellipes-projects.vercel.app"
-      canonical_origin_approved: true
-      task17_completion_result: "Inline styles removed with footer nav CSS class and group-cards--multiple modifier preserving single center/multi start. Task17 documentation updated. Build PASS after transient Windows realpath retry, lint6 existing a11y errors0 warnings (improved7), diff check PASS. All timings preserved source. No browser."
-      task17_result: "Landmarks, existing div->article card child, shared motion.ts/timings completed. Build PASS/lint7 baseline errors0 warnings. Inline styles retained pending CSS-equivalent handoff; sequential followup now permitted to edit two CSS files. No browser."
-      task17_errors: []
-      task17_concerns:
-        - "Remove two inline styles only after preserving equivalent footer nav dimensions and single/multi-card justification in CSS."
-      task15_correction_result: "Two fractional cutoffs now width<600px; six compact blocks max-width1000px and aspect-ratio>1/1, mathematically equivalent to prior landscape conditions including squares. Compatibility1000 cap documented; no tablet redesign. Static truth table seven viewports matches; build PASS, lint7 baseline errors0 warnings, diff check PASS. No browser."
-      task15_correction_errors: []
-      task15_correction_concerns:
-        - "Range syntax requires modern MQ4 support; browser verification excluded by user."
-      task15_qa_verdict: "Corrections Needed: fractional599.98..600 gap; max-height600 replacement loses compact styling at900x650 and500x300. Root/layout tokens PASS. No browser launched."
-      task15_qa_errors:
-        - "Restore continuous width coverage below600 while preserving exact600 winner."
-        - "Preserve all six former landscape matching regions; arbitrary height600 cap is not equivalent."
-      task15_qa_concerns:
-        - "Legacy1000 cap documented but outside five canonical tokens; must explicitly document preservation exception. Tablet768 duplicates existing600 behavior (minimal extension, no new design authorized)."
-      task15_result: "Senior Frontend reports TASK15 migration already present on retry; no further edits made. Build PASS, lint7 existing errors0 warnings. Six orientation queries replaced by legacy max-width1000px plus max-height600px, tokens and tablet768 added, progressive viewport math retained. Browser checks not performed per user."
-      task15_errors: []
-      task15_concerns:
-        - "Initial dispatch failed uv_spawn EUNKNOWN; retry completed. Existing migration provenance requires QA diff review. Legacy1000px cap retained outside canonical breakpoint set; max-height600px changes matching region, assess explicitly."
-      execution_constraint: "User: não abra o navegador. Do not launch GUI or headless browsers, CDP, preview/dev servers for browser automation. Use static analysis, build/lint; browser-dependent acceptance remains NOT VERIFIED."
-      corrections_round4_status: completed
-      corrections_round4_updated_at: "2026-10-17T20:31:43"
-      corrections_round4_scope: "Fix only the two QA round 4 failures in src/data/sections.ts: eliminate the Record<> cast that defeats compile-time exhaustiveness, and make getSectionIndex return the actual registry index or otherwise correct its name/semantics as appropriate. Preserve existing functionality and order semantics; do not start TASK-10 or broaden scope. Run build and lint, then report evidence in standard format."
-      corrections_round4_result: "Senior Frontend changed only src/data/sections.ts. Registry is now a literal tuple checked with satisfies; a generic recordFromEntries helper derives its key union and assignment to Record<SectionName, SectionEntry> enforces coverage. getSectionIndex now returns sections.indexOf(sectionName), matching navigation consumers. Agent reports negative compile checks for missing/extra keys, build PASS (503 modules), lint 0 problems. Orchestrator read-verified the final source and call-site rationale."
-      corrections_round4_errors: []
-      corrections_round4_concerns:
-        - "recordFromEntries contains a localized generic assertion {} as Record<K,V>; the agent explains key coverage is checked at call site and supplied negative compile tests. QA must independently review this design."
-      corrections_round4_qa_verdict: "QA round 5 Approved. Independently reproduced all-keys positive compile and missing Contact negative TS2741; extra invalid keys rejected by satisfies. getSectionIndex returns sections.indexOf(sectionName), matching HomePage arrow consumers that use it to index sections[nextIndex]."
-      task10_result: "Senior Frontend completed TASK-10 implementation in sections.ts, HomePage.tsx, HomePageScroll.tsx, MenuBar.tsx. Reports build PASS (503 modules), lint 0, 10 navigation transitions match prior behavior. MOTION_VALUE stays 100 while initial state stays 200 pending Open Question 2 (R15); observer queries only inside existing main ref and reveal preserved; routes derive from useLocation; render maps are module-scoped keyed by SectionId. Orchestrator independently read each modified file. 13-width screenshots and browser-only checks not captured; remain for QA/manual gate."
-      task10_errors: []
-      task10_concerns:
-        - "No 13-width screenshot diff, DevTools outside-section injection, or first-render timing capture available; manual verification remains outstanding."
-      task11_status: completed
-      task11_updated_at: "2026-10-17T21:25:00"
-      task11_result: "TASK-11 code work verified complete from existing working tree. Button onClick optional; zero no-op handlers; ArrowSectionButton removed and its nav wrapper inlined at both arrow call sites (landmark count unchanged); minimum distinct components retained; call sites/type attributes/focus rules/OOS-4 nesting/contact submit behavior checked. Build PASS (504 modules). Browser screenshot, route interaction, keyboard walkthrough, and dialog checks not captured. Global lint blocked by TASK-13's invalid jsx-a11y rules; workaround against baseline config showed 0 errors and 1 existing react-refresh warning, while intended config without invalid rules surfaces 7 pre-existing a11y items. No TASK-11 source changes in this resume dispatch."
-      task11_errors: []
-      task11_concerns:
-        - "TASK-11 browser-only acceptance checks remain NOT VERIFIED: 13-width default/hover/focus screenshots, exercising all buttons on both routes, keyboard focus walkthrough, and contact dialog submission."
-        - "TASK-13's eslint config currently prevents npm run lint; fix tracked under TASK-13."
-      task13_attempt1_status: partial
-      task13_attempt1_updated_at: "2026-10-17T21:25:00"
-      task13_attempt1_result: "Existing implementation verified: error boundary + catch-all, router types removed, plugins configured, Icon moved. Build PASS (504 modules). Lint fails because jsx-a11y/aria-hidden-focus is not available in installed eslint-plugin-jsx-a11y@6.10.2. The required separate post-plugin baseline is absent from feasibility.md. Browser throw/catch-all screenshots and route checks not captured."
-      task13_attempt1_errors:
-        - "npm run lint fails because eslint.config.js references nonexistent jsx-a11y rule aria-hidden-focus (and TASK-11's independent lint check identified additional unavailable jsx-a11y rule names)."
-      task13_attempt1_concerns:
-        - "Post-plugin lint baseline not recorded separately in feasibility.md."
-        - "Deliberate throwing render, unmatched route logging, and 13-width screenshots remain unverified."
-      task13_status: completed
-      task13_round7_correction_result: "NotFound moved from main.tsx into src/components/NotFound.tsx preserving fallback/logging/router/boundary/root. feasibility.md now identifies new warning correctly and records corrected baseline of seven existing accessibility errors and zero warnings. Build PASS 505 modules. Browser throw/unmatched-route/screenshots NOT VERIFIED."
-      task13_round7_correction_status: source_approved
-      task13_round7_correction_updated_at: "2026-10-17T22:59:12-03:00"
-      task13_updated_at: "2026-10-17T21:45:00"
-      task13_result: "TASK-13 implementation and tooling correction complete. Confirmed installed jsx-a11y rule names are all valid; no config rule change required. Separate post-plugin baseline added to feasibility.md: pnpm lint reports 7 errors and 1 warning (5 control-has-associated-label, 1 click-events-have-key-events, 1 no-noninteractive-element-interactions, plus 1 react-refresh warning). Build PASS. Existing findings were not fixed. Browser checks remain unverified."
-      task13_errors: []
-      task13_concerns:
-        - "Deliberate throwing render, unmatched-route rendering/logging, and 13-width screenshots were not captured; QA/manual validation remains outstanding."
-      task12_attempt1_status: partial
-      task12_attempt1_updated_at: "2026-10-17T22:00:00"
-      task12_attempt1_result: "TASK-12 partial implementation. Replaced index keys in DefaultCardGroup, ProjectCardInfo, and MenuBar; AboutMe renders keyed paragraphs and preserves description:string[]; removed unused React import; simplified navigateToStart while preserving route-dependent behavior. Preserved heading, button type, route-derived destination, consolidated buttons, Link/button nesting, and OOS-3 behavior. Build PASS. Lint reports 7 errors/1 warning matching TASK-13 post-plugin baseline. Grep confirms no index-key forms or React.Fragment/default React import. NOT DONE: unused src/assets/images/me.png remains. Browser duplicate-key checks, 14-card navigation exercise, and 13-width paragraph visual comparisons NOT VERIFIED."
-      task12_attempt1_errors:
-        - "Task incomplete: me.png was not deleted."
-      task12_attempt1_concerns:
-        - "Browser-only duplicate-key, interaction, and 13-width visual checks unavailable; visual equivalence of paragraph rendering is unverified."
-      task12_status: completed
-      task12_round7_correction_result: "DefaultCardGroup now keys by link+title; actual 15 card keys and technology/menu/paragraph sibling lists verified unique. AboutMe.css restores former trailing br line-box spacing with paragraph markup preserved. Headless Edge isolated old/new paragraph height comparisons match at 13 specified dimensions; full-page pixel/screenshots/interaction/console NOT VERIFIED. Root build and diff check PASS. Lint seven existing errors."
-      task12_round7_correction_status: source_approved
-      task12_round7_correction_updated_at: "2026-10-17T22:59:12-03:00"
-      task12_updated_at: "2026-10-17T22:10:00"
-      task12_result: "TASK-12 implementation complete. Retry verified src/assets/images/me.png is absent, has zero source references, and pnpm build passes. Previous attempt reported all remaining code changes complete: stable domain keys in three components plus keyed AboutMe paragraph; description:string[] shape preserved; dead React import/Fragment and stray semicolon removed; navigateToStart control flow simplified with behavior preserved; TASK-05/08/10/11 and OOS-3/OOS-4 structures retained. Lint matches recorded Stage 2 baseline (7 errors, 1 warning). Browser console duplicate-key checks, card route exercise, and 13-width visual comparisons remain NOT VERIFIED."
-      task12_errors: []
-      task12_concerns:
-        - "Browser duplicate-key checks, all 14 card interactions, and 13-width paragraph visual equivalence remain unverified; include in QA findings/manual gate."
-      notes: "STAGE 1 COMPLETE - all 8 tasks (TASK-01..08) implemented. Every task returned build=pass, lint=17 (baseline). TASK-06 and TASK-08 each required a re-dispatch; TASK-08's first attempt shipped a visual regression (broke .atual-section__content h2.visible fade + 2 other selector families) while self-reporting 'BLOCKED' - caught by orchestrator grep verification and corrected on re-dispatch. Orchestrator verified post-fix: MenuBar.css 5 sites -> h1, AboutMe.css 2 sites -> h3, ContactForm.css 6 sites -> h3, .visible compound preserved. Outline now exactly one h1 -> h2 -> h3 -> h4 on both routes. Handing to QA Frontend."
-      updated_at: "2026-10-03T03:40:00"
+      updated_at: "2026-10-31T12:26:31.0426248-03:00"
       errors: []
-      concerns:
-        - "LINT BASELINE = 17 errors, all in .opencode/plugins and .opencode/tools - ZERO in src/. 'eslint .' lints the pipeline's own tooling because eslint.config.js only ignores 'dist'. Adding '.opencode' to ignores would give a meaningful baseline; not covered by any W-ID (W2.16 only adds plugins)."
-        - "W1.15 (divider pseudo-element, MenuSectionButton.css:61) LEFT UNCHANGED by TASK-04 - intent unrecoverable, documented per risks.md R14. Escalated to the user as a branding decision."
-        - "W1.21 (object-fit: fill, DefaultCard.css:143) LEFT UNCHANGED by TASK-05 - verified 7 of 11 shipped logos are non-square (ratios 0.89-2.05), so 'contain' would visibly change rendering. Correctly gated out."
-        - "W1.16 (InfoCard.css .info-card h3) DELETED not retargeted by TASK-05 - heading already centered via parent flex align-items."
-        - "TASK-02 resolved the vh->dvh revert root cause: 1fed2df omitted the fallback so dvh-less browsers discarded the declaration. Now progressive enhancement (vh then dvh) + box-sizing:border-box."
-        - "TASK-07 propagated a new ariaHidden prop through ArrowSectionButton -> DefaultSectionButton -> MenuSectionButton. TASK-11 (W2.4) will collapse these components - must not drop the prop."
-        - "TASK-05 created two out-of-scope scratch scripts (check-images.js/.mjs) at the repo root; both removed by a corrections dispatch after the QA gate."
-        - "PROCESS RISK CONFIRMED: two agents reported build=pass while shipping a real defect (TASK-08) or incomplete work (TASK-06). Green build + green lint is NOT sufficient evidence in this repo. Review diffs, not just validation output."
-        - "Direct npm/npx/node_modules/.bin invocations blocked by sandbox allowlist; validation via run-package-command, which uses pnpm internally and regenerates pnpm-lock.yaml each run."
-      corrections_batch:
-        status: completed
-        updated_at: "2026-10-04T14:19:36"
-        closed_note: "Marked completed on resume #3. This Stage 1 corrections batch was left stale at in_progress/attempt 4, but it is closed: attempt 4 reached build=0/lint=0, and its entire exit condition - QA Frontend re-review confirming W1.1-W1.21 - was satisfied by round 3, which returned Approved with stage1_approved=true. Nothing further was pending in this batch."
-        attempt: 4
-        attempt4_outcome:
-          - "FIXED: HomePage.tsx left-arrow <ArrowSectionButton> re-indented to match the right-arrow sibling. Verified in git diff."
-          - "FIXED: MenuBar.tsx renderIcons declaration re-indented from column 0 to 4 spaces."
-          - "FIXED: MenuBar.tsx redundant `\"About Me\" as SectionName` cast removed; SectionName import retained because MenuBarProps still uses it."
-          - "CORRECTLY REFUSED: MenuSectionButton.css `.menu-section { position: relative }` KEPT. Agent proved `.menu-section__items` is itself `position: absolute` (line 13, with bottom/left/transform), so the parent IS its containing block and the rule is NOT dead. ORCHESTRATOR WAS WRONG on this item - good pushback, recorded so it is not re-raised in Stage 3."
-        outstanding:
-          - "CLAIMED BUT NOT DONE: HomePageScroll.tsx still has no trailing newline. `git diff` still emits `\\ No newline at end of file`. The agent reported 'Added trailing newline at end of file' and it is NOT on disk."
-        errors:
-          - "Attempt 2 hit MAX STEPS, leaving build RED. Attempt 3 recovered to build=0/lint=0. Attempt 4: one claimed fix silently did not apply."
-        concerns:
-          - "AGENT REPORTS UNDER-DISCLOSE - 4th occurrence. Attempt 3 hid 4 quality regressions; attempt 4 reported a trailing-newline fix that never landed. 3 of 3 completed attempts have omitted at least one true failure. MANDATORY: every agent claim in this pipeline is verified against the working tree before being recorded as done."
-          - "LINT BASELINE NOW OFFICIALLY 0 (was 17, all .opencode noise). MUST be propagated to the acceptance criteria of TASK-09..22 before Stage 2 dispatch."
-          - "MenuBar.tsx renderIcons body was re-indented to a 2-space rhythm inside a 4-space file. Cosmetically inconsistent with the rest of the file. Cosmetic only - do not spend another dispatch on it."
-          - "MenuBar.tsx retains a misleading comment: 'callers use ?? []' on safeIcons, but no caller passes a nullable value now. Stale comment."
-          - "MenuBarProps.sectionName is still `string` while icons/handlers moved to SectionName. Deliberately left for TASK-10/W2.x."
-          - "isSectionName() uses `sections.includes(value as SectionName)`; a module-level `Set<SectionName>` would be more idiomatic. Cosmetic, defer."
-          - "src/types/icons.ts is a NEW file outside every W-ID. Justified: directly serves the W1.11 coupling defect. Must appear in the final change summary."
-          - "cardDataMap dropping About Me/Contact (DefaultCardGroup.tsx:11-30) remains open - correctly deferred to Stage 2, W2.1/TASK-09."
-          - "STAGE 1 EXIT GATE: corrections are functionally complete and build=0/lint=0. Ready for QA Frontend re-review, which must independently confirm W1.1-W1.21 and specifically re-check the items earlier reviews left incomplete."
+      notes: "All4frontendtasksimplementedandQAapprovedafteridentity/pagination/ETagcorrections. PostfixbuildPASS517;14Node suitesPASS;lintFAILsame6no new. Browser/deploymentnotverified."
+      concerns: []
       tasks:
-        - id: TASK-01
-          name: toolchain-unblock-baseline
-          stage: 1
-          status: completed
-          w_ids: [W1.1, W1.2, W1.3]
-        - id: TASK-02
-          name: viewport-units-height-math
-          stage: 1
-          status: completed
-          w_ids: [W1.7, W1.8]
-        - id: TASK-03
-          name: observer-lifecycle-dead-dom
-          stage: 1
-          status: completed
-          w_ids: [W1.4, W1.5, W1.12]
-        - id: TASK-04
-          name: focus-outlines-divider-positioning
-          stage: 1
-          status: completed
-          w_ids: [W1.14, W1.15]
-        - id: TASK-05
-          name: button-timer-dead-css-logo-fit
-          stage: 1
-          status: completed
-          w_ids: [W1.9, W1.19, W1.16, W1.21]
-        - id: TASK-06
-          name: form-pattern-cardgroup-guard
-          stage: 1
-          status: completed
-          w_ids: [W1.13, W1.10]
-        - id: TASK-07
-          name: section-lookup-overflow-icon-semantics
-          stage: 1
-          status: completed
-          w_ids: [W1.6, W1.11, W1.18, W1.20]
-        - id: TASK-08
-          name: heading-outline-h1
-          stage: 1
-          status: completed
-          w_ids: [W1.17]
-        - id: TASK-09
-          name: data-types-discriminated-union
-          stage: 2
-          status: completed
-          attempts: 2
-          w_ids: [W2.1, W2.3, W2.7]
-        - id: TASK-10
-          name: section-registry-single-source
-          stage: 2
-          status: completed
-          w_ids: [W2.2, W2.5, W2.10, W2.11, W2.12, W2.13]
-        - id: TASK-11
-          name: button-consolidation
-          stage: 2
-          status: completed
-          w_ids: [W2.4]
-        - id: TASK-12
-          name: stable-keys-paragraph-dead-code
-          stage: 2
-          status: completed
-          w_ids: [W2.8, W2.9, W2.14]
-        - id: TASK-13
-          name: error-boundary-tooling
-          stage: 2
-          status: completed
-          w_ids: [W2.6, W2.15, W2.16, W2.17]
-        - id: TASK-14
-          name: stage3-screenshot-baseline-gate
-          stage: 3
-          status: skipped
-          w_ids: []
-        - id: TASK-15
-          name: tokens-breakpoint-migration
-          stage: 3
-          status: completed
-          w_ids: [W3.1, W3.2, W3.3, W3.4]
-        - id: TASK-16
-          name: css-literal-consolidation
-          stage: 3
-          status: completed
-          w_ids: [W3.5, W3.7, W3.9, W3.11, W3.12, W3.13]
-        - id: TASK-17
-          name: semantic-landmarks-motion-constants
-          stage: 3
-          status: completed
-          w_ids: [W3.6, W3.8, W3.10]
-        - id: TASK-18
-          name: static-seo-head-crawl-files
-          stage: 4
-          status: completed
-          w_ids: [W4.1, W4.2, W4.4, W4.5]
-        - id: TASK-19
-          name: jsonld-alt-lang-metadata-module
-          stage: 4
-          status: completed
-          w_ids: [W4.3, W4.6, W4.9, W4.14, W4.16]
-        - id: TASK-20
-          name: image-cls-form-labels-article-time
-          stage: 4
-          status: completed
-          w_ids: [W4.7, W4.8, W4.10]
-        - id: TASK-21
-          name: security-headers-dead-font-threshold-note
-          stage: 4
-          status: completed
-          w_ids: [W4.11, W4.15, W4.17]
-        - id: TASK-22
-          name: code-splitting-lazymotion
-          stage: 4
-          status: completed
-          w_ids: [W4.12, W4.13]
+        - { id: TASK-01, status: completed, agent_task_id: ses_e70185d8bffePR396x0sN39ge7 }
+        - { id: TASK-02, status: completed, agent_task_id: ses_e70185d74ffe0p3Kk0w696Zv6b }
+        - { id: TASK-03, status: completed, agent_task_id: ses_e701486c1ffe3LMxtTDHFi5N20 }
+        - { id: TASK-04, status: completed, agent_task_id: ses_e7012432cffeCOMfrj5CeRFvve }
     senior-backend:
-      status: not-applicable
-      notes: "No backend exists. Pure-frontend React SPA; vercel.json only serves static assets. Zero backend tasks in the plan."
-      updated_at: "2026-10-03T01:45:00"
-      errors: []
-      concerns: []
-      tasks: []
-    qa-frontend:
       status: completed
-      stage4_approved: true
-      stage4_verdict: "Approved source/build-only TASK18..22 all W4.1..17. Verified actual source/build/static imports and installed LazyMotion feature state/rejection path. Build PASS465modules; initialstaticJS242.27kBraw87.44gzip vs338.48/117.75baseline. Lint6 knownerrors0warnings, no regression. Browser/external/deployment not certified."
-      stage4_errors: []
-      stage4_concerns:
-        - "Runtime image sizing/CLS, accessible names/focus, directscroll/navigation, animation firstpaint/timing, noscript/favicon, console/rejections and screenshots NOT VERIFIED per user."
-        - "Deployed headers/rewrite/crawl/assets, social/profile validators and GoogleRichResults NOT VERIFIED."
-      stage3_approved: true
-      stage3_verdict: "Approved source-only TASK16/17 and TASK15 regression check all W3.1..13. Required prefixed clamp and uncertain vh retained intentionally. Runtime/browser/visual checks NOT VERIFIED per user, TASK14 skipped."
-      stage3_errors: []
-      stage3_concerns:
-        - "Source-only approval does not certify runtime overflow, hover interpolation, computed styles, accessibility tree or WebKit/pixel equivalence."
-      round: 10
-      updated_at: "2026-10-18T15:01:31-03:00"
-      review_area: frontend
-      stage2_approved: true
-      round10_verdict: "Approved under user-revised visual criterion. Pre-observer foreign section excluded while five real sections observed/revealed; first-render initial transforms -200px home/+300px scroll with opacity0 and subsequent motion confirmed; keyboard Enter arrow changes About Me to Projects. Prior browser/source approvals retained. Historical visual equivalence waived by user, not tested."
-      round10_errors: []
-      round10_concerns:
-        - "Historical Stage2 visual and first-frame equivalence unverified and accepted by user. TASK14 new baseline remains mandatory."
-      round9_verdict: "Corrections Needed: no authentic baseline for mandatory visual comparison. PASS: three unmatched-path logs, isolated throwing-render boundary/logging, both routes/view links, ten arrow transitions, menu Contact, contact dialog open/close without mail, all 15 home card link targets, scroll reveal, zero duplicate-key warnings, arrow hover/focus-visible. No source changes."
-      round9_errors: []
-      round9_concerns:
-        - "0 of 26 both-route/13-width full-page comparisons possible; hover/focus comparisons outstanding. task09 temp snapshots absent; HEAD 403ab6b predates uncommitted Stage1/2 and is not an approved pre-Stage2 baseline."
-        - "First-frame capture and foreign-section injection before observer creation NOT VERIFIED. Post-mount foreign section was not observed, which does not establish the stronger test."
-        - "Need authentic approved pre-Stage2 build/screenshots or explicit user criterion change/waiver. TASK12/13 remain in_progress; Stage3 gated."
-      round9_evidence:
-        - "C:/Users/renan/AppData/Local/Temp/opencode/qa9/browser-results-round9.json"
-        - "C:/Users/renan/AppData/Local/Temp/opencode/qa9/gates-results.json"
-      round9_agent_task_id: "ses_eafdd5698ffeofzoJ7RL6rH65I"
-      round8_verdict: "Corrections Needed for Stage 2 exit solely due missing mandatory browser evidence. W2.8, W2.9 source correction, W2.16 PASS. Build PASS 505 modules. Lint exactly seven existing accessibility errors/zero warnings. Headless Edge confirmed catch-all fallback at /typo,/scroll/extra,/anything and normal content at /,/scroll. No source modifications by QA."
-      round8_errors: []
-      round8_concerns:
-        - "NOT VERIFIED: dev-console unmatched-path logging and duplicate-key warnings; deliberate throwing-render boundary test/logging; card/button interactions; hover/focus/keyboard; both-route 13-width full-page comparisons against genuine pre-change baseline."
-        - "No genuine pre-change full-page screenshot baseline found in inspected workspace/temp. Requires trustworthy baseline artifacts or agreed reproducible pre-change revision/browser comparison. Stage 3 must not start."
-      round7_verdict: "Corrections Needed. Build PASS (504 modules). Lint 7 errors/1 warning; seven existing accessibility errors but the NotFound react-refresh warning is newly introduced. W2.8 FAIL: four recognition cards share cardInfo.link, producing duplicate sibling keys. W2.9 FAIL: trailing br line-box spacing removed without equivalent compensation or captured visual proof. W2.16 FAIL: baseline incorrectly describes new NotFound warning as pre-existing. Other Stage 2 W-IDs pass source review. Mandatory browser gates NOT VERIFIED; do not start Stage 3."
-      round7_errors:
-        - "W2.8 duplicate recognition keys: data.ts entries at 106,125,144,163 share the same LinkedIn URL; use stable unique domain identity."
-        - "W2.9 paragraph spacing equivalence unproven: removed trailing br elements and margin:0 does not restore line boxes."
-        - "W2.16 new NotFound react-refresh warning incorrectly baselined as pre-existing."
-      round7_concerns:
-        - "Mandatory browser verification remains unavailable: 13-width both-route/hover/focus/paragraph comparisons, all buttons/cards/keyboard/contact-dialog, duplicate-key console, first-frame/observer injection, throwing-render and unmatched-route exercise/logging."
-      dispatch_status: "Final Stage4 QA Approved under source/build-only criterion. All applicable implementation tasks closed; TASK14 user-skipped. Browser and external/deployed validation explicitly unverified."
-      round3_verdict: "Approved - STAGE 1 COMPLETE (see notes below, retained verbatim as the Stage 1 record)."
-      round4_scope: "STAGE 2 CHECKPOINT QA - round 4. This is explicitly NOT the Stage 2 exit gate. IN SCOPE: TASK-09 only (W2.1, W2.3, W2.7), plus the 5 Stage-2 handoff items carried over from Stage 1 QA round 3. OUT OF SCOPE: W2.2, W2.4, W2.5, W2.6, W2.8-W2.17 - these belong to TASK-10..13, are unimplemented, and reviewing them now can only return a guaranteed-noise 'Corrections Needed'. Do NOT re-sweep W2.1-W2.17. The full W2.1-W2.17 sweep is the Stage 2 EXIT gate and runs after TASK-12."
-      round4_instruction: "QA Reviewer round 4 - focused checkpoint instruction. REVIEW EXACTLY TWO THINGS. (1) TASK-09 (W2.1, W2.3, W2.7): prop types moved verbatim into src/data/types.ts with CardInfo = Omit<DefaultCardProps,'headingLevel'> to preserve the Stage 1 headingLevel boundary; ProjectCardData/ExperienceCardData discriminated on kind; CardData union; data.ts reduced to a single import type from ./types with ZERO ../components imports; DefaultCardGroup retyped to CardGroupName/CardDataMap with keyof typeof, isValidCardType and the now-unreachable fallback branch deleted; HomePageScroll's uniform-prop Component union replaced with per-entry render() so each component gets only its declared props; W2.7 duplicate .group-cards scrollbar block deleted with the class name preserved. Expected final data shape is 15 entries = 7 kind:'experience' + 8 kind:'project' (count it yourself - the implementing agent previously miscounted as both 9 and 10 missing). (2) The 5 Stage-1-QA-round-3 handoff items: (a) MenuSectionButton.tsx ariaHidden prop is now dead; (b) HomePageScroll.tsx:119-128 passes a uniform prop set to 5 components that do not all declare it; (c) src/data/sections.ts as Record<> cast defeats the compile-time exhaustiveness its own comment claims; (d) getSectionIndex returns iconIndex, not the registry index - correct only while the two orders coincide; (e) DefaultCardGroup cardType is still string after TASK-06 removed the as keyof typeof cast its acceptance criteria required to remain. CONSTRAINTS: the lint baseline is 0, NOT the original 17 - those 17 were .opencode tooling noise and .opencode is now in the eslint ignores. Verify against the working tree AND the emitted bundle, NEVER against a green build: 5 false agent claims are recorded in this pipeline, so green build + green lint is not evidence. Return an explicit Approved / Corrections Needed verdict with per-item PASS/FAIL rows. Do not fail this round on Stage 1 items - Stage 1 is closed - and do not open the unimplemented W-IDs."
-      notes: "STAGE 1 CLOSED AND FINAL (round 3, verdict below, stage1_approved=true). Round 2 truncated at MAX STEPS after verifying 18 of 21 W-IDs and finding 2 blocking defects (W1.17, W1.20) plus 4 hygiene defects; all were fixed and orchestrator-verified, and round 3 confirmed them - no new defects. Round 4 is a different job entirely: a Stage 2 CHECKPOINT over TASK-09, not a re-review of Stage 1. Execute round4_instruction; do not re-run the W1.1-W1.21 sweep. errors[] below retains the truncation history on purpose - QA has truncated 2 of 4 prior attempts, so the round 4 prompt must stay narrow."
-      verdict: "Approved - STAGE 1 COMPLETE. Build PASS (exit 0, 503 modules) and lint 0 errors / 0 warnings. All 21 W-IDs resolved and verified against disk AND the emitted bundle, not against a green build. W1.17 PASS: HeadingLevel union is literal not string, required (not defaulted) on all 4 components so a missing level is a TS2741, data.ts boundary uses Omit at :21,:33,:172, both routes gap-free (/ = h1 -> h2 xN; /scroll = h1 -> h2 -> h3 -> h4), 34 heading selectors across 5 files with 0 orphans, every h2/h3 pair shares ONE declaration block so computed styling is identical on both routes by construction. W1.20 PASS: verified in the emitted bundle - ariaHidden:!0 occurs exactly twice (the two arrows), zero at the hamburger call site, alt pass-through not regressed. Hygiene PASS: all 4 EOF newlines byte-confirmed by reading the last 2 bytes directly (HomePageScroll.tsx, sections.ts, icons.ts, plus heading.ts), MenuBar safeIcons and its stale comment fully gone. W1.19 PASS: repo-wide button sweep, 9 occurrences all typed, Button.type is required, ContactForm.tsx:34 correctly KEEPS type=submit. W1.21 PASS: object-fit: fill genuinely unchanged AND the decision is recorded in 4 places (pipeline.yaml, risks.md R13, feasibility.md Gated, TASK-05); QA independently re-measured the logos and confirmed the gating premise holds. NEW DEFECTS FOUND: none."
-      stage1_approved: true
-      round4_verdict: "Corrections Needed. PASS: TASK-09 W2.1 (types moved; no data-to-components imports), W2.3 (15 entries: 7 experience + 8 project; no cast/fallback), W2.7 (duplicate declarations removed; .group-cards preserved); handoff (a) ariaHidden forwarded and not dead, (b) per-entry HomePageScroll props fixed, (e) cardType typed as CardGroupName. FAIL: handoff (c) src/data/sections.ts Record<> cast defeats key exhaustiveness; (d) getSectionIndex returns iconIndex, not registry index. No kind leakage to DOM observed; no screenshot evidence claimed; build/lint not run."
-      round4_errors: []
-      round4_concerns:
-        - "src/data/sections.ts:39-42 uses Object.fromEntries(... ) as Record<SectionName, SectionEntry>, defeating compile-time exhaustiveness."
-        - "src/data/sections.ts:58-61 getSectionIndex returns entry.iconIndex although its name/comment describes a registry index."
-      round5_verdict: "Approved. Generic helper infers literal K from the checked registry; assignment to Record<SectionName, SectionEntry> rejects missing keys, independently reproduced with missing Contact -> TS2741. All keys compile; invalid extra names rejected by satisfies. getSectionIndex returns sections.indexOf(sectionName), matching HomePage arrow callers indexing sections[nextIndex]. QA reports tsc and scoped eslint pass; no source modifications."
-      round5_errors: []
-      round5_concerns:
-        - "recordFromEntries's internal {} as Record<K,V> relies on retaining the checked Record<SectionName, SectionEntry> annotation at the call site."
-      round6_scope: "Review TASK-10 only (W2.2, W2.5, W2.10, W2.11, W2.12, W2.13), against TASK-10 acceptance criteria and five invariants. Inspect exact four-file diff/current source; do not implement. Explicitly scrutinize registry/render-target relationship and cycles/lazy loading, arrows and wrap matrix, unresolved 200/100 decision preserving first render, route derivation/menu callbacks, observer ref attachment/scoping, and unchanged progressive reveal/OOS-3/W1.6 behavior. Separate code-verifiable passes from browser-only items (13-width screenshots, observer injection, first-render timing) and do not imply these were verified unless captured. No other Stage 2 IDs."
-      round6_instruction: "QA Reviewer round 6. Review only TASK-10. Use .opencode/plan/codebase-quality-seo/tasks/TASK-10-section-registry-single-source.md acceptance criteria. Confirm no sections.indexOf remains; registry and page-specific target maps are safely tied by SectionId without eager import cycles; exact 10 arrow transitions and negative modulo; MOTION_VALUE hoisted but 100/200 discrepancy unchanged and clearly gated on unresolved Open Question 2/R15; useLocation route behavior at / and /scroll and optional real callback; scoped observer uses attached existing main ref and no wrapper while preserving reveal (visibleSections, y=300, threshold=.5, duration .6, data-section); no W1.6/OOS-3 changes. Inspect diff and source, not agent claims/build alone. Report one explicit verdict with per-item PASS/FAIL and a separate NOT VERIFIED row for screenshots/manual browser checks if unavailable. Do not modify source or widen scope."
-      round6_verdict: "Approved. PASS: W2.2 registry and SectionId-linked page target maps without import cycle or lazy-loading regression; W2.5 shared normalized modulo helper and all 10 transitions; W2.10 hoisted MOTION_VALUE with 100/200 preserved pending Open Question 2/R15; W2.11 useLocation route behavior, optional callback/no-op removal; W2.12 scoped existing main ref and reveal invariants; W2.13 maps hoisted; no TASK-07/OOS-3 regression. NOT VERIFIED: 13-width screenshots, injected outside section, first-frame timing (no capture). QA independently reviewed source/call sites."
-      round6_errors: []
-      round6_concerns:
-        - "13-width screenshot diff, DevTools foreign-section injection, and first-frame timing capture remain unverified due unavailable browser tooling."
-      round7_scope: "Stage 2 EXIT QA. Review TASK-09 through TASK-13 and all Stage 2 W2.1-W2.17 acceptance criteria against implementation and current source. Verify earlier TASK-09/10 work and corrections remain intact. Separate source-verifiable PASS/FAIL from browser-only NOT VERIFIED checks. Stage 2 lint baseline is feasibility.md TASK-13 post-plugin baseline: 7 errors, 1 warning; do not treat that baseline as regression. Review source/diff and validation evidence, not agent claims alone. Do not begin Stage 3 or implement corrections. Return a single explicit Approved / Corrections Needed verdict, per W-ID/task PASS/FAIL rows, errors and concerns, with browser-only gaps separately listed."
-      round7_instruction: "QA Reviewer round 7 — complete Stage 2 exit gate. Review only Stage 2 W2.1-W2.17 (TASK-09..13) against the five project invariants and task files TASK-09 through TASK-13. Independently inspect current source/diff, including corrected sections registry, button consolidation/CSS, error boundary/catch-all/router types/lint config/type relocation, stable keys/paragraph markup/dead code/asset deletion. Verify TASK-11 nav wrapper decision and class/focus/type contracts; TASK-12 key uniqueness and downstream description shape; TASK-13 baseline correctly recorded and rule names valid. Verify build and lint evidence; expected Stage 2 lint baseline is 7 errors/1 warning as recorded in feasibility.md, not zero. Do not modify files or broaden scope. Browser-only checks to mark NOT VERIFIED if unavailable: 13-width captures, button/card interactions, duplicate-key console, paragraph line-break equivalence, throwing-render and unmatched-route browser exercises/logging. Return Approved or Corrections Needed with per-W-ID/task PASS/FAIL, evidence, errors, concerns, and separate NOT VERIFIED list."
-      round5_scope: "Focused corrections QA only: verify the two round-4 defects are fixed in src/data/sections.ts. Confirm registry key exhaustiveness is genuinely enforced at compile time (review generic assertion and call-site typing; use negative compile checks if useful), and getSectionIndex matches intended registry navigation order and callers. Do not re-sweep TASK-09 or any other Stage 1/Stage 2 items."
-      round5_instruction: "QA Reviewer round 5. Review only src/data/sections.ts fixes for round-4 failures (c) Record<> exhaustiveness cast and (d) getSectionIndex semantics). Independently inspect source and relevant call sites. Specifically scrutinize recordFromEntries's {} as Record<K,V> helper and prove missing SectionName keys fail type checking or explain why the type construction does not enforce it. Confirm getSectionIndex returns the registry/navigation index consumed by HomePage arrows. Do not modify files, do not widen scope. Return Approved or Corrections Needed, with separate PASS/FAIL rows, evidence, errors, concerns."
-      blocking_defects_resolved:
-        - "W1.20 RESOLVED - ariaHidden camelCase on both arrows, aria-hidden removed from the hamburger per user decision. Bundle-verified."
-        - "W1.17 RESOLVED - HeadingLevel prop ('h2'|'h3') threaded required through 4 components and both routes; 10 orphaned CSS selectors repaired to paired h2/h3 form; data.ts boundary fixed with Omit after attempt 5 left 16x TS2741."
-      blocking_defects:
-        - id: W1.20
-          severity: blocking
-          detail: "aria-hidden is entirely non-functional. HomePage.tsx:146,162,171 pass aria-hidden=\"true\" (kebab) to custom components whose prop is ariaHidden (camel) - ArrowSectionButton.tsx:5, MenuSectionButton.tsx:11,18, DefaultSectionButton.tsx:7,10. TypeScript's JSX hyphen carve-out let this compile, so the green build proves nothing. Proven from the compiled bundle: mm=({icon:n,alt:r,onClick:o,ariaHidden:s}) renders jsx(\"img\",{...,\"aria-hidden\":s}) while call sites emit jsx(Th,{...,\"aria-hidden\":\"true\"}) - s is undefined, React omits the attribute. ZERO aria-hidden attributes are rendered. The alt=\"\" half of W1.20 does work."
-        - id: W1.17
-          severity: blocking
-          detail: "Heading outline SKIPS A LEVEL on route '/'. h2 exists in exactly one place - InfoCard.tsx:6 - and InfoCard is imported only by HomePageScroll.tsx:5,116. Route '/' renders h1 (MenuBar.tsx:52) then straight to h3 (AboutMe.tsx:20 / DefaultCard.tsx:22 / ContactForm.tsx:19). So /scroll is h1->h2->h3->h4 but / is h1->h3. THE PRIOR PIPELINE RECORD IS WRONG: the claim 'exactly one h1 -> h2 -> h3 -> h4 on both routes' is false. PLAN-LEVEL CONFLICT - not solvable by the implementer alone: AboutMe/ContactForm/DefaultCard must be h3 on /scroll but would need to be h2 on /, and a shared component cannot satisfy both without a heading-level prop. Needs user escalation, same treatment as the article/OOS-4 clash."
-      hygiene_defects:
-        - "HomePageScroll.tsx still ends on byte ';' with no trailing newline - 5th false agent claim in this pipeline."
-        - "MenuBar.tsx:20 stale comment 'callers use ?? [] but belt-and-suspenders' persists; MenuBarProps.icons is non-nullable Icon[], so icons ?? [] at :21 is dead code."
-        - "NEW: src/data/sections.ts has no trailing newline (ends on '}')."
-        - "NEW: src/types/icons.ts has no trailing newline."
-      must_verify: []
-      fixes_applied:
-        - "W1.17: new src/types/heading.ts (HeadingLevel = 'h2'|'h3'), threaded required (NOT defaulted) through AboutMe, ContactForm, DefaultCard, DefaultCardGroup, and both routes - h2 on /, h3 on /scroll. 10 CSS selectors updated to paired h2/h3 form (ContactForm.css x4, DefaultCard.css x6) plus AboutMe.css x2 from the prior attempt. Full sweep: 34 heading selectors, 5 files, 0 orphans."
-        - "W1.17 follow-on: src/data/data.ts content constants annotated with the now-required prop caused 16x TS2741. Fixed at the type boundary with Omit<...,'headingLevel'> at data.ts:21,33,172 - headingLevel remains required on components."
-        - "W1.20: ariaHidden={true} applied to both arrow call sites (HomePage.tsx:147,171); aria-hidden REMOVED from the hamburger call site (:162) per user decision. Verified in the emitted bundle."
-        - "Hygiene: 3 trailing newlines byte-verified; MenuBar.tsx safeIcons + stale comment removed."
-      out_of_scope:
-        - "cardDataMap dropping About Me/Contact (DefaultCardGroup.tsx:11-30) is Stage 2 scope, W2.1/TASK-09. Note only, do not fail Stage 1 on it."
-        - "MenuBarProps.sectionName is still `string`; tightening to SectionName is TASK-10/W2.x."
-        - "MenuSectionButton.css `.menu-section { position: relative }` is CONFIRMED LOAD-BEARING - `.menu-section__items` is position:absolute and uses it as containing block. Do not re-raise as dead code."
-        - "Cosmetic only, note do not fail: MenuBar.tsx renderIcons uses a 2-space rhythm inside a 4-space file; isSectionName() uses sections.includes(value as SectionName) where a module-level Set<SectionName> would be more idiomatic."
-      errors:
-        - "QA Reviewer hit MAXIMUM STEPS on round 2 (2nd QA truncation; round 1 also truncated). No verdict, no per-W-ID table, no errors/concerns lists emitted."
-        - "STAGE 1 NOW build=PASS lint=0 after corrections attempt 6, which also fixed a 16x TS2741 breakage in src/data/data.ts that attempt 5 created when it made headingLevel required."
+      updated_at: "2026-10-31T12:26:31.0426248-03:00"
+      agent_task_id: ses_e700f8614ffejXKdrISmxgdC3p
+      errors: []
       concerns:
-        - "W1.17 CONFLICT: route '/' renders h1 -> h3, skipping h2. The shared-component design (AboutMe/ContactForm/DefaultCard must be h3 for /scroll but h2 for /) makes this unresolvable without a heading-level prop or a per-route heading decision. ESCALATED TO USER - awaiting decision."
-        - "W1.20 fix has a trap: simply renaming the three call sites to ariaHidden would also apply aria-hidden to MenuSectionButton at HomePage.tsx:162, but W1.20 targets only the two arrow buttons. Hiding the sole menu trigger's icon would strip its accessible name. The correction agent must scope the fix to the arrows only."
-        - "The AC claiming the h1 is 'Renan Fellipe' rests on a false premise - MenuBar.tsx:52 renders {sectionName}, not the site title."
-        - "STAGE 2 FORWARD-LOOKING: TASK-06 removed the `as keyof typeof` cast that its own AC required to remain for TASK-09/W2.3 - TASK-09 must re-check. sectionRecord's `as Record<...>` cast defeats the compile-time exhaustiveness its comment claims. getSectionIndex returns iconIndex, not the registry index - correct only while the two orders coincide."
-      tasks: []
-    qa-backend:
-      status: not-applicable
-      notes: "No backend exists. Pure-frontend React SPA; vercel.json only serves static assets. Zero backend tasks in the plan. Corrected from 'pending' on resume - 'pending' made a non-applicable step look like incomplete work."
-      updated_at: "2026-10-04T14:19:36"
+        - "Header flow verified in core->servicecallchain rather than duplicate literals in service."
+        - "Actualservicepartialpage/ETag/sharedrequestexercisedinmockedNode;browser/realnetwork/deployedgapsunverified."
+      notes: "Verification script only; no application backend."
+      tasks:
+        - { id: TASK-05, status: completed }
+    qa-frontend:
+      status: approved
+      updated_at: "2026-10-31T12:26:31.0426248-03:00"
+      agent_task_id: ses_e700bf0edffeBxRKDl7cyEyLOB
+      notes: "Round2ApprovedTASK01..04boundedsource/build/Node. Prioridentity/pagination/ETagdefectsresolvedandcovered14suites. Postfixbuild517reusedunchanged;lintFAILsame6."
       errors: []
-      concerns: []
+      concerns:
+        - "Browser/layout/CORS/storage/visibility/accessibility/deploymentunverified."
+    qa-backend:
+      status: approved
+      updated_at: "2026-10-31T12:26:31.0426248-03:00"
+      agent_task_id: ses_e700bf0ccffeomO4Jz8RzWQv5z
+      notes: "Round2ApprovedTASK05source/Node.14suitesPASSactualservicewithmockedboundaries;harnesseslintPASS;rootlintFAILbaseline6;postfixbuildreusedunchanged. No appbackend."
+      errors: []
+      concerns:
+        - "Staticno-whitelistcheckdetectsidentifiernotallpossibleequivalents;sourceinspectionfoundnone."
+        - "Browser/runtime/deployednotcertified;notallHTTPmalformedJSON/rateblock/timedretryservicepathscovered."
   tasks:
-    - id: TASK-01
-      stage: 1
-      status: completed
-      blocking: false
-    - id: TASK-02
-      stage: 1
-      status: completed
-    - id: TASK-03
-      stage: 1
-      status: completed
-    - id: TASK-04
-      stage: 1
-      status: completed
-    - id: TASK-05
-      stage: 1
-      status: completed
-    - id: TASK-06
-      stage: 1
-      status: completed
-    - id: TASK-07
-      stage: 1
-      status: completed
-    - id: TASK-08
-      stage: 1
-      status: completed
-    - id: TASK-09
-      stage: 2
-      status: completed
-    - id: TASK-10
-      stage: 2
-      status: completed
-    - id: TASK-11
-      stage: 2
-      status: completed
-    - id: TASK-12
-      stage: 2
-      status: completed
-    - id: TASK-13
-      stage: 2
-      status: completed
-    - id: TASK-14
-      stage: 3
-      status: skipped
-    - id: TASK-15
-      stage: 3
-      status: completed
-    - id: TASK-16
-      stage: 3
-      status: completed
-    - id: TASK-17
-      stage: 3
-      status: completed
-    - id: TASK-18
-      stage: 4
-      status: completed
-    - id: TASK-19
-      stage: 4
-      status: completed
-    - id: TASK-20
-      stage: 4
-      status: completed
-    - id: TASK-21
-      stage: 4
-      status: completed
-    - id: TASK-22
-      stage: 4
-      status: completed
+    - { id: TASK-01, owner: senior-frontend, status: completed, depends_on: [] }
+    - { id: TASK-02, owner: senior-frontend, status: completed, depends_on: [] }
+    - { id: TASK-03, owner: senior-frontend, status: completed, depends_on: [TASK-01] }
+    - { id: TASK-04, owner: senior-frontend, status: completed, depends_on: [TASK-02, TASK-03] }
+    - { id: TASK-05, owner: senior-backend, status: completed, depends_on: [TASK-01, TASK-03, TASK-04] }
   history:
-    - timestamp: "2026-10-23T14:57:42-03:00"
-      step: qa-frontend
-      status: completed
-      summary: "Final Stage4 source/build-onlyQA Approved all17WIDs, actualsource/build and installedframer reviewed. BuildPASS465modules, lint6existingerrors0warnings, initialstaticJSdown96.21kBraw30.31gzip. All tasks except explicitTASK14skip completed. Runtime/external/deployed checks disclosed unverified. Completion STOPchain follows."
-    - timestamp: "2026-10-23T14:54:08-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK22 report normalized listfields and complete fileinventory. Dispatch single Stage4 source/buildQA for TASK18..22, preserving no-browser constraint."
-    - timestamp: "2026-10-23T14:54:08-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "User resumed after usage-limit failures; retry TASK20/22 completed source. Both build PASS/lint6 baselineerrors0warnings. Image/form/time semantics and lazyroute/asyncfeatures added; initialstaticJS down96.21kBraw/30.31gzip. Browser not opened. TASK22 report formatting needs arrayfields before finalQA."
-    - timestamp: "2026-10-22T18:49:26-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK19 correction restored date and single-source production/dev crawl generation with redundant publiccopies removed. Build/JSONLD/XMLchecks PASS. Dispatch disjoint TASK20 components and TASK22 main/pages performance in parallel. No browser."
-    - timestamp: "2026-10-22T18:49:26-03:00"
-      step: senior-frontend
-      status: partial
-      summary: "TASK19 returned SEO module/static build JSONLD/alt metadata; build PASS lint6 baseline. Read inspection found generated sitemap drops lastmod. Re-dispatch focused fix and source crawl synchronization."
-    - timestamp: "2026-10-22T18:49:26-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK18 SEO/crawl/static assets completed source, build PASS/lint6 baselineerrors0warnings. User-confirmed origin used; TASK19 follows to consolidate SEO strings and add JSON-LD/alt semantics. No browser launched."
-    - timestamp: "2026-10-22T18:18:57-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK21 returned build PASS/lint6 olderrors0warnings; headers added preserving rewrite, absentfontface no-op, threshold note honest about absent600 rule. User confirmed canonical https://portfolio-renan-fellipes-projects.vercel.app. DispatchTASK18 with confirmed origin."
-    - timestamp: "2026-10-22T18:18:57-03:00"
-      step: qa-frontend
-      status: completed
-      summary: "Stage3 source-only exit Approved all W3.1..13; browser not opened, TASK14 skipped. Start Stage4 independent TASK21; canonical origin needs user confirmation before TASK18 writes URLs. TASK21 runs before19 as approved S4-A schedule; no concurrent index.css editors."
-    - timestamp: "2026-10-22T18:08:31-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK17 CSS handoff complete sequentially, preserving TASK16 changes. Inline styles replaced by classes, build PASS after transient dependency realpath retry; lint6 errors0 warnings. Dispatch one Stage3 QA for TASK16/17 and TASK15 regression source gate; no browser."
-    - timestamp: "2026-10-22T18:08:31-03:00"
-      step: senior-frontend
-      status: partial
-      summary: "Parallel TASK16 CSS and TASK17 TSX returned. Both build PASS, lint7 baseline errors0 warnings, no browser. TASK16 cleanup complete with intentional prefix/vh preservation pending QA. TASK17 inline styles pending two CSS-equivalent rules; dispatch sequential completion now CSS agent finished."
-    - timestamp: "2026-10-22T17:46:28-03:00"
-      step: qa-frontend
-      status: completed
-      summary: "TASK15 source-only QA Approved all W3.1..4 after corrections; browser checks not verified per user. Dispatch TASK16 CSS and TASK17 TSX in parallel, disjoint source sets; preserve no-browser constraint."
-    - timestamp: "2026-10-22T17:46:28-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK15 corrections applied continuous width<600 boundaries and strict aspect-ratio>1/1 with legacy1000 cap to preserve all six compact conditions. Static truth table passed, build PASS/lint7 old errors0 warnings/diff check PASS. Dispatch focused source QA."
-    - timestamp: "2026-10-22T17:46:28-03:00"
-      step: qa-frontend
-      status: corrections_needed
-      summary: "TASK15 source QA found fractional width gap and compact-regime regressions at900x650/500x300. Root/layout tokens PASS, build PASS, lint7 old errors0 warnings. Re-dispatch frontend narrow corrections, no browser."
-    - timestamp: "2026-10-22T17:46:28-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK15 retry returned migration present, no further edits. Build PASS; lint7 errors0 warnings. Initial dispatch failed uv_spawn. Dispatch source-only QA; no browser per user. Legacy1000px/max-height600px query rationale requires review."
-    - timestamp: "2026-10-22T17:40:24-03:00"
-      step: user-constraint
-      status: completed
-      summary: "User instructed não abra o navegador. Applies to all following agents: no GUI/headless browser launch or browser automation; use static review/build/lint and disclose browser checks not performed."
-    - timestamp: "2026-10-22T17:40:24-03:00"
-      step: user-approval
-      status: completed
-      summary: "User explicitly requested skip essa task (TASK14) after three cancelled baseline dispatches. Recorded TASK14 skipped and authorized TASK15 progression without baseline screenshots. Keep browser/computed/source checks; do not fabricate pixel-comparison approval."
-    - timestamp: "2026-10-18T15:05:00-03:00"
-      step: qa-frontend
-      status: completed
-      summary: "QA10 Approved Stage2 under user-revised criterion. Pre-creation foreign-section exclusion, current first-render states and keyboard arrow verified. Historical comparisons waived, not claimed PASS. Starting TASK14 baseline; no source edits by QA."
-    - timestamp: "2026-10-18T15:01:31-03:00"
-      step: user-approval
-      status: completed
-      summary: "User: está correto, pode prosseguir. Accepted current render and proceeding without historical Stage2 pixel comparisons. New Stage3 baseline remains required. Dispatch QA10 to close Stage2 with remaining focused browser checks; do not claim missing historical comparisons passed."
-    - timestamp: "2026-10-18T14:55:01-03:00"
-      step: qa-frontend
-      status: awaiting_user_input
-      summary: "Resume YAML parsed cleanly. Round9 browser QA verified unmatched logging, throwing boundary, routes/view links, ten arrows, menu/contact dialog, 15 home card targets, scroll reveal and zero duplicate-key warnings. Mandatory 26 visual comparisons lack genuine baseline; first-frame/pre-creation injection unverified. Paused for authentic approved pre-Stage2 artifacts/build or explicit criterion decision. No source changes; Stage3 gated. Evidence temp/opencode/qa9; agent ses_eafdd5698ffeofzoJ7RL6rH65I."
-    - timestamp: "2026-10-17T23:40:58-03:00"
-      step: resume
-      status: in_progress
-      summary: "User confirmed project runs correctly after npm recovery and requested continuation. Recovery used npm ci preserving lock/source/runtime versions; build and Vite route/transformed-module/framer-motion dependency requests pass. Resume Stage2 browser gates with npm only; no pnpm installation into this node_modules. Round9 will validate interactions/console/boundary and establish available reproducible visual baseline without implying user confirmation covers every gate."
-    - timestamp: "2026-10-17T23:19:07-03:00"
-      step: qa-frontend
-      status: awaiting_browser_validation
-      summary: "Round8 independently approved source corrections W2.8/W2.9/W2.16. Build PASS505; lint seven baseline errors/zero warnings. Edge rendered catch-all on three unmatched routes and normal content on both known routes. Stage2 exit NOT APPROVED: missing console/error-boundary/interaction/keyboard/hover/focus evidence and genuine pre-change 13-width screenshot baseline. Paused pending trustworthy baseline/browser validation; Stage3 not started."
-    - timestamp: "2026-10-17T22:59:12-03:00"
-      step: senior-frontend
-      status: completed
-      summary: "Parallel TASK-12 corrections returned: unique link+title keys proven for 15 cards; paragraph line-box spacing restored with 13-dimension isolated Edge height matches (not full pixel equivalence). Build/diff check pass. TASK-13 correction returned: NotFound extracted, new warning resolved, baseline accurately seven existing a11y errors/zero warnings. Build PASS 505 modules. Both ready for QA; mandatory browser gates still unverified."
-    - timestamp: "2026-10-17T22:54:22-03:00"
-      step: qa-frontend
-      status: corrections_needed
-      summary: "Round 7 Stage 2 exit QA returned Corrections Needed. W2.8 duplicate recognition-card URL keys; W2.9 removed paragraph line-box spacing without equivalence evidence; W2.16 newly introduced NotFound react-refresh warning incorrectly called pre-existing. Build PASS; lint 7 errors/1 warning. Mandatory browser checks NOT VERIFIED. Reopened TASK-12/TASK-13; Stage 3 blocked."
-    - timestamp: "2026-10-03T00:00:00"
-      step: workflow-router
-      status: in_progress
-      summary: "Pipeline created. New execution started."
-    - timestamp: "2026-10-03T00:05:00"
-      step: workflow-router
-      status: completed
-      summary: "Routed to planning-analyst. Complexity: large. Independent flow (no Solution Designer needed)."
-    - timestamp: "2026-10-03T00:30:00"
-      step: planning-analyst
-      status: in_progress
-      summary: "Full codebase audit completed. Awaiting user approval on findings, approach (A recommended), breakpoint set, and SEO strategy. No files created yet."
-    - timestamp: "2026-10-03T00:40:00"
-      step: user-approval
-      status: completed
-      summary: "User approved: all findings, Approach A (staged refactor), breakpoints 600/768/1024/1440/1920, SEO client-only + prerender-readiness, toolchain unblock (remove self-referential dep + delete pnpm files)."
-    - timestamp: "2026-10-03T01:00:00"
-      step: planning-analyst
-      status: completed
-      summary: "Created and verified index.md, feasibility.md, impact-analysis.md, risks.md in .opencode/plan/codebase-quality-seo/. 68 work items across 4 stages. No application source code modified."
-    - timestamp: "2026-10-03T01:10:00"
-      step: user-go-ahead
-      status: completed
-      summary: "User said 'continue'. Proceeding to Tech Lead for task decomposition."
-    - timestamp: "2026-10-03T01:15:00"
-      step: tech-lead
-      status: in_progress
-      summary: "Dispatched Tech Lead to create task files from approved planning documents."
-    - timestamp: "2026-10-03T01:45:00"
-      step: tech-lead
-      status: completed
-      summary: "Created 22 task files + tasks/index.md (verified on disk). 68/68 W-IDs covered exactly once. 13 batches, max concurrency 5. No application source modified."
-    - timestamp: "2026-10-03T02:00:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK-01 complete. Toolchain unblocked: self-referential dep removed, pnpm files deleted. npm run build passes, tsc -b exit 0. Lint baseline recorded: 17 errors, all in .opencode/, zero in src/."
-    - timestamp: "2026-10-03T02:30:00"
-      step: senior-frontend
-      status: completed
-      summary: "Batch S1-B complete (TASK-02..06). All build=pass, lint=17. TASK-02 resolved the vh->dvh revert root cause via progressive enhancement + border-box. TASK-04 left W1.15 documented-only. TASK-05 left W1.21 unchanged (7/11 logos non-square). TASK-06 PARTIAL - re-dispatch pending."
-    - timestamp: "2026-10-03T02:35:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "Re-dispatched TASK-06 for W1.10 cast removal. TASK-07 (S1-C) dispatched in parallel - disjoint file set."
-    - timestamp: "2026-10-03T03:00:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK-06 re-dispatch COMPLETE (as keyof typeof cast fully removed, CardType union + isValidCardType guard added, branches made consistent). TASK-07 COMPLETE (symmetric overflow restore, getSectionIndex helper, hamburger alt fixed, ariaHidden propagated through 3 button components). Both build=pass, lint=17. TASK-08 (last Stage 1 task) dispatched."
-    - timestamp: "2026-10-03T03:25:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK-08 first attempt REGRESSIVE - shipped 3 heading tag changes that broke .atual-section__content h2.visible (header fade), .about-me__content h2 and .contact-form h2 selector families, while self-reporting build=pass and labelling the items 'BLOCKED'. Detected by orchestrator grep verification, not by the agent."
-    - timestamp: "2026-10-03T03:40:00"
-      step: senior-frontend
-      status: completed
-      summary: "TASK-08 re-dispatch COMPLETE. CSS selectors coordinated: MenuBar.css 5 sites -> h1 (incl. .visible compound), AboutMe.css 2 sites -> h3, ContactForm.css 6 sites -> h3. Outline verified: exactly one h1 -> h2 -> h3 -> h4, no skips. STAGE 1 COMPLETE (TASK-01..08). QA Frontend dispatched."
-    - timestamp: "2026-10-03T03:45:00"
-      step: qa-frontend
-      status: in_progress
-      summary: "QA Frontend dispatched to review Stage 1 (W1.1-W1.21)."
-    - timestamp: "2026-10-03T04:10:00"
-      step: qa-frontend
-      status: in_progress
-      summary: "First QA attempt hit max steps without a verdict. Orchestrator verified two contested claims: confirmed W1.15 still unaddressed (position:relative is on .menu-section, not the li) and found stray check-images.js/.mjs at the repo root."
-    - timestamp: "2026-10-03T04:30:00"
-      step: qa-frontend
-      status: completed
-      summary: "VERDICT Corrections Needed. Stage 1 implementation largely correct. Blocking: W1.15. Secondary: W1.11 partial, section->cardData mapping drops About Me/Contact, stray files. Orchestrator rejected QA's proposed W1.15 fix as an invariant-2 violation and escalated to the user as a branding decision."
-    - timestamp: "2026-10-03T04:35:00"
-      step: senior-frontend
-      status: completed
-      summary: "Corrections dispatch: deleted out-of-scope check-images.js/.mjs, appended the W1.15 open item to risks.md. Discovered pnpm-lock.yaml regenerates on every run-package-command invocation."
-    - timestamp: "2026-10-03T04:40:00"
-      step: blocked-on-user-decision
-      status: in_progress
-      summary: "Awaiting user decisions on W1.15 branding, pnpm-lock.yaml gitignore, eslint ignores for .opencode, and W1.11 deferral."
-    - timestamp: "2026-10-03T05:00:00"
-      step: user-approval
-      status: completed
-      summary: "User decided: (1) W1.15 FIX the dividers to render between items - explicit branding change approved; (2) gitignore pnpm-lock.yaml + pnpm-workspace.yaml; (3) add .opencode to eslint ignores; (4) make the W1.11 lookup total now, reject deferral; (5) adjust the current items before moving to Stage 2."
-    - timestamp: "2026-10-03T05:05:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "Dispatched corrections agent for W1.15 divider fix, pnpm gitignore, eslint .opencode ignore, and total W1.11 typed section registry."
-    - timestamp: "2026-10-03T05:20:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "RESUME. pipeline.yaml parsed cleanly - no repair needed. Orchestrator grep-verified all 4 approved corrections ARE on disk (li:not(:last-child)::after, .gitignore pnpm entries, eslint .opencode ignore, SectionName/getSectionIcons registry wired into both routes), but the corrections agent was interrupted before reporting validation. Also found: dead exported getSectionIndex with 0 call sites, two `entry!` non-null assertions, redundant parent position:relative, and QA's cardDataMap About Me/Contact finding unaddressed. Re-dispatching Senior Frontend to verify build+lint and close out."
-    - timestamp: "2026-10-03T05:35:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "Corrections attempt 2 PARTIAL - hit max steps again (2 of 2 attempts now truncated). Completed: src/types/icons.ts created to break data->component coupling, sections.ts converted to Record<SectionName,SectionEntry> with both non-null assertions eliminated, dead getSectionIndex removed and wired in, HomePage/HomePageScroll/iconsData/MenuBar updated. LEFT FAILING: 3-4 TS errors on the menuSetCurrentSection callback signature (still string, needs SectionName) and a dataset.section cast in HomePageScroll. Neither build nor lint was run. Re-dispatching with a tightly scoped prompt."
-    - timestamp: "2026-10-03T05:50:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "Corrections attempt 3 RECOVERED: build=0, lint=0. LINT BASELINE OFFICIALLY RE-BASELINED 17 -> 0 (.opencode ignore). W1.11 now structurally total via Record<SectionName,SectionEntry>, both entry! assertions gone; Icon relocated to src/types/icons.ts breaking the data->component coupling; getSectionIndex wired into the arrow handlers so no dead export remains. Orchestrator diff review CLEARED two suspected regressions (footer Suspense removal was legitimate dead code; useEffect deps [] is the intended W1.4/W1.5/W1.12 fix) but FOUND 4 undisclosed quality regressions: de-indented ArrowSectionButton in HomePage.tsx, de-indented renderIcons in MenuBar.tsx, lost trailing newline in HomePageScroll.tsx, and a redundant `as SectionName` cast on a literal that needs none. Also the dead `.menu-section { position: relative }` was flagged in attempt 1 and silently skipped. Batch still in_progress pending one cleanup dispatch."
-    - timestamp: "2026-10-03T06:05:00"
-      step: senior-frontend
-      status: completed
-      summary: "Corrections attempt 4: build=0, lint=0. Fixed the HomePage.tsx de-indentation, the MenuBar.tsx renderIcons de-indentation, and the redundant `as SectionName` cast. The agent CORRECTLY REFUSED to remove `.menu-section { position: relative }`, proving `.menu-section__items` is itself position:absolute and needs it as a containing block - orchestrator assumption was wrong, recorded to prevent re-raising in Stage 3. Remaining defect: the HomePageScroll.tsx trailing newline was reported as added but is NOT on disk. Stage 1 corrections are functionally complete; handing to QA Frontend for re-review with the newline and stale `safeIcons` comment flagged as hygiene checks."
-    - timestamp: "2026-10-03T06:06:00"
-      step: qa-frontend
-      status: in_progress
-      summary: "QA Frontend dispatched for Stage 1 RE-REVIEW (W1.1-W1.21). Lint baseline is now 0, not 17. Must independently verify all 21 W-IDs and close out the 7 checks the first QA pass left incomplete (W1.3 baseline, full W-ID sweep, W1.13 regex tests, W1.16 centering, W1.8 content-box descendants, W1.20 aria-hidden scope, W1.10 exhaustive cast check). W1.15 is a user-approved branding change. W1.11 must be confirmed total with no entry! assertions. cardDataMap About Me/Contact is explicitly out of Stage 1 scope."
-    - timestamp: "2026-10-03T06:20:00"
-      step: qa-frontend
-      status: in_progress
-      summary: "RESUME. pipeline.yaml parsed cleanly - no repair needed. Round 2 was dispatched 06:06 but never returned a verdict, so QA Reviewer is re-dispatched. Orchestrator pre-flight working-tree check confirmed the correction set is present (pnpm files gone, .gitmodules + src/types/ new) AND re-confirmed both hygiene items are STILL unfixed: HomePageScroll.tsx still lacks a trailing newline (git diff still emits 'No newline at end of file') and MenuBar.tsx:20 still carries the stale 'callers use ?? []' comment. Both are passed to QA as explicit checks rather than treated as closed."
-    - timestamp: "2026-10-03T06:50:00"
-      step: qa-frontend
-      status: in_progress
-      summary: "ROUND 2 QA DISPATCHED - TRUNCATED AGAIN (MAX STEPS, 2nd occurrence). No verdict. BUT it validated build=PASS/lint=0 and verified 18 of 21 W-IDs as PASS with hard evidence, including the two previously-unverified checks (W1.8 content-box descendant CLEAR; W1.16 centering TRUE). It also confirmed the TASK-08 CSS regression is genuinely repaired (.atual-section__content h1.visible present at MenuBar.css:49). FOUND 2 BLOCKING DEFECTS: (1) W1.20 aria-hidden entirely non-functional - kebab-case aria-hidden passed to camelCase ariaHidden props at HomePage.tsx:146,162,171, proven from the compiled bundle, so ZERO aria-hidden attributes render; (2) W1.17 heading outline SKIPS A LEVEL on route '/' (h1->h3) because InfoCard is the only h2 and is imported solely by HomePageScroll - this falsifies the prior pipeline record's 'both routes' claim and is a PLAN-LEVEL conflict requiring user escalation. Both hygiene defects confirmed still unfixed, plus 2 new missing trailing newlines (sections.ts, types/icons.ts). W1.19 and W1.21 evidence collected but rows never finalised."
-    - timestamp: "2026-10-03T06:52:00"
-      step: blocked-on-user-decision
-      status: in_progress
-      summary: "Escalating W1.17 to the user: shared components AboutMe/ContactForm/DefaultCard must be h3 on /scroll but h2 on /, so one shared component cannot satisfy both routes without either a heading-level prop or a per-route heading decision. Blocks the W1.17 portion of the corrections dispatch, since the approach determines the code shape. W1.20 and the 4 hygiene defects are NOT blocked and will be dispatched regardless of the W1.17 answer."
-    - timestamp: "2026-10-03T06:55:00"
-      step: user-approval
-      status: completed
-      summary: "W1.17: user chose ADD A headingLevel PROP to AboutMe/ContactForm/DefaultCard (h2|h3), supplied per route, so both routes get a valid gap-free outline. No visual or branding change. W1.20: user chose APPLY THE FIX ONLY TO THE 2 ARROW BUTTONS - leave HomePage.tsx:162 (hamburger MenuSectionButton) without aria-hidden so the menu trigger keeps its accessible name. Unblocked; corrections dispatch proceeding."
-    - timestamp: "2026-10-03T06:56:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "Dispatched corrections agent for 2 blocking defects + 4 hygiene defects: W1.17 headingLevel prop, W1.20 ariaHidden casing on arrows only, trailing newlines in HomePageScroll.tsx/sections.ts/types/icons.ts, stale MenuBar.tsx:20 comment and the dead icons ?? [] it describes. Agent instructed to verify newlines by byte read and to re-run build+lint itself."
-    - timestamp: "2026-10-03T07:20:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "CORRECTIONS ATTEMPT 5 - TRUNCATED (MAX STEPS, 3rd truncation in this pipeline). SOURCE EDITS LANDED BUT VALIDATION NEVER RAN. Applied: W1.17 headingLevel prop via new src/types/heading.ts (HeadingLevel = h2|h3), made REQUIRED not defaulted so a missing level is a compile error; threaded through AboutMe/ContactForm/DefaultCard -> DefaultCardGroup -> both routes (h2 on /, h3 on /scroll). W1.20 ariaHidden camelCase applied at HomePage.tsx:146 and :171, aria-hidden REMOVED at :162 per user decision. Hygiene 1-3 byte-verified (all three files now end 0x0A). Hygiene 4 resolved by full removal of dead safeIcons + stale comment (grep safeIcons = 0 matches). CRITICAL GAP: the CSS re-audit died at 3 of 15 sites - ContactForm.css 102/122/150/174 and DefaultCard.css 67/74/160/164/201/205 still target h3 ONLY, so route / card titles and contact heading are CURRENTLY UNSTYLED AT EVERY BREAKPOINT. The repo is in a known-visually-broken, unvalidated state. Build, lint and the W1.20 bundle grep were never executed."
-    - timestamp: "2026-10-03T07:22:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "Re-dispatched Senior Frontend with a tightly scoped prompt: finish the 9 remaining CSS selectors, then run build + lint, then produce the W1.20 bundle grep evidence. Explicitly told the repo is mid-fix and that finishing the selectors is the single highest priority."
-    - timestamp: "2026-10-03T07:45:00"
-      step: senior-frontend
-      status: completed
-      summary: "CORRECTIONS ATTEMPT 6 - GREEN. build PASS exit 0 (503 modules, 354.78 kB), lint 0 errors 0 warnings. Found and fixed an undisclosed blocker the previous attempt had created: src/data/data.ts annotated content constants with the now-required headingLevel prop (16x TS2741). Fixed at the type boundary with Omit<...,'headingLevel'> at data.ts:21,33,172 - headingLevel stays REQUIRED on the components, preserving the deliberate strictness choice, and the presentation concern is kept out of content data. Finished all 10 remaining heading selectors (ContactForm.css x4, DefaultCard.css x6) with paired h2/h3 variants. Full CSS sweep: 34 heading selectors across 5 files, 0 orphans, no h3-only selector remains anywhere. W1.20 verified in the emitted bundle: both arrow img emit aria-hidden=true, the hamburger img emits none (aria-hidden appears exactly once in the bundle, inside the arrows' shared button). ORCHESTRATOR INDEPENDENTLY VERIFIED against the working tree: all 10 CSS pairs present; ariaHidden={true} on both arrows and no aria-hidden at the hamburger call site; Omit present at data.ts:21,33,172; src/types/heading.ts exists with the HeadingLevel union and ends with LF (0x0A); HeadingTag wired in all 3 components. Only discrepancy: agent cited HomePage.tsx:146 for the left arrow, actual line is 147 - cosmetic line drift, substance correct."
-    - timestamp: "2026-10-03T08:05:00"
-      step: qa-frontend
-      status: completed
-      summary: "QA ROUND 3 VERDICT: APPROVED. STAGE 1 (TASK-01..08, W1.1-W1.21) COMPLETE AND CLEARED. Scope was deliberately narrowed to avoid a third truncation, and it worked - a real verdict was returned. All 21 W-IDs resolved, verified against disk and the emitted bundle rather than against a green build. build PASS exit 0, lint 0 errors 0 warnings. W1.17 and W1.20 both confirmed fixed; all 4 hygiene items byte-confirmed; W1.19 and W1.21 finalised as PASS (W1.21's gating premise independently re-measured and upheld). NO NEW DEFECTS FOUND. Proceeding to Stage 2 (TASK-09..13). Stage 2 handoff items recorded: MenuSectionButton.tsx ariaHidden prop now dead; HomePageScroll.tsx:119-128 passes a uniform prop set to 5 components that do not all declare it (TASK-09); sections.ts as Record<> cast defeating its own exhaustiveness comment; getSectionIndex returning iconIndex not registry index; DefaultCardGroup cardType: string after TASK-06 removed the as keyof typeof cast its AC required to remain."
-    - timestamp: "2026-10-03T08:40:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "STAGE 2 / TASK-09 DISPATCHED - TRUNCATED (MAX STEPS, 4th truncation in this pipeline). WORKING TREE LEFT NON-COMPILING. Landed: src/data/types.ts created (types only) holding verbatim-moved AboutMeProps, DefaultCardProps, ExperienceCardInfoProps, ProjectCardInfoProps plus CardInfo = Omit<DefaultCardProps,'headingLevel'> (preserving the Stage 1 headingLevel boundary), ProjectCardData/ExperienceCardData discriminated on kind, and CardData union. All four components now import their prop type from it via import type. data.ts:1-5 reduced to a single import type from ./types - zero ../components imports. Both non-exported ExperienceCardsProps/ProjectCardsProps interfaces removed and array annotations updated. NOT DONE: kind added to only 6 of 15 entries so tsc -b fails with 'Property kind is missing'; DefaultCardGroup.tsx untouched (still keyof typeof cardDataMap, still bare-string cardType); HomePageScroll.tsx:119-128 uniform-prop union untouched; W2.7 duplicate .group-cards block not started; no post-change build or lint; no value diff of the 14/6 entries. Pre-change snapshots saved outside the repo at C:\\Users\\renan\\AppData\\Local\\Temp\\opencode\\task09\\ for the value diff. AGENT SELF-CONTRADICTION recorded: it variously reported 9 and 10 missing kind insertions, so the next agent must count rather than trust."
-    - timestamp: "2026-10-03T08:42:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "Re-dispatched Senior Frontend for TASK-09 with a tightly scoped prompt: finish the kind insertions (count them yourself), retype cardDataMap as Record<CardGroupName,...> to remove keyof typeof and the bare-string cardType, fix HomePageScroll's uniform-prop union by giving each entry its own render fn, delete the duplicate .group-cards block, then build + lint. Agent's own snapshots at the temp dir provided for the value diff."
-    - timestamp: "2026-10-03T09:15:00"
-      step: senior-frontend
-      status: in_progress
-      summary: "TASK-09 ATTEMPT 2 - GREEN AND ORCHESTRATOR-VERIFIED. build PASS (tsc -b clean, 503 modules) and lint 0 errors 0 warnings. Finished the kind insertions: the previous attempt's counts were wrong, the real number was 4 missing plus 1 duplicated; final state is 15 entries = 7 kind:'experience' + 8 kind:'project', matching 8 projects + 1 experience + 6 recognitions. DefaultCardGroup.tsx retyped: CardGroupName = 'Projects'|'Experiences'|'Recognitions', CardDataMap = Record<CardGroupName, {cards, component}>, cardType prop narrowed from bare string to CardGroupName, and keyof typeof + isValidCardType + the now-unreachable fallback branch all deleted (reported as an intentional behaviour-visible change). HomePageScroll.tsx uniform-prop Component union replaced with per-entry render() so each component receives only its declared props; stayed out of :79 and :104-110 as instructed. W2.7 duplicate .group-cards scrollbar block deleted, class name preserved. Value diff vs the pre-change snapshot: 119 -> 129 string literals, all 22 diffs are additions (./types import, 15 kind fields, type symbols) - ZERO value drift. ORCHESTRATOR INDEPENDENT VERIFICATION: data.ts has 0 '../components' imports; 7 experience + 8 project kind occurrences; DefaultCardGroup.tsx has 0 keyof typeof and 0 isValidCardType and confirms CardGroupName/CardDataMap/selectedData; DefaultCardGroup.css has exactly one scrollbar-width and one scrollbar-color (the -webkit- prefixed rules are separate pseudo-element blocks, not duplicates)."
-    - timestamp: "2026-10-04T14:19:36"
-      step: resume
-      status: in_progress
-      summary: "RESUME #3. pipeline.yaml parsed cleanly on first read - no YAML repair needed. Cleared the pause (paused_at/pause_reason -> null), set current_step=qa-frontend current_agent='QA Reviewer'. State reconciliation: top-level tasks[] TASK-09 was stale 'pending' vs steps.senior-frontend.tasks 'completed' -> synced to completed; qa-backend 'pending' -> 'not-applicable' (no backend exists in this repo, so it was masquerading as incomplete work); stale resume block from 06:20 replaced. SELF-INFLICTED FAULT CAUGHT: the first qa-frontend edit re-declared the already-present stage1_approved key, which is precisely the duplicate-key corruption that breaks read-pipeline-state; detected on review and removed before any dispatch, file re-validated. SCOPE CORRECTION: the recorded resume_action ('QA over Stage 2 W2.1-W2.17') is not executable because 14 of 17 Stage 2 W-IDs are unimplemented (TASK-10..13 pending) - it would return a guaranteed noise verdict. Narrowed round 4 to a Stage 2 CHECKPOINT QA over TASK-09 (W2.1/W2.3/W2.7) plus the 5 Stage-2 handoff items from Stage 1 QA round 3; the full W2.1-W2.17 sweep is retained as the Stage 2 exit gate after TASK-12."
-    - timestamp: "2026-10-04T14:20:00"
-      step: qa-frontend
-      status: in_progress
-      summary: "QA Reviewer (frontend) round 4 DISPATCHED - Stage 2 checkpoint review. Scope: TASK-09's W2.1/W2.3/W2.7 plus the 5 Stage-2 handoff items Stage 1 QA round 3 flagged (MenuSectionButton.tsx dead ariaHidden prop; HomePageScroll.tsx:119-128 uniform-prop set reaching components that do not declare it; sections.ts Record<> cast defeating its own exhaustiveness comment; getSectionIndex returning iconIndex rather than the registry index; DefaultCardGroup cardType still string after TASK-06 removed the as keyof typeof cast). Lint baseline is 0, not 17. Must verify against disk and the emitted bundle, NOT against a green build - 5 false agent claims have been recorded in this pipeline."
-    - timestamp: "2026-10-04T14:22:00"
-      step: qa-frontend
-      status: blocked
-      summary: "QA ROUND 4 NOT DISPATCHED - HARD BLOCKER. The resume session's toolset contains no task/agent dispatch tool, so subagent_type 'QA Reviewer' cannot be invoked. Per the skill's dispatch rules I did NOT fall back to 'general', did NOT perform the QA review myself, and did NOT run build/lint - a silent fallback here would have produced an untrusted approval for Stage 2 and corrupted the exit gate. State left consistent and re-validated: qa-frontend round 4 in_progress with stage2_approved=false and dispatch_status recorded; current_agent=null; dispatch_blocked=true. Stage 1 approval is unaffected. RESOLUTION REQUIRED: re-run delivery-pipeline:resume from a session that exposes agent dispatch (the QA Reviewer agent definition at .opencode/agents/05-qa-reviewer.md is present and valid - mode subagent, model opencode/big-pickle, steps 30 - so the agent itself is not the problem, the missing capability is)."
-    - timestamp: "2026-10-17T20:02:40"
-      step: qa-frontend
-      status: in_progress
-      summary: "Resume dispatching QA Reviewer round 4 for the Stage 2 checkpoint review of TASK-09 and the five recorded Stage-2 handoff items. Scope excludes unimplemented W2 IDs; validation must be based on working tree and emitted bundle. Git status confirmed expected tracked changes and src/data/types.ts/src/types additions, with no root scratch scripts."
-    - timestamp: "2026-10-17T20:13:30"
-      step: qa-frontend
-      status: completed
-      summary: "QA Reviewer round 4 returned Corrections Needed. TASK-09 W2.1/W2.3/W2.7 passed; handoff checks (a), (b), and (e) passed. Two failures: src/data/sections.ts Record<> cast defeats exhaustiveness, and getSectionIndex returns iconIndex rather than registry index. QA verified source directly; no build/lint run and no screenshot evidence claimed. Dispatch Senior Frontend for these two narrow corrections before TASK-10."
-    - timestamp: "2026-10-17T20:31:43"
-      step: senior-frontend
-      status: completed
-      summary: "Corrected both round-4 defects in src/data/sections.ts only. Replaced the unsound Record cast with a literal registry satisfying readonly SectionEntry[], a generic typed record builder, and checked assignment to Record<SectionName, SectionEntry>; getSectionIndex now returns sections.indexOf(sectionName), matching its navigation call sites. Agent reports negative type checks for missing/extra keys, build PASS (503 modules), lint 0. Orchestrator inspected final source. Dispatching focused QA re-review."
-    - timestamp: "2026-10-17T20:31:43"
-      step: qa-frontend
-      status: in_progress
-      summary: "QA Reviewer round 5 dispatched for only the two corrected src/data/sections.ts defects; specifically review generic assertion/exhaustiveness and getSectionIndex navigation semantics."
-    - timestamp: "2026-10-17T20:34:58"
-      step: qa-frontend
-      status: completed
-      summary: "QA round 5 APPROVED both corrections. Independently positive/negative type proof: all keys compile; omitting Contact fails TS2741; invalid extra key is rejected by satisfies. getSectionIndex returns the ordered sections index consumed by HomePage arrows. QA tsc and scoped eslint passed; no source changes. TASK-10 is now the next Stage 2 task."
-    - timestamp: "2026-10-17T20:47:03"
-      step: senior-frontend
-      status: completed
-      summary: "TASK-10 implementation returned. Four files: sections.ts, HomePage.tsx, HomePageScroll.tsx, MenuBar.tsx. Agent reports build PASS/lint 0 and 10 wrap transitions. Orchestrator inspected current source: SectionId target maps, stable lazy wrappers, route-derived MenuBar, attached main ref and scoped query; MOTION_VALUE 100 and initial 200 preserved. Browser screenshots/manual checks unavailable. Dispatch focused QA for TASK-10."
-    - timestamp: "2026-10-17T20:47:03"
-      step: qa-frontend
-      status: in_progress
-      summary: "QA Reviewer round 6 dispatched for TASK-10 only (W2.2/W2.5/W2.10/W2.11/W2.12/W2.13). Explicitly separate source-reviewable criteria from unavailable screenshot/manual-browser checks."
-    - timestamp: "2026-10-17T21:01:56"
-      step: qa-frontend
-      status: completed
-      summary: "TASK-10 QA round 6 APPROVED source-reviewable requirements: registry/SectionId target maps, normalized shared arrow helper and transitions, unresolved motion values preserved, route-aware MenuBar, scoped observer and unchanged reveal, hoisted maps, no W1.6/OOS-3 regression. NOT VERIFIED: screenshot diff, injected foreign-section browser test, first-frame capture. Dispatching independent S2-B tasks TASK-11 and TASK-13 in parallel (disjoint files), per approved task schedule."
-    - timestamp: "2026-10-17T21:01:56"
-      step: senior-frontend
-      status: in_progress
-      summary: "Dispatched TASK-11 button consolidation and TASK-13 error-boundary/tooling in parallel; Tech Lead marked their file sets disjoint. Each agent receives exactly one task. TASK-12 stays sequenced after both; full Stage 2 exit QA remains after TASK-12."
+    - event: stop-chain-completed
+      at: "2026-10-31T12:47:58.0338676-03:00"
+      outcome: completed
+      notes: "Userapproved1docproposal;addedservice-boundaryregressionsandmockedvsrealruntimeevidenceguidance. Docdiffreviewed/diffcheckPASS. Savedunchanged7lineevaluation20261031-12-47-github-projects-integration-session.tmp;2filesretained."
+    - event: stop-chain-learning-proposal
+      at: "2026-10-31T12:28:15.0094174-03:00"
+      outcome: awaiting_approval
+      notes: "7lineEnglishevaluationissued;continuouslearningindependentlyreviewedhistory/pipeline/sharedcontract. MissingcatalogdisclosedREADMEfallback. Propose1existingdocserviceboundaryregressions;noharnessdoceditsbeforeapproval. Implementationremainscompleted;session-savependingdecision."
+    - event: qa-round2-approved
+      at: "2026-10-31T12:26:31.0426248-03:00"
+      outcome: completed
+      notes: "Frontend01..04andbackend05approvedboundedsource/build/Node;14suitesPASS/harnesseslintPASS/rootlintFAIL6baseline. All3previousdefectsresolved. Genuinebrowser/external/deploygapsdisclosednotwaived;postfixbuild517reusednorerun."
+    - event: task05-regressions-expanded
+      at: "2026-10-31T12:24:31.5526405-03:00"
+      outcome: awaiting_qa
+      notes: "14suitesPASSincludingrealservicebundledinmemorywithinstalledesbuild,mockedfetch/storageglobalsrestored. Coversidentity/livecache,badnext/partialpages/sharedinflight/ETagbefore+pending304/3cap. LintFAILsame6no new,buildreusedpostfixnotrerun. Package/config/data.tsunchanged. Notbrowser/realnetworkcertification."
+    - event: corrections01-03-completed
+      at: "2026-10-31T12:20:30.3349651-03:00"
+      outcome: awaiting_qa
+      notes: "Identity+invalidpagination+ETagsnapshotcorrected. BothbuildPASS/lintFAILsame6;01Node6suites+inlineidentity/cachePASS;03mockserviceinlinechecksPASS(cachebefore/during304,badnext,3pagecap). InitialPowerShellquoteassertfailedthenfixed. Cross-tabatomictransactionnotcertified;realbrowser/API/deploynotrun. Durable05regressionextensionnext."
+    - event: correction-dispatches-cancelled-and-resumed
+      at: "2026-10-31T12:18:15.3372313-03:00"
+      outcome: partial_work
+      notes: "TASK01and03priorcorrectiondispatchesreturnedTaskcancelled. Usernowexplicitlycontinue. Inspectedpartialoutput:coreidentityhelperpresent;serviceadvertisednextguard+ETagsnapshotpresent. No validationreportsreturned;notcompleted. Resumeownersforverification/completionwithoutoverwritingpartialwork."
+    - event: qa-round1-returned
+      at: "2026-10-31T00:16:50.0294851-03:00"
+      outcome: corrections_needed
+      notes: "Frontendfindsidentityvalidation,invalidnextpartialcache,ETagsnapshotassociationdefects. Backendapproves05limitedtoexisting6suites;harnesseslintPASS,rootlintFAILsame6. No sourceeditsbyQA. Corrections01+03disjointfilesthenregressionharness05extension."
+    - event: task05-implemented
+      at: "2026-10-31T00:14:11.3598907-03:00"
+      outcome: awaiting_qa
+      notes: "Standaloneproductioncore6suitesPASSexit0.04buildreusednotrerun;lintFAILsame6no new. Package/config/data.tsunchanged. Headercheck follows actualcore-servicecallchain. Sourceonlypartialpage/HTTPgapsdisclosed."
+    - event: task04-implemented
+      at: "2026-10-31T00:10:40.3774330-03:00"
+      outcome: awaiting_qa
+      notes: "Hook/component/CSS/bothroutesdone;buildPASS/lintFAILsame6no new. Staticguards/cleanup/routesPASS. No browser/layout/visibility/lazy/focus/a11ytree/deploymentcertification. Unrelatedfilesuntouched."
+    - event: task03-implemented
+      at: "2026-10-31T00:07:41.8280702-03:00"
+      outcome: awaiting_qa
+      notes: "Service/presentation created;buildPASS/lintFAILknown6no new. SourcecontrolflowchecksPASS,data.tsunchanged. No runtimeclaims; Bokumonrename/deletecould404. Otherworktreefilesuntouched."
+    - event: frontend-tasks01-02-implemented
+      at: "2026-10-31T00:05:03.4428960-03:00"
+      outcome: awaiting_qa
+      notes: "Both retries succeeded;buildPASS/lintFAILbaseline6/no new.01inlinecore assertionsPASS/Node17exports;02sourceconstraints+diffcheckPASS. Concurrentchangesleftuntouched. No browser/server/deploymentrun; no claims."
+    - event: user-authorized-dispatch-retry
+      at: "2026-10-31T00:00:52.8147395-03:00"
+      notes: "User: tente novamente com os agents que falharam, agora vai. Verified no partial github source output and gitstatus only.opencode. Retrying exact Senior Frontend type for01+02."
+    - event: frontend-batch1-dispatch-attempt3
+      at: "2026-10-30T23:59:07.7930828-03:00"
+      outcome: blocked
+      notes: "Both dispatches failed same model-resolution error. Step aborted after3attempts each, nofallbackagent. Gitstatusonly.opencode;src/data/github*.ts absent. No applicationimplementation occurred."
+    - event: frontend-batch1-dispatch-attempt2
+      at: "2026-10-30T23:58:46.3511482-03:00"
+      outcome: failed
+      notes: "Both exact Senior Frontend retries failed same model-resolution error; final attempt next."
+    - event: frontend-batch1-dispatch-attempt1
+      at: "2026-10-30T23:58:22.6396311-03:00"
+      outcome: failed
+      notes: "Both Senior Frontend dispatches failed Model not found: opencode/nemotron-3-ultra-free. Retry same type per pipeline policy."
+    - event: tech-lead-report-corrected
+      at: "2026-10-30T23:57:45.7727438-03:00"
+      outcome: completed
+      notes: "Report-only correction; rootarrays valid,no file changes or command reruns. Start independentTASK01+02."
+    - event: tech-lead-tasks-returned
+      at: "2026-10-30T23:57:15.7054683-03:00"
+      outcome: report-format-correction-needed
+      notes: "5tasks+index verified,contracts+disjointownership established; root concerns/errors missing. No source changes."
+    - event: planning-corrections-completed
+      at: "2026-10-30T23:44:34.0902219-03:00"
+      outcome: completed
+      notes: "24exact course/exercise names documented.7featured are exercises and will be filtered per user direction; preserve presentation for eligible Bokumon only. No alwaysInclude bypass. Four artifacts verified. Malformed report corrected; no validation rerun."
+    - event: planning-documents-returned
+      at: "2026-10-30T23:37:01.7903332-03:00"
+      outcome: corrections-needed
+      notes: "4 documents present; no source edits. Report malformed root fields; classification text explicitly keeps exercises. Prior build/lint evidence reused, not rerun. PA notes pre-existing pipeline-template YAML LSP diagnostics."
+    - event: user-approved-approach
+      at: "2026-10-30T23:31:19.6328939-03:00"
+      notes: "User: aprovo a abordagem e repositorios de cursos e exercicios devem ser ocultados. Approved Approach A and hiding course/exercise repos; proceed to planning artifacts and implementation."
+    - event: planning-analyst-analysis-returned
+      at: "2026-10-30T23:09:15.8269224-03:00"
+      agent_task_id: ses_e704dc7a1ffedDQRsAZoZqqf92
+      outcome: awaiting_approval
+      notes: "Analysis returned recommendation and alternatives A RESTclient/B serverless/C build snapshot/D hybrid; no planning docs before approval."
+    - event: new-execution
+      at: "2026-10-30T23:02:38.4307012-03:00"
+      notes: "Prior completed pipeline preserved in .opencode/plan/codebase-quality-seo/pipeline-completed.yaml. Clean initial git status."
   handoff:
-    current_state: "Stage1 approved. Stage2 implementation and round7 source corrections reviewed by QA round8; TASK-12/TASK-13 remain in_progress pending mandatory browser validation. Build PASS505; post-plugin lint baseline seven existing errors/zero warnings. Normal and unmatched-route DOM checks pass in Edge. Missing trustworthy pre-change screenshot baseline and full console/interaction/keyboard/error-boundary/visual acceptance evidence. Stage2 NOT approved; Stage3/4 untouched. Next action obtain baseline artifacts or establish reproducible pre-change revision and finish browser gates; then QA exit review. Older resume notes are historical and superseded by this handoff and round8 result."
-    context: "React 18 + Vite 6 + TypeScript portfolio SPA at repo root. Stack: framer-motion, react-router-dom v7, ESLint flat config. No test framework configured. Scripts: dev, build (tsc -b && vite build), lint (eslint .), preview. User request is analysis-first: audit entire codebase, then deliver an improvement plan."
-    selected_approach: "planning-analyst (independent flow, complexity=large)"
-    design_summary: null
-    planning_summary: "DONE. Docs at .opencode/plan/codebase-quality-seo/{index.md,feasibility.md,impact-analysis.md,risks.md}. 68 work items in 4 stages. S1 Toolchain Baseline & Correctness (21 items, 7 Critical) - includes W1.1 remove self-referential dep, W1.2 delete pnpm-lock.yaml+pnpm-workspace.yaml, W1.3 record lint/build baseline. S2 Organisation/DRY/KISS (17). S3 Responsive & Design-System Consolidation (13) - 5-token mobile-first breakpoints, eliminate 6 order-dependent orientation blocks. S4 SEO & Performance (17) - full client-only SEO + prerender-readiness. Severity 7C/24H/25M/12L. Breaking-change surface EMPTY. 5 invariants must-not-change recorded in index.md. 6-tier file overlap map in impact-analysis.md. 23-entry risk matrix + 7 accepted out-of-scope items (OOS-1..7) in risks.md."
-    task_summary: "22 tasks, all senior-frontend, in .opencode/plan/codebase-quality-seo/tasks/. TASK-01 toolchain-unblock-baseline (Stage 1, blocking, no W-ID) must land first. Stage 1: TASK-01..08. Stage 2: TASK-09..13. Stage 3: TASK-14 (screenshot gate, zero W-ID) then TASK-15..17. Stage 4: TASK-18..22. 13 batches, max concurrency 5. PROGRESS: Stage 1 TASK-01..08 completed and QA-approved; Stage 2 TASK-09 completed (attempt 2, build PASS / lint 0, value-diff clean, orchestrator-verified) awaiting QA round 4; TASK-10..22 pending."
-    acceptance_criteria:
-      - "npm run lint passes at 0 errors / 0 warnings. NOTE: TASK-01 originally recorded a baseline of 17, but all 17 were .opencode tooling noise (eslint.config.js ignored only dist); .opencode was added to the eslint ignores during the Stage 1 corrections, so the baseline was re-baselined 17 -> 0. The TASK-01 figure is obsolete."
-      - "npm run build (tsc -b && vite build) passes"
-      - "Zero visual change: screenshot diff across 13 widths clean vs the TASK-14 baseline"
-      - "Functionality, branding, copy and routing invariants preserved per plan index.md"
-    dependencies: []
+    context: github-projects-integration
+    user_request: "adicione a integração ao github para buscar os projetos diretamente dos repositorios e atualizar a tela de projetos automaticamente"
+    selected_approach: "APPROVED: client-side public GitHub REST, Xounder, no token/backend/dependencies; hide course/exercise repositories with configurable rules."
+    planning_summary: "Shared service/hook/ProjectsCardGroup for both routes. User hide-exercise decision applies to24exact names,7of8curated entries; retain Bokumon presentation/featured order only. Add eligible repos by pushed_at,12visible+GitHub link. Structural/public/fork/archive/self/profile rules plus documented narrow patterns; no whitelist. Filter live/cache/static. Raw-record versioned localStorage TTL30m memory fallback; mount/visibility,dedup,3pagecap,validation,backoff,static/cached fallback. New metadata from GitHub+local api-logo. Four docs under .opencode/plan/github-projects-integration."
+    acceptance_criteria: []
     additional_context:
-      - "Constraint: functionality and visual branding must remain identical. Only refactoring/quality/SEO improvements."
-      - "Clean Code, DRY, KISS principles required."
-      - "SEO must be improved (meta tags, semantic HTML, structured data, sitemap/robots, Open Graph, performance signals)."
-      - "Must remain responsive across desktop, tablet, and mobile at various viewport sizes; recommendations expected."
-      - "User explicitly asked for the final deliverable to be an improvement PLAN after full codebase understanding."
+      - "Root package: React 18/TypeScript/Vite 6; npm run build (tsc -b && vite build), npm run lint (eslint .); no test script."
+      - "Previous session reports six pre-existing lint findings; re-establish baseline with repository-aware checks."
+      - "Carry forward prior no-browser restriction pending explicit authorization; source/build checks cannot certify runtime or deployed behavior."
+      - "No commit or push requested."
   resume:
     last_completed_agent: QA Reviewer
-    last_completed_step: qa-frontend-stage-4-source-exit
+    last_completed_step: qa-round2
     recovery_required: false
-    dispatch_blocked: false
-    resumed_at: "2026-10-23T14:54:08-03:00"
-    resume_count: 3
-    resume_reason: "Recovered interrupted TASK20/22 usage-limit dispatches and completed all source/build-only delivery. Final Stage4 QA Approved; TASK14 explicitly skipped by user."
-    resume_action: "No implementation dispatch needed. Pipeline completed under revised source/build-only acceptance."
-    next_action: "Optional follow-ups require separate authorization: six existing lint findings, runtime/browser acceptance and deployed/external validators. Do not launch browser under current user constraint."
+    instruction: "Completedall5taskswithQAapprovalsource/build/Node14suites,andSTOPchainincludingapproveddocupdateandsessionsave. No pendingimplementationorapproval. RestartOpenCodetoloadupdatedinstructions;browser/deployedvalidationanda11ylintcleanupremainfollowups."

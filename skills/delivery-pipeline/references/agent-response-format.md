@@ -46,6 +46,13 @@ Implementation agents, the Tech Lead, and QA use this contract. The orchestrator
 - Do not rerun a successful build solely because another workflow section repeats it. Rerun when relevant changes, failures, or unresolved concerns invalidate the evidence.
 - Distinguish source inspection, build validation, runtime verification, and deployed/external validation. A build or typecheck does not prove visual equivalence, animation behavior, accessibility-tree output, or production HTTP responses.
 
+### Exercise Service Boundaries
+
+- For service changes involving pagination, partial failures, cache replacement, or HTTP validators such as ETags, include relevant regression checks against the actual production service. Passing pure-helper tests or finding expected source text alone does not establish correct orchestration across these boundaries.
+- Exercise the affected failure and race scenarios: incomplete page sets must not be committed as complete snapshots, and a validator must not refresh cache records it did not validate. Assert observable results, requests, and cache writes rather than duplicating production logic in a test-only implementation.
+- Where browser execution is unavailable or restricted, use existing tooling for scoped Node execution with mocked network/storage boundaries when feasible. Restore mocks after each check, avoid dependency or infrastructure changes solely for this purpose, and disclose any remaining acceptance-critical gaps.
+- Report pure-helper assertions, static checks, and mocked execution of production services as distinct evidence. Mocked HTTP/storage checks do not certify real browser behavior, CORS, cross-tab storage timing, or deployed responses; preserve the actual execution and approval scope.
+
 ### Bound the Verdict
 
 QA returns an explicit verdict and its approval scope. List unexecuted acceptance checks separately. A waiver records the user's decision and its exact scope; it does not change a check's execution result to PASS. If mandatory criteria remain unmet and no applicable revision was approved, return Corrections Needed or report the blocker rather than silently narrowing acceptance.
