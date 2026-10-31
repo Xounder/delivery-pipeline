@@ -19,8 +19,9 @@ Investy/
 ├── compose.yaml                    # Main PostgreSQL/migrate/API/worker/web
 ├── compose.bootstrap.yaml          # Docker-native private configuration setup
 ├── compose.e2e.yaml                # Isolated test database/migrate/browser
-├── DOCKER.md                       # Docker-first local operation
-├── DEPLOYMENT.md                   # Deployment and validation boundaries
+├── docs/
+│   ├── DOCKER.md                   # Docker-first local operation
+│   └── DEPLOYMENT.md               # Deployment and validation boundaries
 ├── docker/                         # Bootstrap, secret guards, runner and nginx
 │
 ├── apps/
@@ -144,8 +145,8 @@ Investy/
 
 ## Runtime Guides
 
-- [Docker-first main stack](../DOCKER.md)
-- [Deployment boundaries](../DEPLOYMENT.md)
+- [Docker-first main stack](../docs/DOCKER.md)
+- [Deployment boundaries](../docs/DEPLOYMENT.md)
 - [Isolated real-PostgreSQL browser suite](../apps/web/e2e/real/README.md)
 
 Keep code-QA, static checks, fixture-based browsers, and real database/worker
