@@ -108,11 +108,11 @@ Verify:
 - Lint passes
 - Tests pass
 - When running `test` for `apps/web`, the tool returns Playwright E2E results with pass/fail counts and individual test names. Check that all E2E tests pass, not just the exit code.
-- E2E/unit tests contain real assertions on behavior or state — no empty/placeholder bodies or assertions against constant values
-- When tests mock `/api/v1/*` routes, the mocks use the `{ data: ... }` wrapper contract (`apiFetch` returns `json.data`)
 - No dead code
 - No unused imports
 - No unused variables
+
+**Only when reviewing OpenCode custom-tool work:** check tool discovery shape/location (discovered exports are valid tools; helpers/tests are not discovered as tools) against the installed SDK/loader. Review SDK query result bounds, asynchronous timeout and stale/error/unknown semantics without claiming a hard parsing or byte-size bound. Use `npm --prefix .opencode test` for standalone tooling; mark absent `.opencode` build/lint scripts N/A rather than running unrelated app checks. Distinguish passing units from live restart, tool discovery and actual SDK/API request validation: claim each only with observed evidence, otherwise mark it explicitly unverified.
 
 ### 6. Review Error Handling
 
@@ -142,9 +142,7 @@ with a detailed list of required changes.
 
 Return review summary to the Delivery Pipeline (pipeline.yaml is updated by the orchestrator).
 
-Return using the [standard agent response format](../skills/delivery-pipeline/references/agent-response-format.md). MUST include `summary.changes`, `summary.validations`, `concerns`, and `errors`.
-
-FAILURE TO RETURN STANDARD FORMAT WILL CAUSE ORCHESTRATOR TO RE-DISPATCH — this is mandatory.
+See [shared/subagent-common.md](shared/subagent-common.md) — Return Format.
 
 ## Review Rules
 
@@ -180,10 +178,7 @@ Avoid reviewing unrelated areas.
 
 ## Retry Limit (failure escalation)
 
-If the same action fails 3 consecutive times, the subagent MUST NOT retry. Instead, it must return to the orchestrator/agent that created it, reporting:
-1. Which action failed
-2. The error reason observed
-3. That it cannot proceed further
+See [shared/subagent-common.md](shared/subagent-common.md) — Retry Limit.
 
 ## Constraints
 
