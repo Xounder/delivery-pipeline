@@ -26,6 +26,16 @@ Pending
 
 ---
 
+## Session Scope
+
+- Planned session batch: [BATCH-XX; distinguish from parallel execution wave]
+- Deliverable boundary and explicitly out of scope: [Independently reviewable result; follow-up task IDs]
+- Candidate files / shared-file owner and merge strategy: [Paths; sequential or disjoint sections, or none]
+- Principal-context estimate: [Dispatch/context + condensed return + QA/corrections + commit/state handoffs; closure share accounted for within the current model's effective `limits.dispatchReserve` returned by `read-context-budget`, not added twice; size/uncertainty labels and assumptions, not measured telemetry]
+- Validation and closeout boundary: [Checks and QA evidence required; deferred runtime checks or pending approvals, if any]
+
+---
+
 ## Acceptance Criteria
 
 - [ ] Criterion
@@ -117,13 +127,6 @@ or
 - [ ] Validation step
 - [ ] Validation step
 
-### E2E Test Authoring Guidance (Playwright)
-
-- [ ] Avoid FullCalendar drag/select automation — use deterministic slot-click interactions or node-level unit specs instead
-- [ ] Every mocked API route responds `{ data: ... }` to satisfy the app's `apiFetch` contract
-- [ ] Tests assert on real UI state, network traffic, or behavior — no placeholders or empty assertions
-- [ ] When multiple tasks share `apps/web/e2e`, keep specs in separate files and report pass/fail per spec file
-
 ---
 
 ## Definition of Done
@@ -134,6 +137,24 @@ or
 - [ ] Build passes
 - [ ] Lint passes
 - [ ] Validation completed
+- [ ] Commits created (`feat(<feature>)[TASK-XX]` and separate `docs(<area>)` when `.opencode/` files changed)
+
+---
+
+## Commit
+
+Each finalized task produces:
+
+1. One implementation commit:
+   ```text
+   feat(<feature-from-pipeline.yaml>)[<TASK-XX>]: <subject>
+   ```
+2. One separate documentation commit when the task touched `.opencode/`:
+   ```text
+   docs(<area>): <detailed description>
+   ```
+
+Example subject: `add database schema and repository`. Record the commit SHAs in `pipeline.yaml` task metadata (`feat_commit`, `docs_commit`).
 
 ---
 

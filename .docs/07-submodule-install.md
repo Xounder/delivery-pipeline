@@ -46,17 +46,106 @@ git push
 
 ## Cloning a Codebase that Contains the Submodule
 
-When cloning a codebase that uses the `delivery-pipeline`, use:
+The parent repository records the exact submodule commit to use. The branch configured in `.gitmodules` selects which branch remote updates follow; it does **not** automatically check out that branch when cloning or initializing the submodule.
+
+Use the project's dedicated `dlvr-ppln/<project-name>` branch throughout the steps below. See [Project-Specific Branches](06-submodule-branches.md#project-specific-branches) for the naming convention. The branch must already exist on `origin`.
+
+### 1. Check the Branch Configuration in the Parent Repository
+
+The consuming project's `.gitmodules` should include the project-specific branch:
+
+```ini
+[submodule ".opencode"]
+    path = .opencode
+    url = <DELIVERY_PIPELINE_REPOSITORY_URL>
+    branch = dlvr-ppln/<project-name>
+```
+
+If the branch entry is missing or incorrect, configure it from the **parent repository root**:
+
+```bash
+git submodule set-branch --branch dlvr-ppln/<project-name> .opencode
+```
+
+Commit the resulting `.gitmodules` change in the parent repository so the whole team shares this configuration.
+
+### 2. Clone or Initialize the Submodule
+
+For a new checkout:
 
 ```bash
 git clone --recurse-submodules <CODEBASE_URL>
+cd <CODEBASE_DIRECTORY>
 ```
 
-If the repository has already been cloned:
+If the repository has already been cloned, run from the **parent repository root**:
 
 ```bash
 git submodule update --init --recursive
 ```
+
+Both commands check out the submodule commit recorded by the parent repository, normally in **detached HEAD** state. This is expected: it reproduces the project's recorded version rather than downloading the latest project-branch commit.
+
+### 3. Switch to the Project Branch and Configure Tracking
+
+Before editing the harness or using branch-based updates, enter the submodule and fetch its remote branches:
+
+```bash
+cd .opencode
+git fetch origin
+```
+
+If the project branch already exists locally:
+
+```bash
+git checkout dlvr-ppln/<project-name>
+git branch --set-upstream-to=origin/dlvr-ppln/<project-name> dlvr-ppln/<project-name>
+```
+
+If it exists only on `origin`, create the local tracking branch instead:
+
+```bash
+git checkout --track -b dlvr-ppln/<project-name> origin/dlvr-ppln/<project-name>
+```
+
+Verify the active branch and its upstream:
+
+```bash
+git branch --show-current
+git branch -vv
+```
+
+The active branch should be `dlvr-ppln/<project-name>` and track `origin/dlvr-ppln/<project-name>`. Switching branches can change the submodule commit relative to the version recorded by the parent repository.
+
+### 4. Pull Updates During Daily Work
+
+To fetch and merge updates from the branch configured in `.gitmodules`, run from the **parent repository root**, with the project branch checked out in the submodule:
+
+```bash
+git submodule update --remote --merge .opencode
+```
+
+Alternatively, from **inside `.opencode/`**, pull from the upstream configured in step 3:
+
+```bash
+git pull
+```
+
+The first command uses the branch selected in `.gitmodules`; the second uses the local branch's upstream. Keep both aligned with the same project branch. Review local changes before updating and resolve any merge conflicts before continuing.
+
+When the submodule commit changes, review and commit the updated pointer from the **parent repository root** so other contributors receive the same version:
+
+```bash
+git diff --submodule=log -- .opencode
+git add .opencode
+git commit -m "chore: update delivery-pipeline submodule"
+```
+
+Any local submodule changes must first be committed and pushed to its project branch before the parent repository publishes a pointer to that commit.
+
+For a checkout that only needs the version already recorded by the parent repository, use `git submodule update --init --recursive` without `--remote`. Recheck the branch before subsequent harness edits, since this can return the submodule to detached HEAD.
+
+After cloning or updating, follow steps below.
 
 ---
 

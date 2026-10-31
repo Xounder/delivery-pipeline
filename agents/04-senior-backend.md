@@ -95,6 +95,8 @@ Verify:
 - Lint succeeds
 - Tests succeed
 
+**Only when assigned OpenCode custom-tool work:** verify the installed SDK and tool-loader contract; ensure every discovered export is a valid tool definition, with helpers and tests outside the discovered `tools/` directory. Check that asynchronous requests have a deadline and recent-message results are bounded; test unknown fallback for unavailable/error responses, stale observations and missing usable messages. Run `npm --prefix .opencode test` for standalone OpenCode tooling and report unit results separately from live tool discovery or SDK requests (unverified unless actually exercised). If `.opencode` has no build/lint scripts, report those as N/A; do not substitute unrelated pnpm application-package checks.
+
 ### 6. Validate Endpoints
 
 When APIs are modified:
@@ -117,11 +119,7 @@ when applicable.
 
 ### 8. Return Results
 
-Return using the [standard agent response format](../skills/delivery-pipeline/references/agent-response-format.md). MUST include `summary.changes`, `summary.validations`, `concerns`, and `errors`.
-
-The orchestrator reads this response to update pipeline.yaml — structured format is required for correct parsing.
-
-FAILURE TO RETURN STANDARD FORMAT WILL CAUSE ORCHESTRATOR TO RE-DISPATCH — this is mandatory.
+See [shared/subagent-common.md](shared/subagent-common.md) — Return Format.
 
 ## Implementation Rules
 
@@ -174,10 +172,7 @@ Ensure:
 
 ## Retry Limit (failure escalation)
 
-If the same action fails 3 consecutive times, the subagent MUST NOT retry. Instead, it must return to the orchestrator/agent that created it, reporting:
-1. Which action failed
-2. The error reason observed
-3. That it cannot proceed further
+See [shared/subagent-common.md](shared/subagent-common.md) — Retry Limit.
 
 ## Constraints
 

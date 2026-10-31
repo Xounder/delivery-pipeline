@@ -13,12 +13,36 @@ The router never creates files and never modifies source code.
 
 Its only responsibility is selecting the correct entry point.
 
+## Architecture Base Prerequisite
+
+Routing requires a complete **architecture documentation set**:
+
+- `[ARCHITECTURE_ENTRY_FILE]` — `.opencode/architecture/architecture.md`
+- `[ARCHITECTURE_INDEX_FILE]` — `.opencode/architecture/index.md`
+- `[DOCS_CATALOG_FILE]` — `.opencode/docs-catalog.md`
+- `[PROJECT_STRUCTURE_FILE]` — `.opencode/project-structure.md`
+- INDEX.md `# Architecture` section
+
+If any piece is missing (or a codebase exists without these docs), the pipeline dispatches the Architecture Initializer to bootstrap or backfill the set.
+
+- New execution and resume/recovery handling for the set check, dispatch, approval, verification, and update live in the **delivery-pipeline** skill — see [Architecture Initialization Flow](../delivery-pipeline/references/execution-phases.md#architecture-initialization-flow). That skill is the single source of truth for the flow.
+- The router itself does **not** route to the Architecture Initializer — dispatch happens before routing.
+
 ## Decision Tree
 
 ```mermaid
 flowchart LR
 
-A[User Request] --> B{Codebase Exists?}
+A[User Request] --> AI{Architecture Docs Complete?}
+
+AI -->|No| ABI[Architecture Initializer]
+
+ABI --> AB_APPROVAL{Base Approved?}
+
+AB_APPROVAL -->|No| ABI
+AB_APPROVAL -->|Yes| B{Codebase Exists?}
+
+AI -->|Yes| B{Codebase Exists?}
 
 B -->|No| SD[Solution Designer]
 
@@ -151,6 +175,7 @@ complexity: small | medium | large
 - Never generate planning documents
 - Never generate technical tasks
 - Only classify and route requests
+- Never route a request before the architecture documentation set is complete — if `[ARCHITECTURE_ENTRY_FILE]`, `[DOCS_CATALOG_FILE]`, or `[PROJECT_STRUCTURE_FILE]` is missing (or the INDEX.md `# Architecture` section is empty), return the Architecture Base prerequisite state so the pipeline dispatches the Architecture Initializer
 - Prefer Tech Lead when planning is unnecessary
 - Prefer Planning Analyst when the implementation goal is clear and only feasibility/impact analysis is needed
 - Prefer Solution Designer when requirements are incomplete, design exploration is needed, or no codebase exists

@@ -36,6 +36,7 @@ Possible inputs:
 - Create task files
 - Create task index
 - Ensure implementation clarity
+- Propose bounded principal-session batches for all known unfinished tasks, not just the next wave.
 
 ## Workflow
 
@@ -139,7 +140,7 @@ Tasks should not be:
 Target:
 
 - Meaningful implementation scope
-- Several hours to several days of work
+- Several hours to several days of work **only when that scope fits a bounded session**; split an oversized task into independently reviewable deliverables before implementation, never force a large task into one batch because of duration
 - Clear acceptance criteria
 
 ### 7. Create Task Files
@@ -164,15 +165,15 @@ TASK-N-*.md
 
 One task per file.
 
-For each task, preencha a seção **Edge Cases** com cenários de borda específicos:
-- Race conditions (concorrência entre states, carregamento assíncrono)
-- Estados vazios (empty arrays, null/undefined, fallbacks)
-- Falhas de API ou storage (quota excedida, parse error, timeout)
-- Campos opcionais ou ausentes (eventos sem `end`, sem `title`)
-- Limites (datas extremas, eventos recorrentes, many items)
-- Regressões em funcionalidades existentes
+For each task, include an **Edge Cases** section with specific boundary scenarios:
+- Race conditions (state concurrency, asynchronous loading)
+- Empty states (empty arrays, null/undefined, fallbacks)
+- API or storage failures (quota exceeded, parse error, timeout)
+- Optional or missing fields (events without `end`, without `title`)
+- Limits (extreme dates, recurring events, many items)
+- Regressions in existing functionality
 
-Quando uma task modificar um arquivo que também é modificado por outra task, documente um **File Overlap Warning** no corpo da task e inclua a **merge strategy** recomendada (execução sequencial vs paralelo com merge cuidadoso em seções diferentes do mesmo arquivo).
+When a task modifies a file that another task also modifies, document a **File Overlap Warning** in the task body and include the recommended **merge strategy** (sequential execution vs parallel with careful merge of different sections of the same file).
 
 If template variables were not resolved in your input, use `[TASK_TEMPLATE_FILE]` as the template reference or call `resolve-template` with `template: '.opencode/template/task-template.md'` and the pipeline context name to get the rendered content.
 
@@ -190,12 +191,13 @@ The index must contain:
 - Execution order
 - Dependency graph
 - Ownership mapping
-- **File Overlaps** — lista de arquivos tocados por múltiplas tasks com estratégia de merge (sequencial vs paralelo com merge cuidadoso)
-- **Parallelization Plan** — batches recomendados com justificativa (ex: "Batch 1: TASK-A + TASK-B independentes; Batch 2: TASK-C (depende de TASK-A)")
+- **File Overlaps** — files touched by multiple tasks with their merge strategy (sequential vs parallel with careful merge)
+- **Parallelization Plan** — recommended batches with justification (e.g., "Batch 1: TASK-A + TASK-B independent; Batch 2: TASK-C (depends on TASK-A)")
+- **Session Scope Plan** — stable `BATCH-XX` assignments for every unfinished task (future entries pending), per-task principal cost components and uncertainty, baseline/reserve assumptions, real dependencies and overlap boundaries. Label parallelization waves within a batch separately from principal-session batches.
 
 ### 9. Update Pipeline
 
-Return implementation metadata to the Delivery Pipeline (pipeline.yaml is updated by the orchestrator).
+Return implementation metadata to the Delivery Pipeline (pipeline.yaml is updated by the orchestrator). Include stable `BATCH-XX` IDs, each unfinished task ID exactly once, batch-level dependencies only where technically required, safe file-overlap/ownership boundaries, planned principal-context estimates, and pending future batches. Follow the [scope-slicing procedure](../skills/delivery-pipeline/references/session-batches.md#slice-work-before-implementation): estimate current measured principal intake (including startup/design/planning/retries), per-task dispatch/context, condensed returns, QA/corrections, commit handoffs and closure with uncertainty and the **effective** `limits.dispatchReserve` from the current principal model's `read-context-budget` result, **not** entire child-agent histories. Unknown intake, unconfirmed model, unusable capacity or unestimable cost stops new work; do not manufacture numbers. Begin closeout planning at effective `limits.target`, stop new dispatch at `limits.stopNewWork` and close by `limits.closeBy`; a `continue` reading does not authorize dispatch without enough estimated headroom for work and reserve. Re-evaluate after a model switch. One independently reviewable task is a valid batch. Split oversized tasks **before** work, with new IDs and explicit acceptance/ownership/file boundaries, while preserving approved task history and avoiding duplicate IDs. If planning exhausts room, preserve the full pending plan for a fresh session rather than launching implementation or fabricating a completed task batch. The historical "Batch 1" parallelization waves in old task indexes are not session-batch records; do not silently rewrite completed tasks.
 
 ## Task Rules
 
@@ -215,39 +217,14 @@ Tasks must not:
 - Be excessively small
 - Be excessively large
 
-### Dependency Rules
+### Dependency and Parallelization Rules
 
-Prefer:
+Apply the [parallelization rules](../skills/delivery-pipeline/references/parallelization-rules.md) when designing the task graph. In addition, the Tech Lead must:
 
-```text
-Backend
-+
-Frontend
-```
-
-running simultaneously.
-
-Avoid dependencies whenever possible.
-
-Dependencies are only allowed when:
-
-- Data contracts are undefined
-- Shared interfaces must exist first
-- Architectural constraints require sequencing
-
-### Parallelization Rules
-
-The Tech Lead must design the task graph to maximize:
-
-- Parallel execution
-- Developer utilization
-- Delivery speed
-
-while preserving:
-
-- Correctness
-- Maintainability
-- Architectural integrity
+- Maximize parallel execution, developer utilization, and delivery speed while preserving correctness, maintainability, and architectural integrity
+- Prefer `Backend + Frontend` running simultaneously
+- Avoid dependencies whenever possible
+- Only create dependencies when: data contracts are undefined, shared interfaces must exist first, or architectural constraints require sequencing
 
 ## Output
 
@@ -259,10 +236,7 @@ See [Task Rules](#task-rules) above — all dependency and parallelism rules are
 
 ## Retry Limit (failure escalation)
 
-If the same action fails 3 consecutive times, the subagent MUST NOT retry. Instead, it must return to the orchestrator/agent that created it, reporting:
-1. Which action failed
-2. The error reason observed
-3. That it cannot proceed further
+See [shared/subagent-common.md](shared/subagent-common.md) — Retry Limit.
 
 ## Constraints
 
